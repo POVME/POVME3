@@ -1,0 +1,27 @@
+Peeled!
+[[ 0.  1.  1. ...,  0.  0.  0.]
+ [ 1.  0.  0. ...,  0.  0.  0.]
+ [ 1.  0.  0. ...,  0.  0.  0.]
+ ..., 
+ [ 0.  0.  0. ...,  0.  1.  1.]
+ [ 0.  0.  0. ...,  1.  0.  0.]
+ [ 0.  0.  0. ...,  1.  0.  0.]]
+[[ 0.  1.  1. ...,  0.  0.  0.]
+ [ 1.  0.  0. ...,  0.  0.  0.]
+ [ 1.  0.  0. ...,  0.  0.  0.]
+ ..., 
+ [ 0.  0.  0. ...,  0.  1.  1.]
+ [ 0.  0.  0. ...,  1.  0.  0.]
+ [ 0.  0.  0. ...,  1.  0.  0.]]
+Peeled!
+time to create occupancy map: 0.116676092148
+time to create hydrogen bond acceptor map: 0.0119478702545
+time to create hydrogen bond donor map: 0.456910848618
+time to create aromatic map: 0.308730840683
+time to create hydrophobic map: 0.696046829224
+time to create hydrophilic map: 0.294914960861
+time to create hydrophobicity map: 4.83155894279
+time to create occupancy map: 4.13546013832
+time to create hydrogen bond acceptor map: 0.890594005585
+time to create hydrogen bond donor map: 17.0958659649
+time to create aromatic map: 1.18322587013

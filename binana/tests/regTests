@@ -1,0 +1,15 @@
+algebra_basic algebra_basic testBasicFmaps.py
+algebra_dock_basic algebra_dock_basic  testBasicFmaps.py
+algebra_dock_complex algebra_dock_complex exampleDock.py
+algebra_func_input algebra_func_input funcInputTest.py
+algebra_peel_dock algebra_peel_dock peelDock.py
+algebra_score_hbond algebra_score_hbond algebraHbondTest.py
+#peel_2gfc_basic peel_2gfc_basic 2gfcTest.py
+peel_arg_basic peel_arg_basic argTest.py
+peel_featureMap_fromDx peel_featureMap_fromDx dxImportTest.py
+peel_lig_basic peel_lig_basic ligTest.py
+peel_povme_conversion peel_povme_conversion conversionTest.py
+#peel_povme_conversion peel_povme_conversion POVME_frame0.npy
+#peel_receptor_basic peel_receptor_basic receptorLigandTest.py
+test_featureMap_fromOffGridPts test_featureMap_fromOffGridPts makeRotatedMap.py
+peel_trp_basic peel_trp_basic trpTest.py

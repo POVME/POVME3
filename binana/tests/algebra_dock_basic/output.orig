@@ -1,0 +1,27 @@
+
+======Beginning scoring ======
+Setting aromatic to be 0 for featuremap_A and 1 for featuremap_B
+Setting hbondDonor to be 2 for featuremap_A and 3 for featuremap_B
+Setting hbondAcceptor to be 4 for featuremap_A and 5 for featuremap_B
+Setting hydrophobic to be 6 for featuremap_A and 7 for featuremap_B
+Setting hydrophilic to be 8 for featuremap_A and 9 for featuremap_B
+Setting hydrophobicity to be 10 for featuremap_A and 11 for featuremap_B
+Setting occupancy to be 12 for featuremap_A and 13 for featuremap_B
+0.00000e+00	hbondAcceptor_A * hbondDonor_B
+0.00000e+00	hbondAcceptor_B * hbondDonor_A
+
+Now trying out meaner score functions
+
+0.00000e+00	-2 * hydrophobic_A * hydrophobic_B
+0.00000e+00	hbondAcceptor_A * numpy.sqrt(hbondDonor_B)
+0.00000e+00	numpy.sqrt(hbondDonor_A) * hbondAcceptor_B
+-1.00000e+00	-aromatic_A - aromatic_B
+3.00000e+00	(hbondAcceptor_A + hbondDonor_B) * (aromatic_A + aromatic_B)
+5.00000e+00	(hbondAcceptor_B + hbondDonor_A) * (aromatic_A + aromatic_B)
+2.70000e-03	0.0001 * pow(10, hydrophobicity_A * hydrophobicity_B )
+
+Now trying out previously buggy score functions
+
+0.00000e+00	hbondAcceptor_A * hbondDonor_B
+0.00000e+00	hbondAcceptor_B * hbondDonor_A
+0.00000e+00	-(hbondDonor_A * hbondDonor_B)

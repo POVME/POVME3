@@ -1,0 +1,9 @@
+#VRML V1.0 ascii
+Separator {
+Material {diffuseColor 1 1 0 specularColor 1 1 1}
+Separator {Translation { translation -0.9745391307 -0.0342941335 0.1660619707 0.1466997516} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.2473521841 0.9456839154 0.2001866692 -0.0665141080} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.4045415269 -0.3199130603 0.0468187480 0.8554588194} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.0531873854 -0.0992197656 -0.9464135457 -0.3027010747} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.2694580343 -0.4922569560 0.5333461579 -0.6329433884} Sphere { radius 0.1 }}
+}

@@ -1,0 +1,43 @@
+RUNNING THE L-BFGS-B CODE
+
+it    = iteration number
+nf    = number of function evaluations
+nseg  = number of segments explored during the Cauchy search
+nact  = number of active bounds at the generalized Cauchy point
+sub   = manner in which the subspace minimization terminated:
+        con = converged, bnd = a bound was reached
+itls  = number of iterations performed in the line search
+stepl = step length used
+tstep = norm of the displacement (total step)
+projg = norm of the projected gradient
+f     = function value
+
+           * * *
+
+Machine precision = 2.220D-16
+ N =           13     M =           10
+
+   it   nf  nseg  nact  sub  itls  stepl    tstep     projg        f
+    0    1     -     -   -     -     -        -     2.000D+02  1.119D+05
+    1    5     9    13  ---    3  3.2D-02  1.3D+01  4.900D+02  8.756D+04
+    2    6     1     4  con    0  1.0D+00  5.3D+00  4.889D+02  3.403D+04
+    3    7     2     4  con    0  1.0D+00  1.9D+00  4.883D+02  2.111D+04
+    4    8     1     4  con    0  1.0D+00  9.7D-01  4.877D+02  1.924D+04
+    5    9     1     4  con    0  1.0D+00  3.2D+00  3.700D+02  1.450D+04
+    6   34     7    10  ---    4  9.2D-04  4.7D-01  3.365D+02  1.441D+04
+    7   35     1     4  con    0  1.0D+00  2.4D+00  3.025D+02  1.394D+04
+    8   36     1     4  con    0  1.0D+00  2.2D+00  3.705D+02  1.337D+04
+    9   60     5     8  ---    3  4.7D-03  2.2D+00  1.929D+02  1.195D+04
+   10   83     9    11  ---    2  8.2D-04  3.2D-01  1.873D+02  1.193D+04
+   11  120     7     9  ---   16  7.8D-06  2.4D-03  1.872D+02  1.193D+04
+   12  160     7     9   Š­   19  2.8D-15  8.5D-13      -          -
+
+ABNORMAL_TERMINATION_IN_LNSRCH                              
+
+ Line search cannot locate an adequate point after 20 function
+  and gradient evaluations.  Previous x, f and g restored.
+ Possible causes: 1 error in function or gradient evaluation;
+                  2 rounding error dominate computation.
+
+ Total User time 0.000E+00 seconds.
+

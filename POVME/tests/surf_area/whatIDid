@@ -1,0 +1,23 @@
+01/23/15 to 01/28/15 - The CSARDOCK test set was unpacked one level above this folder. I ran the rotateProteins.py (which is hardcoded to the test set I used in this time period). This script generated 5 rotations of each protein. I then used makeRunScript.py to collect all of them and prepares scripts to analyze it by three means: POVME, fpocket, and dpocket.
+
+POVME is run using an inclusion sphere in the midpoint of two pocket-defining residues.
+
+fpocket is run AFTER POVME, using it's inclusion sphere dummy atoms as pocket-defining atoms for the start of the run.
+
+dpocket is run on the COMPLEX structures (also in the CSARDOCK set), and has its pockets defined when makeRunScripts.py identifies the ligand in the structure.
+
+One makeRunScripts.py has run, I analyze the structures by running "parallel < runAll.sh" in each folder. Since the fpocket starting point is defined by the POVME inclusion region, I must run POVME before fpocket. dpocket can be run at any time.
+
+Finally, I run comparePovmeToFpocket.py. This script was scaled up unexpectedly and so the naming conventions inside might not follow best practices. There are three settings to fiddle with in here: whether to normalize the volumes (divide all fpocket volumes by the mean fpocket voluemso that average is 1, and same for povme), whether to compare to the fpocket-based-on-povme-inclusion-region output or to dpocket output (set at "comparePovmeTo=" line), and which dpocket output to compare to (the unbiased fpocket pocket which overlaps with ligand, or an fpocket run seeded by the ligand atoms. uncomment appropriate "mdpocketData = " line).
+
+The script tries to answer the question of "do these two methods agree?". I first tried to answer it using bootstrap analysis (which answers "could the sorts of values that come out of these approaches agree better?"). To do this, I calculate the total difference between the measurements of each protein using POVME and fpocket. Then, I resample both distributions to get a "fake" data set, basically picking 58 (the number of proteins) assorted values from the list of actual POVME values, and 58 assorted values from the list of actual fpocket values, then I calculate their summed difference. I make 10,000 of these fake data sets and get a disribution of summed values that would occur if the POVME and fpocket numbers were just randomly thrown together. By looking at the fraction of random permutatiosn that give a worse summed difference value, I generate the odds that the observed differences indicate no agreement between methods. 
+
+Note: According to pages 32 and 33 in the fpocket manual, dpout_fpocketp.txt is the ligand binding pocket, as described by fpocket independently of the ligand.
+
+
+The results at this point indicate that:
+1) the pocket volumes do not immediately seem to have good agreement.
+2) when run in replicate (on rotations of the same protein), both approaches produce an average RSD of maybe around 5-10% (by visual inspection), but for a few proteins this shoots up as high as 20-30%
+3) The bootstrap resampling analyses indicate refutement of the null hyopthesis between 100 and ~85% of the time. Looking at multiple rotations of the same protein and taking the mean lowers this value. 
+4) The polarity scorer doesn't agree very well. I may need to change the way that POVME calculates polarity (currently sum(pocket hydrophobic)/(sum(pocket_hydrophic)+sum(pocket_hydrophilic)) ). Or I could try comparing to other fpocket descriptors.
+5) dpocket doesn't give surface area, so I can't compare to it.

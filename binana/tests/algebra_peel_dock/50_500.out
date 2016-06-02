@@ -1,0 +1,54 @@
+#VRML V1.0 ascii
+Separator {
+Material {diffuseColor 1 1 0 specularColor 1 1 1}
+Separator {Translation { translation -0.3180257576 -0.7964682612 -0.4817164675 -0.1801309838} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.7880862827 0.0363744087 0.3173178366 -0.5262188746} Sphere { radius 0.1 }}
+Separator {Translation { translation -0.5448438697 -0.8008581067 0.1977571933 0.1505441566} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.6849717069 -0.1060704452 -0.5044724334 -0.5148498668} Sphere { radius 0.1 }}
+Separator {Translation { translation -0.5496627263 0.6701258778 -0.4801541915 -0.1351079111} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.1820003872 0.8083009079 -0.5466738495 0.1211329997} Sphere { radius 0.1 }}
+Separator {Translation { translation -0.6739709010 -0.0525492965 -0.7029146533 -0.2211623529} Sphere { radius 0.1 }}
+Separator {Translation { translation -0.6146597134 0.2858508051 -0.4388326543 0.5898378213} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.4714531995 -0.6801975672 -0.5516340311 0.1037451009} Sphere { radius 0.1 }}
+Separator {Translation { translation -0.1723343223 -0.5099690362 0.5825741707 0.6089661723} Sphere { radius 0.1 }}
+Separator {Translation { translation -0.5098709908 -0.5871589923 0.1141276352 -0.6182643232} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.2570971630 0.3880791411 -0.4382716570 0.7689041446} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.1611715575 0.1259766790 0.8675358004 -0.4533599457} Sphere { radius 0.1 }}
+Separator {Translation { translation -0.9600031313 -0.2498126893 -0.0673489105 -0.1070127675} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.2405426828 -0.4889070686 0.3941488025 -0.7401052746} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.7381770990 0.1903048329 0.6198724948 0.1861094604} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.1691178636 -0.9662962382 0.1730033587 -0.0879804876} Sphere { radius 0.1 }}
+Separator {Translation { translation -0.7766626833 0.2793680551 -0.0107922916 -0.5644750594} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.8264772692 -0.5507262671 0.0284903121 -0.1132440030} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.9757590051 0.1497546549 -0.1023878942 0.1224117089} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.5422335385 -0.4955195488 0.3858063325 0.5582084200} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.0507622923 -0.2986944542 -0.9164395676 -0.2614255755} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.5914176815 0.7204574617 0.0590551362 0.3573215118} Sphere { radius 0.1 }}
+Separator {Translation { translation -0.3212914635 -0.1386386464 -0.4291097323 -0.8327160133} Sphere { radius 0.1 }}
+Separator {Translation { translation -0.2534342103 -0.5659727965 0.7501541835 -0.2295965933} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.6683817477 -0.2081813851 -0.2434910542 0.6712961022} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.0551208434 0.3955855567 -0.7330529753 -0.5505516283} Sphere { radius 0.1 }}
+Separator {Translation { translation -0.7649123041 -0.1945161712 0.1697156302 0.5901433988} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.3961544679 0.6777942644 0.4381690118 -0.4377950317} Sphere { radius 0.1 }}
+Separator {Translation { translation -0.8285345087 0.5144268213 0.1431007582 0.1685757584} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.0336555792 -0.7955064047 -0.1348069803 0.5897999153} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.0698602092 -0.3003588772 -0.7436754288 0.5931702560} Sphere { radius 0.1 }}
+Separator {Translation { translation -0.1524061995 0.6752022470 -0.0545611859 -0.7196508549} Sphere { radius 0.1 }}
+Separator {Translation { translation -0.4251212476 0.5750145450 0.6423128134 -0.2757978383} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.1282693265 0.6777296650 0.6760415471 0.2592244348} Sphere { radius 0.1 }}
+Separator {Translation { translation -0.4221473385 0.2943089810 0.5867066265 0.6252592924} Sphere { radius 0.1 }}
+Separator {Translation { translation -0.1774250151 0.2672703688 -0.9197702448 0.2260743478} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.6200900463 0.6265683506 -0.2595378217 -0.3943863025} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.6030296688 0.1547513763 -0.7695350169 0.1422079038} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.2363807477 -0.6498159924 -0.3112536274 -0.6519083506} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.2771020778 0.1202423642 -0.0415886723 -0.9523794384} Sphere { radius 0.1 }}
+Separator {Translation { translation -0.3298350612 0.0408678915 0.4634076249 -0.8214572545} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.3419110666 0.2043878920 0.3899632320 0.8302114730} Sphere { radius 0.1 }}
+Separator {Translation { translation -0.7374396146 -0.0668166505 0.6689733235 -0.0647537059} Sphere { radius 0.1 }}
+Separator {Translation { translation -0.5813687294 -0.4562243509 -0.5215606949 0.4264319215} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.4873679760 -0.4824894019 0.7229923240 -0.0834178185} Sphere { radius 0.1 }}
+Separator {Translation { translation -0.1323970726 0.9856981710 0.0914615796 -0.0500490786} Sphere { radius 0.1 }}
+Separator {Translation { translation -0.2075726078 0.7271533013 0.0110463009 0.6542474059} Sphere { radius 0.1 }}
+Separator {Translation { translation 0.0065318606 -0.0181954062 0.9646484558 0.2628300188} Sphere { radius 0.1 }}
+Separator {Translation { translation -0.1457064072 -0.1317051718 -0.0588954491 0.9787516113} Sphere { radius 0.1 }}
+}

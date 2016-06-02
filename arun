@@ -1,0 +1,5 @@
+#!/bin/sh
+DIR=$( cd "$( dirname "$0" )" && pwd )
+
+alias POVME2='python ${DIR}/POVME/POVME2.py'
+eval PYTHONPATH=${PYTHONPATH}:${DIR}/binana:${DIR}/POVME:${DIR}/pymolecule.2.0:${DIR}/binana:${DIR}/binana $@

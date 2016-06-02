@@ -1,0 +1,21 @@
+
+
+The scoring function components are originally:
+hydrophobic_A * hydrophobic_B
+hbondAcceptor_A * hbondDonor_B
+hbondDonor_A * hbondAcceptor_B
+aromatic_A * aromatic_B
+hydrophobicity_A * hydrophobicity_B
+
+However, I'd prefer them to be
+-2 * hydrophobic_A * hydrophobic_B
+hbondAcceptor_A * numpy.sqrt(hbondDonor_B)
+numpy.sqrt(hbondDonor_A) * hbondAcceptor_B
+-aromatic_A - aromatic_B
+0.0001 * numpy.exp( hydrophobicity_A * hydrophobicity_B )
+The scores for each term are
+-1.85053e-02	-2 * hydrophobic_A * hydrophobic_B
+5.99752e-01	hbondAcceptor_A * numpy.sqrt(hbondDonor_B)
+0.00000e+00	numpy.sqrt(hbondDonor_A) * hbondAcceptor_B
+-6.00000e+00	-aromatic_A - aromatic_B
+2.97912e+00	0.0001 * numpy.exp( hydrophobicity_A * hydrophobicity_B )

@@ -1,0 +1,5 @@
+# Test_name   Folder   Run commands
+consistent_convex_hull_first consistent_convex_hull_first ../../POVME2.py sample_POVME_input_first.ini
+consistent_convex_hull_max consistent_convex_hull_max ../../POVME2.py sample_POVME_input_max.ini
+consistent_convex_hull_average consistent_convex_hull_average ../../POVME2.py sample_POVME_input_average.ini
+consistent_convex_hull_each consistent_convex_hull_each ../../POVME2.py sample_POVME_input_each.ini

@@ -1,0 +1,1 @@
+/home/j5wagner/git/parameterTestBuilds/20140919_occScale1.0_occStyleHard_yesH_yesNorm/arun python parameterTest.py occScale1.0_occStyleHard_yesH_yesNorm_50rots_gridRes1.0 50 1.0

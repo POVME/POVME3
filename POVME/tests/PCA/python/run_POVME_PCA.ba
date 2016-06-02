@@ -1,0 +1,21 @@
+#!/bin/bash
+
+
+###usage: ./run_coordinate_correlator
+
+filename=`ls | grep "frame" | grep ".npy" | tr '\n' ' '`
+
+echo $filename
+
+python POVME_PCA.py $filename
+
+mkdir principal_components
+mv prin_comp_* principal_components
+mv create_python_pc_pdbs.tcl principal_components
+mv common_points.xyz principal_components
+
+cd principal_components
+
+vmd -dispdev text -e create_python_pc_pdbs.tcl
+
+exit

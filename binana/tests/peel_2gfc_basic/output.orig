@@ -1,0 +1,41 @@
+ERROR: Unknown bond distance between elements H and P. Assuming 2.687.
+ERROR: Unknown bond distance between elements H and P. Assuming 2.687.
+ERROR: Unknown bond distance between elements H and P. Assuming 2.687.
+ERROR: Unknown bond distance between elements H and P. Assuming 2.687.
+ERROR: Unknown bond distance between elements H and P. Assuming 2.687.
+ERROR: Unknown bond distance between elements P and H. Assuming 2.687.
+ERROR: Unknown bond distance between elements P and H. Assuming 2.687.
+ERROR: Unknown bond distance between elements P and H. Assuming 2.687.
+ERROR: Unknown bond distance between elements P and H. Assuming 2.687.
+ERROR: Unknown bond distance between elements P and H. Assuming 2.687.
+ERROR: Unknown bond distance between elements H and P. Assuming 2.687.
+ERROR: Unknown bond distance between elements H and P. Assuming 2.687.
+ERROR: Unknown bond distance between elements P and H. Assuming 2.687.
+ERROR: Unknown bond distance between elements P and H. Assuming 2.687.
+ERROR: Unknown bond distance between elements P and H. Assuming 2.687.
+ERROR: Unknown bond distance between elements P and H. Assuming 2.687.
+ERROR: Unknown bond distance between elements P and H. Assuming 2.687.
+ERROR: Unknown bond distance between elements H and P. Assuming 2.687.
+ERROR: Unknown bond distance between elements H and P. Assuming 2.687.
+ERROR: Unknown bond distance between elements H and P. Assuming 2.687.
+[[ 0.  1.  0. ...,  0.  0.  0.]
+ [ 1.  0.  1. ...,  0.  0.  0.]
+ [ 0.  1.  0. ...,  0.  0.  0.]
+ ..., 
+ [ 0.  0.  0. ...,  0.  0.  0.]
+ [ 0.  0.  0. ...,  0.  0.  0.]
+ [ 0.  0.  0. ...,  0.  0.  0.]]
+[[ 0.  1.  0. ...,  0.  0.  0.]
+ [ 1.  0.  1. ...,  0.  0.  0.]
+ [ 0.  1.  0. ...,  0.  0.  0.]
+ ..., 
+ [ 0.  0.  0. ...,  0.  0.  0.]
+ [ 0.  0.  0. ...,  0.  0.  0.]
+ [ 0.  0.  0. ...,  0.  0.  0.]]
+Peeled!
+time to create occupancy map: 6.83149409294
+time to create hydrogen bond acceptor map: 0.915490865707
+time to create hydrogen bond donor map: 14.5091130733
+time to create aromatic map: 1.07328009605
+time to create hydrophobic map: 15.3365750313
+time to create hydrophilic map: 8.50989103317

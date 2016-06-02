@@ -1,0 +1,19 @@
+Run these files in the same directory as the location of the .npy files.
+
+To run the scripts binding_site_overlap.py and cluster,py:
+
+First: run binding_site_overlap.py.
+    The required inputs are the set of .npy files produced by POVME2.py
+    ex: "python binding_site_overlap.py -f *.npy"
+    
+    Output: Similarity matricies for Tanimoto and Tversky calculations. 
+
+Second: run cluster.py,
+    The required inputs are:
+        indexMapToFrames.csv from binding_site_overlap.py
+        csv file produced by binding_site_overlap.py (either Tanimoto
+            or Tversky)
+        the number of clusters wanted
+    ex: "python cluster.py indexMapToFrames.csv 2 POVME_Tanimoto_matrix.csv"
+    
+    Output: frames_centroid.csv, which contains where each frame is clustered

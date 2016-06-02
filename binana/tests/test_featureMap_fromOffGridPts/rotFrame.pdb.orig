@@ -1,0 +1,1493 @@
+ATOM      1    X AAA X   1     -11.594  -2.341  -0.319                       X
+ATOM      2    X AAB X   2     -11.258  -0.137  -3.640                       X
+ATOM      3    X AAC X   3     -10.850  -2.445  -1.517                       X
+ATOM      4    X AAD X   4     -12.170  -1.135  -0.781                       X
+ATOM      5    X AAE X   5     -11.510  -1.790  -1.149                       X
+ATOM      6    X AAF X   6     -10.514  -0.241  -4.838                       X
+ATOM      7    X AAG X   7     -12.086  -0.584  -1.611                       X
+ATOM      8    X AAH X   8     -11.426  -1.239  -1.979                       X
+ATOM      9    X AAI X   9     -10.430   0.310  -5.668                       X
+ATOM     10    X AAJ X  10     -11.678  -2.892   0.511                       X
+ATOM     11    X AAK X  11     -10.682  -1.343  -3.177                       X
+ATOM     12    X AAL X  12     -12.002  -0.033  -2.442                       X
+ATOM     13    X AAM X  13     -11.342  -0.688  -2.809                       X
+ATOM     14    X AAN X  14      -9.777  -4.167   3.471                       X
+ATOM     15    X AAO X  15      -9.117  -4.822   3.104                       X
+ATOM     16    X AAP X  16      -9.104   0.242  -3.170                       X
+ATOM     17    X AAQ X  17      -8.445  -0.413  -3.538                       X
+ATOM     18    X AAR X  18      -9.764   0.897  -2.802                       X
+ATOM     19    X AAS X  19      -4.149  -2.139  -9.067                       X
+ATOM     20    X AAT X  20     -10.029  -5.820   5.962                       X
+ATOM     21    X AAU X  21      -9.369  -6.475   5.594                       X
+ATOM     22    X AAV X  22     -10.689  -5.165   6.330                       X
+ATOM     23    X AAW X  23      -9.693  -3.616   2.641                       X
+ATOM     24    X AAX X  24      -9.357  -1.411  -0.680                       X
+ATOM     25    X AAY X  25     -10.017  -0.756  -0.312                       X
+ATOM     26    X AAZ X  26      -9.020   0.793  -4.000                       X
+ATOM     27    X ABA X  27      -8.360   0.138  -4.368                       X
+ATOM     28    X ABB X  28      -9.680   1.448  -3.632                       X
+ATOM     29    X ABC X  29      -4.725  -0.933  -9.529                       X
+ATOM     30    X ABD X  30      -7.364   1.687  -8.057                       X
+ATOM     31    X ABE X  31      -9.945  -5.269   5.132                       X
+ATOM     32    X ABF X  32      -9.285  -5.924   4.764                       X
+ATOM     33    X ABG X  33      -9.609  -3.064   1.811                       X
+ATOM     34    X ABH X  34      -9.273  -0.860  -1.510                       X
+ATOM     35    X ABI X  35     -10.592   0.450  -0.774                       X
+ATOM     36    X ABJ X  36      -8.613  -1.515  -1.878                       X
+ATOM     37    X ABK X  37      -9.932  -0.205  -1.142                       X
+ATOM     38    X ABL X  38      -8.936   1.344  -4.831                       X
+ATOM     39    X ABM X  39      -8.276   0.689  -5.199                       X
+ATOM     40    X ABN X  40      -5.960   0.928  -9.624                       X
+ATOM     41    X ABO X  41      -6.620   1.583  -9.256                       X
+ATOM     42    X ABP X  42      -9.861  -4.718   4.302                       X
+ATOM     43    X ABQ X  43      -9.201  -5.373   3.934                       X
+ATOM     44    X ABR X  44      -9.525  -2.513   0.981                       X
+ATOM     45    X ABS X  45      -9.189  -0.309  -2.340                       X
+ATOM     46    X ABT X  46     -10.508   1.001  -1.604                       X
+ATOM     47    X ABU X  47      -8.529  -0.964  -2.708                       X
+ATOM     48    X ABV X  48      -9.848   0.346  -1.972                       X
+ATOM     49    X ABW X  49      -8.284  -3.133   4.309                       X
+ATOM     50    X ABX X  50      -7.624  -3.788   3.941                       X
+ATOM     51    X ABY X  51      -7.947  -0.928   0.988                       X
+ATOM     52    X ABZ X  52      -3.328  -5.514  -1.588                       X
+ATOM     53    X ACA X  53      -7.288  -1.583   0.620                       X
+ATOM     54    X ACB X  54      -3.652  -2.655  -4.541                       X
+ATOM     55    X ACC X  55      -7.611   1.276  -2.333                       X
+ATOM     56    X ACD X  56      -6.951   0.621  -2.701                       X
+ATOM     57    X ACE X  57      -8.271   1.931  -1.965                       X
+ATOM     58    X ACF X  58      -5.955   2.170  -6.390                       X
+ATOM     59    X ACG X  59      -5.295   1.515  -6.758                       X
+ATOM     60    X ACH X  60      -8.536  -4.786   6.800                       X
+ATOM     61    X ACI X  61      -7.876  -5.441   6.432                       X
+ATOM     62    X ACJ X  62      -8.200  -2.582   3.479                       X
+ATOM     63    X ACK X  63      -7.540  -3.237   3.111                       X
+ATOM     64    X ACL X  64      -7.863  -0.377   0.158                       X
+ATOM     65    X ACM X  65      -8.523   0.278   0.526                       X
+ATOM     66    X ACN X  66      -3.568  -2.103  -5.371                       X
+ATOM     67    X ACO X  67      -7.527   1.827  -3.163                       X
+ATOM     68    X ACP X  68      -4.228  -1.448  -5.003                       X
+ATOM     69    X ACQ X  69      -6.867   1.172  -3.531                       X
+ATOM     70    X ACR X  70      -4.551   1.411  -7.956                       X
+ATOM     71    X ACS X  71      -5.211   2.066  -7.588                       X
+ATOM     72    X ACT X  72      -8.452  -4.235   5.969                       X
+ATOM     73    X ACU X  73      -7.792  -4.890   5.601                       X
+ATOM     74    X ACV X  74      -4.156  -5.961   0.441                       X
+ATOM     75    X ACW X  75      -8.116  -2.031   2.648                       X
+ATOM     76    X ACX X  76      -4.816  -5.306   0.809                       X
+ATOM     77    X ACY X  77      -7.456  -2.686   2.281                       X
+ATOM     78    X ACZ X  78      -7.779   0.174  -0.672                       X
+ATOM     79    X ADA X  79      -9.099   1.484   0.064                       X
+ATOM     80    X ADB X  80      -8.439   0.829  -0.304                       X
+ATOM     81    X ADC X  81      -4.803  -0.242  -5.465                       X
+ATOM     82    X ADD X  82      -6.123   1.068  -4.729                       X
+ATOM     83    X ADE X  83      -7.443   2.378  -3.993                       X
+ATOM     84    X ADF X  84      -5.463   0.413  -5.097                       X
+ATOM     85    X ADG X  85      -6.783   1.723  -4.361                       X
+ATOM     86    X ADH X  86      -4.467   1.962  -8.786                       X
+ATOM     87    X ADI X  87      -5.127   2.617  -8.418                       X
+ATOM     88    X ADJ X  88      -8.368  -3.684   5.139                       X
+ATOM     89    X ADK X  89      -7.708  -4.339   4.771                       X
+ATOM     90    X ADL X  90      -2.752  -6.720  -1.126                       X
+ATOM     91    X ADM X  91      -4.072  -5.410  -0.390                       X
+ATOM     92    X ADN X  92      -8.031  -1.480   1.818                       X
+ATOM     93    X ADO X  93      -3.412  -6.065  -0.758                       X
+ATOM     94    X ADP X  94      -7.372  -2.135   1.450                       X
+ATOM     95    X ADQ X  95      -7.695   0.725  -1.503                       X
+ATOM     96    X ADR X  96      -9.015   2.035  -0.767                       X
+ATOM     97    X ADS X  97      -8.355   1.380  -1.135                       X
+ATOM     98    X ADT X  98      -6.039   1.619  -5.559                       X
+ATOM     99    X ADU X  99      -5.379   0.964  -5.927                       X
+ATOM    100    X ADV X 100      -6.699   2.274  -5.191                       X
+ATOM    101    X ADW X 101      -4.383   2.513  -9.616                       X
+ATOM    102    X ADX X 102      -5.471  -3.409   4.410                       X
+ATOM    103    X ADY X 103      -6.790  -2.099   5.146                       X
+ATOM    104    X ADZ X 104      -4.811  -4.064   4.042                       X
+ATOM    105    X AEA X 105      -6.131  -2.754   4.778                       X
+ATOM    106    X AEB X 106      -2.495  -3.825  -0.382                       X
+ATOM    107    X AEC X 107      -6.454   0.105   1.825                       X
+ATOM    108    X AED X 108      -7.774   1.416   2.561                       X
+ATOM    109    X AEE X 109      -1.835  -4.480  -0.750                       X
+ATOM    110    X AEF X 110      -3.155  -3.170  -0.014                       X
+ATOM    111    X AEG X 111      -5.794  -0.550   1.458                       X
+ATOM    112    X AEH X 112      -7.114   0.760   2.193                       X
+ATOM    113    X AEI X 113      -4.798   1.000  -2.231                       X
+ATOM    114    X AEJ X 114      -6.118   2.310  -1.495                       X
+ATOM    115    X AEK X 115      -1.499  -2.276  -4.071                       X
+ATOM    116    X AEL X 116      -2.818  -0.966  -3.335                       X
+ATOM    117    X AEM X 117      -5.458   1.655  -1.863                       X
+ATOM    118    X AEN X 118      -6.778   2.965  -1.127                       X
+ATOM    119    X AEO X 119      -4.067  -4.168   2.844                       X
+ATOM    120    X AEP X 120      -5.387  -2.858   3.580                       X
+ATOM    121    X AEQ X 121      -6.706  -1.548   4.316                       X
+ATOM    122    X AER X 122      -4.727  -3.513   3.212                       X
+ATOM    123    X AES X 123      -6.046  -2.203   3.948                       X
+ATOM    124    X AET X 124      -2.411  -3.274  -1.213                       X
+ATOM    125    X AEU X 125      -6.370   0.656   0.995                       X
+ATOM    126    X AEV X 126      -7.690   1.967   1.731                       X
+ATOM    127    X AEW X 127      -1.751  -3.929  -1.581                       X
+ATOM    128    X AEX X 128      -5.710   0.001   0.627                       X
+ATOM    129    X AEY X 129      -7.030   1.312   1.363                       X
+ATOM    130    X AEZ X 130      -8.350   2.622   2.099                       X
+ATOM    131    X AFA X 131      -4.714   1.551  -3.062                       X
+ATOM    132    X AFB X 132      -6.034   2.861  -2.326                       X
+ATOM    133    X AFC X 133      -5.374   2.206  -2.694                       X
+ATOM    134    X AFD X 134      -2.663  -4.927   1.278                       X
+ATOM    135    X AFE X 135      -3.983  -3.617   2.014                       X
+ATOM    136    X AFF X 136      -5.302  -2.307   2.750                       X
+ATOM    137    X AFG X 137      -6.622  -0.997   3.486                       X
+ATOM    138    X AFH X 138      -2.003  -5.582   0.910                       X
+ATOM    139    X AFI X 139      -3.323  -4.272   1.646                       X
+ATOM    140    X AFJ X 140      -4.643  -2.962   2.382                       X
+ATOM    141    X AFK X 141      -5.962  -1.652   3.118                       X
+ATOM    142    X AFL X 142      -1.007  -4.033  -2.779                       X
+ATOM    143    X AFM X 143      -2.327  -2.723  -2.043                       X
+ATOM    144    X AFN X 144      -6.286   1.208   0.165                       X
+ATOM    145    X AFO X 145      -7.606   2.518   0.901                       X
+ATOM    146    X AFP X 146      -1.667  -3.378  -2.411                       X
+ATOM    147    X AFQ X 147      -5.626   0.553  -0.203                       X
+ATOM    148    X AFR X 148      -6.946   1.863   0.533                       X
+ATOM    149    X AFS X 149      -5.290   2.757  -3.524                       X
+ATOM    150    X AFT X 150      -5.555  -3.960   5.241                       X
+ATOM    151    X AFU X 151      -6.874  -2.650   5.977                       X
+ATOM    152    X AFV X 152      -4.895  -4.615   4.873                       X
+ATOM    153    X AFW X 153      -6.215  -3.305   5.609                       X
+ATOM    154    X AFX X 154      -2.579  -4.376   0.448                       X
+ATOM    155    X AFY X 155      -3.899  -3.066   1.184                       X
+ATOM    156    X AFZ X 156      -5.218  -1.756   1.920                       X
+ATOM    157    X AGA X 157      -6.538  -0.446   2.656                       X
+ATOM    158    X AGB X 158      -1.919  -5.031   0.080                       X
+ATOM    159    X AGC X 159      -3.239  -3.721   0.816                       X
+ATOM    160    X AGD X 160      -4.559  -2.411   1.552                       X
+ATOM    161    X AGE X 161      -5.878  -1.101   2.288                       X
+ATOM    162    X AGF X 162      -7.198   0.209   3.024                       X
+ATOM    163    X AGG X 163      -2.243  -2.172  -2.873                       X
+ATOM    164    X AGH X 164      -6.202   1.759  -0.665                       X
+ATOM    165    X AGI X 165      -1.583  -2.827  -3.241                       X
+ATOM    166    X AGJ X 166      -5.542   1.104  -1.033                       X
+ATOM    167    X AGK X 167      -6.862   2.414  -0.297                       X
+ATOM    168    X AGL X 168       1.302  -7.616   2.304                       X
+ATOM    169    X AGM X 169       0.642  -6.960   2.672                       X
+ATOM    170    X AGN X 170      -4.637  -1.720   5.616                       X
+ATOM    171    X AGO X 171      -1.001  -2.791   0.455                       X
+ATOM    172    X AGP X 172      -2.321  -1.481   1.191                       X
+ATOM    173    X AGQ X 173      -3.641  -0.171   1.927                       X
+ATOM    174    X AGR X 174      -4.961   1.139   2.663                       X
+ATOM    175    X AGS X 175      -6.281   2.449   3.399                       X
+ATOM    176    X AGT X 176      -0.342  -3.446   0.087                       X
+ATOM    177    X AGU X 177      -1.661  -2.136   0.823                       X
+ATOM    178    X AGV X 178      -2.981  -0.826   1.559                       X
+ATOM    179    X AGW X 179      -4.301   0.484   2.295                       X
+ATOM    180    X AGX X 180      -5.621   1.794   3.031                       X
+ATOM    181    X AGY X 181       0.655  -1.897  -3.602                       X
+ATOM    182    X AGZ X 182      -3.305   2.033  -1.394                       X
+ATOM    183    X AHA X 183      -4.625   3.344  -0.658                       X
+ATOM    184    X AHB X 184      -3.965   2.689  -1.026                       X
+ATOM    185    X AHC X 185      -3.893  -1.824   4.418                       X
+ATOM    186    X AHD X 186       0.726  -6.409   1.842                       X
+ATOM    187    X AHE X 187      -3.233  -2.479   4.050                       X
+ATOM    188    X AHF X 188      -4.553  -1.169   4.786                       X
+ATOM    189    X AHG X 189       0.402  -3.550  -1.111                       X
+ATOM    190    X AHH X 190      -0.917  -2.240  -0.375                       X
+ATOM    191    X AHI X 191      -2.237  -0.930   0.361                       X
+ATOM    192    X AHJ X 192      -3.557   0.380   1.097                       X
+ATOM    193    X AHK X 193      -4.877   1.690   1.833                       X
+ATOM    194    X AHL X 194      -6.197   3.000   2.569                       X
+ATOM    195    X AHM X 195      -0.257  -2.895  -0.743                       X
+ATOM    196    X AHN X 196      -1.577  -1.585  -0.007                       X
+ATOM    197    X AHO X 197      -2.897  -0.275   0.729                       X
+ATOM    198    X AHP X 198      -4.217   1.035   1.465                       X
+ATOM    199    X AHQ X 199      -5.537   2.345   2.201                       X
+ATOM    200    X AHR X 200      -3.881   3.240  -1.856                       X
+ATOM    201    X AHS X 201       0.150  -5.203   1.379                       X
+ATOM    202    X AHT X 202      -1.170  -3.893   2.115                       X
+ATOM    203    X AHU X 203      -2.489  -2.583   2.851                       X
+ATOM    204    X AHV X 204      -3.809  -1.273   3.587                       X
+ATOM    205    X AHW X 205      -5.129   0.037   4.323                       X
+ATOM    206    X AHX X 206      -0.510  -4.548   1.747                       X
+ATOM    207    X AHY X 207      -1.830  -3.238   2.483                       X
+ATOM    208    X AHZ X 208      -3.149  -1.928   3.219                       X
+ATOM    209    X AIA X 209      -4.469  -0.618   3.955                       X
+ATOM    210    X AIB X 210       0.486  -2.999  -1.941                       X
+ATOM    211    X AIC X 211      -0.833  -1.689  -1.205                       X
+ATOM    212    X AID X 212      -2.153  -0.379  -0.469                       X
+ATOM    213    X AIE X 213      -3.473   0.931   0.267                       X
+ATOM    214    X AIF X 214      -4.793   2.241   1.002                       X
+ATOM    215    X AIG X 215      -0.173  -2.344  -1.573                       X
+ATOM    216    X AIH X 216      -1.493  -1.034  -0.837                       X
+ATOM    217    X AII X 217      -2.813   0.276  -0.101                       X
+ATOM    218    X AIJ X 218      -4.133   1.586   0.635                       X
+ATOM    219    X AIK X 219      -5.453   2.896   1.370                       X
+ATOM    220    X AIL X 220      -3.797   3.791  -2.686                       X
+ATOM    221    X AIM X 221       0.234  -4.652   0.549                       X
+ATOM    222    X AIN X 222      -1.086  -3.342   1.285                       X
+ATOM    223    X AIO X 223      -2.405  -2.032   2.021                       X
+ATOM    224    X AIP X 224      -3.725  -0.722   2.757                       X
+ATOM    225    X AIQ X 225      -5.045   0.588   3.493                       X
+ATOM    226    X AIR X 226      -0.426  -3.997   0.917                       X
+ATOM    227    X AIS X 227      -1.745  -2.687   1.653                       X
+ATOM    228    X AIT X 228      -3.065  -1.377   2.389                       X
+ATOM    229    X AIU X 229      -4.385  -0.067   3.125                       X
+ATOM    230    X AIV X 230      -5.705   1.243   3.861                       X
+ATOM    231    X AIW X 231       0.571  -2.448  -2.772                       X
+ATOM    232    X AIX X 232      -0.749  -1.138  -2.036                       X
+ATOM    233    X AIY X 233      -2.069   0.172  -1.300                       X
+ATOM    234    X AIZ X 234      -3.389   1.482  -0.564                       X
+ATOM    235    X AJA X 235      -4.709   2.792   0.172                       X
+ATOM    236    X AJB X 236      -0.089  -1.793  -2.404                       X
+ATOM    237    X AJC X 237      -1.409  -0.483  -1.668                       X
+ATOM    238    X AJD X 238      -2.729   0.827  -0.932                       X
+ATOM    239    X AJE X 239      -4.049   2.137  -0.196                       X
+ATOM    240    X AJF X 240      -5.369   3.448   0.540                       X
+ATOM    241    X AJG X 241      -0.991  -0.307   6.923                       X
+ATOM    242    X AJH X 242      -2.311   1.003   7.659                       X
+ATOM    243    X AJI X 243      -3.630   2.313   8.395                       X
+ATOM    244    X AJJ X 244      -4.950   3.623   9.131                       X
+ATOM    245    X AJK X 245      -0.331  -0.962   6.555                       X
+ATOM    246    X AJL X 246      -1.651   0.348   7.291                       X
+ATOM    247    X AJM X 247      -2.971   1.658   8.027                       X
+ATOM    248    X AJN X 248      -4.290   2.968   8.763                       X
+ATOM    249    X AJO X 249       5.945  -4.654  -0.078                       X
+ATOM    250    X AJP X 250       4.625  -3.344   0.658                       X
+ATOM    251    X AJQ X 251       3.305  -2.033   1.394                       X
+ATOM    252    X AJR X 252       0.665   0.587   2.866                       X
+ATOM    253    X AJS X 253      -0.655   1.897   3.602                       X
+ATOM    254    X AJT X 254      -1.974   3.207   4.338                       X
+ATOM    255    X AJU X 255      -3.294   4.517   5.074                       X
+ATOM    256    X AJV X 256       5.285  -3.999   0.290                       X
+ATOM    257    X AJW X 257       3.965  -2.689   1.026                       X
+ATOM    258    X AJX X 258       0.005   1.242   3.234                       X
+ATOM    259    X AJY X 259      -1.315   2.552   3.970                       X
+ATOM    260    X AJZ X 260      -2.634   3.862   4.706                       X
+ATOM    261    X AKA X 261       3.641   0.171  -1.927                       X
+ATOM    262    X AKB X 262       2.321   1.481  -1.191                       X
+ATOM    263    X AKC X 263       1.001   2.791  -0.455                       X
+ATOM    264    X AKD X 264      -0.318   4.101   0.281                       X
+ATOM    265    X AKE X 265       2.981   0.826  -1.559                       X
+ATOM    266    X AKF X 266       1.661   2.136  -0.823                       X
+ATOM    267    X AKG X 267       0.342   3.446  -0.087                       X
+ATOM    268    X AKH X 268      -0.978   4.756   0.649                       X
+ATOM    269    X AKI X 269       2.658   3.685  -4.512                       X
+ATOM    270    X AKJ X 270       1.338   4.995  -3.776                       X
+ATOM    271    X AKK X 271       3.317   3.030  -4.880                       X
+ATOM    272    X AKL X 272       1.998   4.340  -4.144                       X
+ATOM    273    X AKM X 273       3.654   5.234  -8.201                       X
+ATOM    274    X AKN X 274      -0.907   0.244   6.092                       X
+ATOM    275    X AKO X 275      -2.227   1.554   6.828                       X
+ATOM    276    X AKP X 276      -3.546   2.864   7.564                       X
+ATOM    277    X AKQ X 277      -4.866   4.174   8.300                       X
+ATOM    278    X AKR X 278      -0.247  -0.411   5.724                       X
+ATOM    279    X AKS X 279      -1.567   0.899   6.460                       X
+ATOM    280    X AKT X 280      -2.887   2.209   7.196                       X
+ATOM    281    X AKU X 281      -4.206   3.519   7.932                       X
+ATOM    282    X AKV X 282       4.709  -2.792  -0.172                       X
+ATOM    283    X AKW X 283       3.389  -1.482   0.564                       X
+ATOM    284    X AKX X 284       2.069  -0.172   1.300                       X
+ATOM    285    X AKY X 285       0.749   1.138   2.036                       X
+ATOM    286    X AKZ X 286      -0.571   2.448   2.772                       X
+ATOM    287    X ALA X 287      -1.890   3.758   3.508                       X
+ATOM    288    X ALB X 288       4.049  -2.137   0.196                       X
+ATOM    289    X ALC X 289       2.729  -0.827   0.932                       X
+ATOM    290    X ALD X 290       1.409   0.483   1.668                       X
+ATOM    291    X ALE X 291       0.089   1.793   2.404                       X
+ATOM    292    X ALF X 292      -1.230   3.103   3.140                       X
+ATOM    293    X ALG X 293      -2.550   4.413   3.876                       X
+ATOM    294    X ALH X 294       3.725   0.722  -2.757                       X
+ATOM    295    X ALI X 295       2.405   2.032  -2.021                       X
+ATOM    296    X ALJ X 296       1.086   3.342  -1.285                       X
+ATOM    297    X ALK X 297      -0.234   4.652  -0.549                       X
+ATOM    298    X ALL X 298       3.065   1.377  -2.389                       X
+ATOM    299    X ALM X 299       1.745   2.687  -1.653                       X
+ATOM    300    X ALN X 300       0.426   3.997  -0.917                       X
+ATOM    301    X ALO X 301       2.742   4.236  -5.342                       X
+ATOM    302    X ALP X 302       3.402   3.581  -5.710                       X
+ATOM    303    X ALQ X 303       2.082   4.891  -4.974                       X
+ATOM    304    X ALR X 304      -0.823   0.795   5.262                       X
+ATOM    305    X ALS X 305      -2.143   2.105   5.998                       X
+ATOM    306    X ALT X 306      -3.462   3.415   6.734                       X
+ATOM    307    X ALU X 307      -0.163   0.140   4.894                       X
+ATOM    308    X ALV X 308      -1.483   1.450   5.630                       X
+ATOM    309    X ALW X 309      -2.802   2.760   6.366                       X
+ATOM    310    X ALX X 310      -4.122   4.070   7.102                       X
+ATOM    311    X ALY X 311       4.793  -2.241  -1.002                       X
+ATOM    312    X ALZ X 312       3.473  -0.931  -0.267                       X
+ATOM    313    X AMA X 313       2.153   0.379   0.469                       X
+ATOM    314    X AMB X 314       0.833   1.689   1.205                       X
+ATOM    315    X AMC X 315      -0.486   2.999   1.941                       X
+ATOM    316    X AMD X 316      -1.806   4.309   2.677                       X
+ATOM    317    X AME X 317       5.453  -2.896  -1.370                       X
+ATOM    318    X AMF X 318       4.133  -1.586  -0.635                       X
+ATOM    319    X AMG X 319       2.813  -0.276   0.101                       X
+ATOM    320    X AMH X 320       1.493   1.034   0.837                       X
+ATOM    321    X AMI X 321       0.173   2.344   1.573                       X
+ATOM    322    X AMJ X 322      -1.146   3.654   2.309                       X
+ATOM    323    X AMK X 323       3.809   1.273  -3.587                       X
+ATOM    324    X AML X 324       2.489   2.583  -2.851                       X
+ATOM    325    X AMM X 325       1.170   3.893  -2.115                       X
+ATOM    326    X AMN X 326       3.149   1.928  -3.219                       X
+ATOM    327    X AMO X 327       1.830   3.238  -2.483                       X
+ATOM    328    X AMP X 328       0.510   4.548  -1.747                       X
+ATOM    329    X AMQ X 329       2.826   4.787  -6.172                       X
+ATOM    330    X AMR X 330       3.486   4.132  -6.540                       X
+ATOM    331    X AMS X 331       2.166   5.442  -5.804                       X
+ATOM    332    X AMT X 332       0.245  -2.169   7.017                       X
+ATOM    333    X AMU X 333      -1.075  -0.858   7.753                       X
+ATOM    334    X AMV X 334      -2.395   0.452   8.489                       X
+ATOM    335    X AMW X 335      -3.715   1.762   9.225                       X
+ATOM    336    X AMX X 336      -5.694   3.727  10.329                       X
+ATOM    337    X AMY X 337      -0.415  -1.513   7.385                       X
+ATOM    338    X AMZ X 338      -1.735  -0.203   8.121                       X
+ATOM    339    X ANA X 339      -3.055   1.107   8.857                       X
+ATOM    340    X ANB X 340       5.860  -5.205   0.752                       X
+ATOM    341    X ANC X 341       4.541  -3.895   1.488                       X
+ATOM    342    X AND X 342       3.221  -2.585   2.224                       X
+ATOM    343    X ANE X 343       0.581   0.036   3.696                       X
+ATOM    344    X ANF X 344      -0.739   1.346   4.432                       X
+ATOM    345    X ANG X 345      -2.058   2.656   5.168                       X
+ATOM    346    X ANH X 346      -3.378   3.966   5.904                       X
+ATOM    347    X ANI X 347       5.201  -4.550   1.120                       X
+ATOM    348    X ANJ X 348       3.881  -3.240   1.856                       X
+ATOM    349    X ANK X 349      -0.079   0.691   4.064                       X
+ATOM    350    X ANL X 350      -1.399   2.001   4.800                       X
+ATOM    351    X ANM X 351      -2.718   3.311   5.536                       X
+ATOM    352    X ANN X 352       3.557  -0.380  -1.097                       X
+ATOM    353    X ANO X 353       2.237   0.930  -0.361                       X
+ATOM    354    X ANP X 354       0.917   2.240   0.375                       X
+ATOM    355    X ANQ X 355      -0.402   3.550   1.111                       X
+ATOM    356    X ANR X 356      -1.722   4.860   1.847                       X
+ATOM    357    X ANS X 357       4.217  -1.035  -1.465                       X
+ATOM    358    X ANT X 358       2.897   0.275  -0.729                       X
+ATOM    359    X ANU X 359       1.577   1.585   0.007                       X
+ATOM    360    X ANV X 360       0.257   2.895   0.743                       X
+ATOM    361    X ANW X 361      -1.062   4.205   1.479                       X
+ATOM    362    X ANX X 362       2.573   3.134  -3.682                       X
+ATOM    363    X ANY X 363       1.254   4.444  -2.946                       X
+ATOM    364    X ANZ X 364       3.233   2.479  -4.050                       X
+ATOM    365    X AOA X 365       1.914   3.789  -3.314                       X
+ATOM    366    X AOB X 366       0.594   5.099  -2.578                       X
+ATOM    367    X AOC X 367       2.910   5.338  -7.003                       X
+ATOM    368    X AOD X 368       3.570   4.683  -7.371                       X
+ATOM    369    X AOE X 369       8.931  -2.586   1.597                       X
+ATOM    370    X AOF X 370       7.611  -1.276   2.333                       X
+ATOM    371    X AOG X 371       3.652   2.655   4.541                       X
+ATOM    372    X AOH X 372       2.332   3.965   5.277                       X
+ATOM    373    X AOI X 373       1.012   5.275   6.013                       X
+ATOM    374    X AOJ X 374       9.591  -3.241   1.229                       X
+ATOM    375    X AOK X 375       8.271  -1.931   1.965                       X
+ATOM    376    X AOL X 376       6.951  -0.621   2.701                       X
+ATOM    377    X AOM X 377       2.992   3.310   4.909                       X
+ATOM    378    X AON X 378       1.672   4.620   5.645                       X
+ATOM    379    X AOO X 379       0.352   5.930   6.381                       X
+ATOM    380    X AOP X 380       7.947   0.928  -0.988                       X
+ATOM    381    X AOQ X 381       6.628   2.239  -0.252                       X
+ATOM    382    X AOR X 382       5.308   3.549   0.484                       X
+ATOM    383    X AOS X 383       3.988   4.859   1.220                       X
+ATOM    384    X AOT X 384       2.668   6.169   1.956                       X
+ATOM    385    X AOU X 385       8.607   0.273  -1.356                       X
+ATOM    386    X AOV X 386       7.288   1.583  -0.620                       X
+ATOM    387    X AOW X 387       5.968   2.894   0.116                       X
+ATOM    388    X AOX X 388       4.648   4.204   0.852                       X
+ATOM    389    X AOY X 389       3.328   5.514   1.588                       X
+ATOM    390    X AOZ X 390       8.284   3.133  -4.309                       X
+ATOM    391    X APA X 391       6.964   4.443  -3.573                       X
+ATOM    392    X APB X 392       5.644   5.753  -2.837                       X
+ATOM    393    X APC X 393       7.624   3.788  -3.941                       X
+ATOM    394    X APD X 394       6.304   5.098  -3.205                       X
+ATOM    395    X APE X 395       4.984   6.408  -2.469                       X
+ATOM    396    X APF X 396       7.359  -2.929   4.823                       X
+ATOM    397    X APG X 397       9.015  -2.035   0.767                       X
+ATOM    398    X APH X 398       7.695  -0.725   1.503                       X
+ATOM    399    X API X 399       3.736   3.206   3.711                       X
+ATOM    400    X APJ X 400       2.416   4.516   4.446                       X
+ATOM    401    X APK X 401       1.096   5.826   5.182                       X
+ATOM    402    X APL X 402       9.675  -2.690   0.399                       X
+ATOM    403    X APM X 403       8.355  -1.380   1.135                       X
+ATOM    404    X APN X 404       7.035  -0.070   1.871                       X
+ATOM    405    X APO X 405       4.396   2.551   3.343                       X
+ATOM    406    X APP X 406       3.076   3.861   4.078                       X
+ATOM    407    X APQ X 407       1.756   5.171   4.814                       X
+ATOM    408    X APR X 408       8.031   1.480  -1.818                       X
+ATOM    409    X APS X 409       6.712   2.790  -1.082                       X
+ATOM    410    X APT X 410       5.392   4.100  -0.346                       X
+ATOM    411    X APU X 411       4.072   5.410   0.390                       X
+ATOM    412    X APV X 412       8.691   0.824  -2.186                       X
+ATOM    413    X APW X 413       7.372   2.135  -1.450                       X
+ATOM    414    X APX X 414       6.052   3.445  -0.714                       X
+ATOM    415    X APY X 415       4.732   4.755   0.022                       X
+ATOM    416    X APZ X 416       3.412   6.065   0.758                       X
+ATOM    417    X AQA X 417       7.048   4.994  -4.403                       X
+ATOM    418    X AQB X 418       5.728   6.304  -3.667                       X
+ATOM    419    X AQC X 419       7.708   4.339  -4.771                       X
+ATOM    420    X AQD X 420       6.388   5.649  -4.035                       X
+ATOM    421    X AQE X 421       7.443  -2.378   3.993                       X
+ATOM    422    X AQF X 422       8.103  -3.033   3.625                       X
+ATOM    423    X AQG X 423       9.099  -1.484  -0.064                       X
+ATOM    424    X AQH X 424       7.779  -0.174   0.672                       X
+ATOM    425    X AQI X 425       6.459   1.136   1.408                       X
+ATOM    426    X AQJ X 426       3.820   3.757   2.880                       X
+ATOM    427    X AQK X 427       2.500   5.067   3.616                       X
+ATOM    428    X AQL X 428       8.439  -0.829   0.304                       X
+ATOM    429    X AQM X 429       7.119   0.481   1.040                       X
+ATOM    430    X AQN X 430       3.160   4.412   3.248                       X
+ATOM    431    X AQO X 431       1.840   5.722   3.984                       X
+ATOM    432    X AQP X 432       8.116   2.031  -2.648                       X
+ATOM    433    X AQQ X 433       6.796   3.341  -1.913                       X
+ATOM    434    X AQR X 434       5.476   4.651  -1.177                       X
+ATOM    435    X AQS X 435       4.156   5.961  -0.441                       X
+ATOM    436    X AQT X 436       8.775   1.376  -3.016                       X
+ATOM    437    X AQU X 437       7.456   2.686  -2.281                       X
+ATOM    438    X AQV X 438       6.136   3.996  -1.545                       X
+ATOM    439    X AQW X 439       4.816   5.306  -0.809                       X
+ATOM    440    X AQX X 440       7.132   5.545  -5.233                       X
+ATOM    441    X AQY X 441       6.472   6.200  -4.865                       X
+ATOM    442    X AQZ X 442       8.847  -3.137   2.427                       X
+ATOM    443    X ARA X 443       7.527  -1.827   3.163                       X
+ATOM    444    X ARB X 444       8.187  -2.482   2.795                       X
+ATOM    445    X ARC X 445       9.183  -0.933  -0.894                       X
+ATOM    446    X ARD X 446       7.863   0.377  -0.158                       X
+ATOM    447    X ARE X 447       6.544   1.687   0.578                       X
+ATOM    448    X ARF X 448       3.904   4.308   2.050                       X
+ATOM    449    X ARG X 449       2.584   5.618   2.786                       X
+ATOM    450    X ARH X 450       8.523  -0.278  -0.526                       X
+ATOM    451    X ARI X 451       7.203   1.032   0.210                       X
+ATOM    452    X ARJ X 452       4.564   3.653   1.682                       X
+ATOM    453    X ARK X 453       3.244   4.963   2.418                       X
+ATOM    454    X ARL X 454       8.200   2.582  -3.479                       X
+ATOM    455    X ARM X 455       6.880   3.892  -2.743                       X
+ATOM    456    X ARN X 456       5.560   5.202  -2.007                       X
+ATOM    457    X ARO X 457       4.240   6.512  -1.271                       X
+ATOM    458    X ARP X 458       7.540   3.237  -3.111                       X
+ATOM    459    X ARQ X 459       6.220   4.547  -2.375                       X
+ATOM    460    X ARR X 460       4.900   5.857  -1.639                       X
+ATOM    461    X ARS X 461       6.556   6.751  -5.696                       X
+ATOM    462    X ART X 462       6.638   4.722   6.216                       X
+ATOM    463    X ARU X 463       5.402   6.583   6.121                       X
+ATOM    464    X ARV X 464       6.062   5.928   5.753                       X
+ATOM    465    X ARW X 465       4.743   7.239   6.489                       X
+ATOM    466    X ARX X 466       7.059   7.478   2.065                       X
+ATOM    467    X ARY X 467       5.487   7.135   5.291                       X
+ATOM    468    X ARZ X 468       6.146   6.479   4.923                       X
+ATOM    469    X ASA X 469       7.803   7.374   0.866                       X
+ATOM    470    X ASB X 470       6.231   7.031   4.093                       X
+ATOM    471    X ASC X 471       8.546   7.270  -0.332                       X
+ATOM    472    X ASD X 472       9.206   6.615  -0.700                       X
+ATOM    473    X ASE X 473      10.776   4.378   8.815                       X
+ATOM    474    X ASF X 474      11.436   3.723   8.447                       X
+ATOM    475    X ASG X 475      10.117   5.033   9.183                       X
+ATOM    476    X ASH X 476      10.861   4.929   7.985                       X
+ATOM    477    X ASI X 477      11.520   4.274   7.617                       X
+ATOM    478    X ASJ X 478      10.201   5.584   8.353                       X
+ATOM    479    X ASK X 479       2.049  -7.099   2.723                       X
+ATOM    480    X ASL X 480      -4.551  -0.548   6.403                       X
+ATOM    481    X ASM X 481       1.389  -6.444   3.091                       X
+ATOM    482    X ASN X 482      -3.891  -1.203   6.035                       X
+ATOM    483    X ASO X 483       1.065  -3.584   0.138                       X
+ATOM    484    X ASP X 484      -0.255  -2.274   0.874                       X
+ATOM    485    X ASQ X 485      -1.575  -0.964   1.610                       X
+ATOM    486    X ASR X 486      -2.894   0.346   2.346                       X
+ATOM    487    X ASS X 487      -4.214   1.656   3.082                       X
+ATOM    488    X AST X 488      -5.534   2.966   3.818                       X
+ATOM    489    X ASU X 489       0.405  -2.929   0.506                       X
+ATOM    490    X ASV X 490      -0.915  -1.619   1.242                       X
+ATOM    491    X ASW X 491      -2.235  -0.309   1.978                       X
+ATOM    492    X ASX X 492      -3.554   1.001   2.714                       X
+ATOM    493    X ASY X 493      -4.874   2.311   3.450                       X
+ATOM    494    X ASZ X 494       1.401  -1.380  -3.183                       X
+ATOM    495    X ATA X 495      -1.238   1.240  -1.711                       X
+ATOM    496    X ATB X 496      -2.558   2.550  -0.975                       X
+ATOM    497    X ATC X 497      -3.878   3.860  -0.239                       X
+ATOM    498    X ATD X 498       0.741  -0.725  -2.815                       X
+ATOM    499    X ATE X 499      -1.898   1.895  -1.343                       X
+ATOM    500    X ATF X 500      -3.218   3.205  -0.607                       X
+ATOM    501    X ATG X 501       2.133  -6.548   1.892                       X
+ATOM    502    X ATH X 502       0.813  -5.237   2.628                       X
+ATOM    503    X ATI X 503      -3.147  -1.307   4.836                       X
+ATOM    504    X ATJ X 504      -4.466   0.003   5.572                       X
+ATOM    505    X ATK X 505       1.473  -5.892   2.260                       X
+ATOM    506    X ATL X 506       0.153  -4.582   2.996                       X
+ATOM    507    X ATM X 507      -2.487  -1.962   4.468                       X
+ATOM    508    X ATN X 508      -3.807  -0.652   5.204                       X
+ATOM    509    X ATO X 509       1.149  -3.033  -0.692                       X
+ATOM    510    X ATP X 510      -0.171  -1.723   0.044                       X
+ATOM    511    X ATQ X 511      -1.491  -0.413   0.779                       X
+ATOM    512    X ATR X 512      -2.810   0.897   1.515                       X
+ATOM    513    X ATS X 513      -4.130   2.207   2.251                       X
+ATOM    514    X ATT X 514      -5.450   3.517   2.987                       X
+ATOM    515    X ATU X 515       0.489  -2.378  -0.324                       X
+ATOM    516    X ATV X 516      -0.831  -1.068   0.412                       X
+ATOM    517    X ATW X 517      -2.151   0.242   1.147                       X
+ATOM    518    X ATX X 518      -3.470   1.552   1.883                       X
+ATOM    519    X ATY X 519      -4.790   2.862   2.619                       X
+ATOM    520    X ATZ X 520       1.485  -0.829  -4.013                       X
+ATOM    521    X AUA X 521      -3.134   3.757  -1.437                       X
+ATOM    522    X AUB X 522      -0.818   3.996  -5.862                       X
+ATOM    523    X AUC X 523      -0.158   3.341  -6.230                       X
+ATOM    524    X AUD X 524       0.897  -4.686   1.798                       X
+ATOM    525    X AUE X 525      -0.423  -3.376   2.534                       X
+ATOM    526    X AUF X 526      -1.743  -2.066   3.270                       X
+ATOM    527    X AUG X 527      -3.063  -0.756   4.006                       X
+ATOM    528    X AUH X 528      -4.382   0.554   4.742                       X
+ATOM    529    X AUI X 529       1.557  -5.341   1.430                       X
+ATOM    530    X AUJ X 530       0.237  -4.031   2.166                       X
+ATOM    531    X AUK X 531      -1.083  -2.721   2.902                       X
+ATOM    532    X AUL X 532      -2.403  -1.411   3.638                       X
+ATOM    533    X AUM X 533      -3.723  -0.101   4.374                       X
+ATOM    534    X AUN X 534       1.233  -2.482  -1.523                       X
+ATOM    535    X AUO X 535      -0.087  -1.172  -0.787                       X
+ATOM    536    X AUP X 536      -1.407   0.138  -0.051                       X
+ATOM    537    X AUQ X 537      -2.726   1.448   0.685                       X
+ATOM    538    X AUR X 538      -4.046   2.758   1.421                       X
+ATOM    539    X AUS X 539       0.573  -1.827  -1.155                       X
+ATOM    540    X AUT X 540      -0.747  -0.517  -0.419                       X
+ATOM    541    X AUU X 541      -2.066   0.793   0.317                       X
+ATOM    542    X AUV X 542      -3.386   2.103   1.053                       X
+ATOM    543    X AUW X 543      -4.706   3.413   1.789                       X
+ATOM    544    X AUX X 544      -0.734   4.547  -6.692                       X
+ATOM    545    X AUY X 545       1.305  -6.995   3.921                       X
+ATOM    546    X AUZ X 546       0.981  -4.135   0.968                       X
+ATOM    547    X AVA X 547      -0.339  -2.825   1.704                       X
+ATOM    548    X AVB X 548      -1.659  -1.515   2.440                       X
+ATOM    549    X AVC X 549      -2.979  -0.205   3.176                       X
+ATOM    550    X AVD X 550      -4.298   1.105   3.912                       X
+ATOM    551    X AVE X 551       0.321  -3.480   1.336                       X
+ATOM    552    X AVF X 552      -0.999  -2.170   2.072                       X
+ATOM    553    X AVG X 553      -2.319  -0.860   2.808                       X
+ATOM    554    X AVH X 554      -3.638   0.450   3.544                       X
+ATOM    555    X AVI X 555      -4.958   1.760   4.280                       X
+ATOM    556    X AVJ X 556       1.317  -1.931  -2.353                       X
+ATOM    557    X AVK X 557      -0.003  -0.621  -1.617                       X
+ATOM    558    X AVL X 558      -1.322   0.689  -0.881                       X
+ATOM    559    X AVM X 559      -2.642   1.999  -0.145                       X
+ATOM    560    X AVN X 560      -3.962   3.309   0.591                       X
+ATOM    561    X AVO X 561       1.977  -2.586  -2.721                       X
+ATOM    562    X AVP X 562       0.657  -1.276  -1.985                       X
+ATOM    563    X AVQ X 563      -0.663   0.034  -1.249                       X
+ATOM    564    X AVR X 564      -1.982   1.344  -0.513                       X
+ATOM    565    X AVS X 565      -3.302   2.654   0.223                       X
+ATOM    566    X AVT X 566      -1.564   1.520   8.077                       X
+ATOM    567    X AVU X 567      -2.884   2.830   8.813                       X
+ATOM    568    X AVV X 568      -4.204   4.140   9.549                       X
+ATOM    569    X AVW X 569      -2.224   2.175   8.445                       X
+ATOM    570    X AVX X 570      -3.544   3.485   9.181                       X
+ATOM    571    X AVY X 571       6.691  -4.137   0.341                       X
+ATOM    572    X AVZ X 572       5.371  -2.827   1.077                       X
+ATOM    573    X AWA X 573       0.092   2.414   4.021                       X
+ATOM    574    X AWB X 574      -1.228   3.724   4.757                       X
+ATOM    575    X AWC X 575      -2.548   5.034   5.492                       X
+ATOM    576    X AWD X 576       7.351  -4.792  -0.027                       X
+ATOM    577    X AWE X 577       6.031  -3.482   0.709                       X
+ATOM    578    X AWF X 578       4.711  -2.172   1.445                       X
+ATOM    579    X AWG X 579       0.752   1.759   3.653                       X
+ATOM    580    X AWH X 580      -0.568   3.069   4.389                       X
+ATOM    581    X AWI X 581      -1.888   4.379   5.124                       X
+ATOM    582    X AWJ X 582       4.388   0.688  -1.508                       X
+ATOM    583    X AWK X 583       3.068   1.998  -0.772                       X
+ATOM    584    X AWL X 584       1.748   3.308  -0.036                       X
+ATOM    585    X AWM X 585       0.428   4.618   0.700                       X
+ATOM    586    X AWN X 586       5.048   0.033  -1.876                       X
+ATOM    587    X AWO X 587       3.728   1.343  -1.140                       X
+ATOM    588    X AWP X 588       2.408   2.653  -0.404                       X
+ATOM    589    X AWQ X 589       1.088   3.963   0.332                       X
+ATOM    590    X AWR X 590      -0.232   5.273   1.068                       X
+ATOM    591    X AWS X 591       4.724   2.892  -4.829                       X
+ATOM    592    X AWT X 592       3.404   4.202  -4.093                       X
+ATOM    593    X AWU X 593       2.084   5.512  -3.357                       X
+ATOM    594    X AWV X 594       4.064   3.547  -4.461                       X
+ATOM    595    X AWW X 595       2.744   4.857  -3.725                       X
+ATOM    596    X AWX X 596       4.400   5.751  -7.782                       X
+ATOM    597    X AWY X 597       0.823  -2.754   9.096                       X
+ATOM    598    X AWZ X 598      -0.160   0.761   6.511                       X
+ATOM    599    X AXA X 599      -1.480   2.071   7.247                       X
+ATOM    600    X AXB X 600      -2.800   3.381   7.983                       X
+ATOM    601    X AXC X 601      -4.120   4.691   8.719                       X
+ATOM    602    X AXD X 602      -0.820   1.416   6.879                       X
+ATOM    603    X AXE X 603      -2.140   2.726   7.615                       X
+ATOM    604    X AXF X 604      -3.460   4.036   8.351                       X
+ATOM    605    X AXG X 605       6.775  -3.586  -0.490                       X
+ATOM    606    X AXH X 606       5.455  -2.276   0.246                       X
+ATOM    607    X AXI X 607       4.136  -0.965   0.982                       X
+ATOM    608    X AXJ X 608       1.496   1.655   2.454                       X
+ATOM    609    X AXK X 609       0.176   2.965   3.190                       X
+ATOM    610    X AXL X 610      -1.144   4.275   3.926                       X
+ATOM    611    X AXM X 611       7.435  -4.241  -0.858                       X
+ATOM    612    X AXN X 612       6.115  -2.931  -0.122                       X
+ATOM    613    X AXO X 613       4.795  -1.621   0.614                       X
+ATOM    614    X AXP X 614       0.836   2.310   2.822                       X
+ATOM    615    X AXQ X 615      -0.484   3.620   3.558                       X
+ATOM    616    X AXR X 616      -1.804   4.930   4.294                       X
+ATOM    617    X AXS X 617       4.472   1.239  -2.338                       X
+ATOM    618    X AXT X 618       3.152   2.549  -1.602                       X
+ATOM    619    X AXU X 619       1.832   3.859  -0.867                       X
+ATOM    620    X AXV X 620       0.512   5.169  -0.131                       X
+ATOM    621    X AXW X 621       5.132   0.584  -2.706                       X
+ATOM    622    X AXX X 622       3.812   1.894  -1.970                       X
+ATOM    623    X AXY X 623       2.492   3.204  -1.235                       X
+ATOM    624    X AXZ X 624       1.172   4.514  -0.499                       X
+ATOM    625    X AYA X 625       4.808   3.443  -5.659                       X
+ATOM    626    X AYB X 626       3.488   4.753  -4.923                       X
+ATOM    627    X AYC X 627       4.148   4.098  -5.291                       X
+ATOM    628    X AYD X 628       2.828   5.408  -4.555                       X
+ATOM    629    X AYE X 629       0.907  -2.203   8.266                       X
+ATOM    630    X AYF X 630       6.523  -5.239   2.001                       X
+ATOM    631    X AYG X 631      -0.076   1.312   5.681                       X
+ATOM    632    X AYH X 632      -1.396   2.622   6.417                       X
+ATOM    633    X AYI X 633      -2.716   3.932   7.153                       X
+ATOM    634    X AYJ X 634       5.863  -4.584   2.369                       X
+ATOM    635    X AYK X 635      -0.736   1.967   6.049                       X
+ATOM    636    X AYL X 636      -2.056   3.277   6.785                       X
+ATOM    637    X AYM X 637      -3.376   4.587   7.521                       X
+ATOM    638    X AYN X 638       6.859  -3.035  -1.320                       X
+ATOM    639    X AYO X 639       5.539  -1.724  -0.584                       X
+ATOM    640    X AYP X 640       4.220  -0.414   0.152                       X
+ATOM    641    X AYQ X 641       2.900   0.896   0.888                       X
+ATOM    642    X AYR X 642       1.580   2.206   1.624                       X
+ATOM    643    X AYS X 643       0.260   3.516   2.360                       X
+ATOM    644    X AYT X 644      -1.060   4.826   3.096                       X
+ATOM    645    X AYU X 645       6.199  -2.380  -0.952                       X
+ATOM    646    X AYV X 646       4.880  -1.069  -0.216                       X
+ATOM    647    X AYW X 647       3.560   0.241   0.520                       X
+ATOM    648    X AYX X 648       2.240   1.551   1.256                       X
+ATOM    649    X AYY X 649       0.920   2.861   1.992                       X
+ATOM    650    X AYZ X 650      -0.400   4.171   2.728                       X
+ATOM    651    X AZA X 651       5.876   0.480  -3.905                       X
+ATOM    652    X AZB X 652       4.556   1.790  -3.169                       X
+ATOM    653    X AZC X 653       3.236   3.100  -2.433                       X
+ATOM    654    X AZD X 654       1.916   4.410  -1.697                       X
+ATOM    655    X AZE X 655       6.536  -0.175  -4.273                       X
+ATOM    656    X AZF X 656       5.216   1.135  -3.537                       X
+ATOM    657    X AZG X 657       3.896   2.445  -2.801                       X
+ATOM    658    X AZH X 658       2.576   3.755  -2.065                       X
+ATOM    659    X AZI X 659       1.256   5.065  -1.329                       X
+ATOM    660    X AZJ X 660       3.572   5.304  -5.754                       X
+ATOM    661    X AZK X 661       4.232   4.649  -6.122                       X
+ATOM    662    X AZL X 662      -2.968   2.279   9.644                       X
+ATOM    663    X AZM X 663      -4.288   3.589  10.380                       X
+ATOM    664    X AZN X 664      -4.948   4.244  10.748                       X
+ATOM    665    X AZO X 665      -2.308   1.624   9.276                       X
+ATOM    666    X AZP X 666      -3.628   2.934  10.012                       X
+ATOM    667    X AZQ X 667       6.607  -4.688   1.171                       X
+ATOM    668    X AZR X 668       5.287  -3.378   1.907                       X
+ATOM    669    X AZS X 669       0.008   1.863   4.851                       X
+ATOM    670    X AZT X 670      -1.312   3.173   5.587                       X
+ATOM    671    X AZU X 671      -2.632   4.483   6.323                       X
+ATOM    672    X AZV X 672       5.947  -4.033   1.539                       X
+ATOM    673    X AZW X 673       4.627  -2.723   2.275                       X
+ATOM    674    X AZX X 674       0.668   1.208   4.483                       X
+ATOM    675    X AZY X 675      -0.652   2.518   5.219                       X
+ATOM    676    X AZZ X 676      -1.972   3.828   5.955                       X
+ATOM    677    X BAA X 677       5.623  -1.173  -1.414                       X
+ATOM    678    X BAB X 678       4.304   0.137  -0.678                       X
+ATOM    679    X BAC X 679       2.984   1.447   0.058                       X
+ATOM    680    X BAD X 680       1.664   2.757   0.794                       X
+ATOM    681    X BAE X 681       0.344   4.067   1.530                       X
+ATOM    682    X BAF X 682       6.283  -1.828  -1.782                       X
+ATOM    683    X BAG X 683       4.964  -0.518  -1.046                       X
+ATOM    684    X BAH X 684       3.644   0.792  -0.310                       X
+ATOM    685    X BAI X 685       2.324   2.102   0.426                       X
+ATOM    686    X BAJ X 686       1.004   3.412   1.162                       X
+ATOM    687    X BAK X 687      -0.316   4.722   1.898                       X
+ATOM    688    X BAL X 688       4.640   2.341  -3.999                       X
+ATOM    689    X BAM X 689       3.320   3.651  -3.263                       X
+ATOM    690    X BAN X 690       2.000   4.961  -2.527                       X
+ATOM    691    X BAO X 691       3.980   2.996  -3.631                       X
+ATOM    692    X BAP X 692       2.660   4.306  -2.895                       X
+ATOM    693    X BAQ X 693       3.656   5.855  -6.584                       X
+ATOM    694    X BAR X 694       4.316   5.200  -6.952                       X
+ATOM    695    X BAS X 695       9.678  -2.069   2.016                       X
+ATOM    696    X BAT X 696       8.358  -0.759   2.752                       X
+ATOM    697    X BAU X 697       3.079   4.482   5.695                       X
+ATOM    698    X BAV X 698       1.759   5.792   6.431                       X
+ATOM    699    X BAW X 699       9.018  -1.414   2.384                       X
+ATOM    700    X BAX X 700       3.738   3.827   5.327                       X
+ATOM    701    X BAY X 701       2.419   5.137   6.063                       X
+ATOM    702    X BAZ X 702       4.735   5.376   1.639                       X
+ATOM    703    X BBA X 703       5.395   4.721   1.271                       X
+ATOM    704    X BBB X 704       4.075   6.031   2.007                       X
+ATOM    705    X BBC X 705       9.030   3.650  -3.890                       X
+ATOM    706    X BBD X 706       7.710   4.960  -3.154                       X
+ATOM    707    X BBE X 707       6.391   6.270  -2.418                       X
+ATOM    708    X BBF X 708       8.370   4.305  -3.522                       X
+ATOM    709    X BBG X 709       7.051   5.615  -2.786                       X
+ATOM    710    X BBH X 710       5.731   6.925  -2.050                       X
+ATOM    711    X BBI X 711       9.762  -1.518   1.185                       X
+ATOM    712    X BBJ X 712       8.442  -0.208   1.921                       X
+ATOM    713    X BBK X 713       4.482   3.723   4.129                       X
+ATOM    714    X BBL X 714       3.163   5.033   4.865                       X
+ATOM    715    X BBM X 715       1.843   6.343   5.601                       X
+ATOM    716    X BBN X 716       9.102  -0.863   1.553                       X
+ATOM    717    X BBO X 717       3.823   4.378   4.497                       X
+ATOM    718    X BBP X 718       2.503   5.688   5.233                       X
+ATOM    719    X BBQ X 719       6.138   4.617   0.072                       X
+ATOM    720    X BBR X 720       4.819   5.927   0.808                       X
+ATOM    721    X BBS X 721       6.798   3.962  -0.296                       X
+ATOM    722    X BBT X 722       5.479   5.272   0.440                       X
+ATOM    723    X BBU X 723       4.159   6.582   1.176                       X
+ATOM    724    X BBV X 724       7.795   5.511  -3.984                       X
+ATOM    725    X BBW X 725       6.475   6.821  -3.248                       X
+ATOM    726    X BBX X 726       8.454   4.856  -4.352                       X
+ATOM    727    X BBY X 727       7.135   6.166  -3.616                       X
+ATOM    728    X BBZ X 728       8.190  -1.861   4.412                       X
+ATOM    729    X BCA X 729       9.846  -0.967   0.355                       X
+ATOM    730    X BCB X 730       4.566   4.274   3.299                       X
+ATOM    731    X BCC X 731       3.247   5.584   4.035                       X
+ATOM    732    X BCD X 732       3.907   4.929   3.667                       X
+ATOM    733    X BCE X 733       2.587   6.239   4.403                       X
+ATOM    734    X BCF X 734       7.542   3.858  -1.494                       X
+ATOM    735    X BCG X 735       6.223   5.168  -0.758                       X
+ATOM    736    X BCH X 736       4.903   6.478  -0.022                       X
+ATOM    737    X BCI X 737       6.882   4.513  -1.126                       X
+ATOM    738    X BCJ X 738       5.563   5.823  -0.390                       X
+ATOM    739    X BCK X 739       7.879   6.062  -4.815                       X
+ATOM    740    X BCL X 740       7.219   6.717  -4.447                       X
+ATOM    741    X BCM X 741       8.274  -1.310   3.582                       X
+ATOM    742    X BCN X 742       8.934  -1.965   3.214                       X
+ATOM    743    X BCO X 743       4.651   4.825   2.469                       X
+ATOM    744    X BCP X 744       3.331   6.135   3.205                       X
+ATOM    745    X BCQ X 745       7.950   1.549   0.629                       X
+ATOM    746    X BCR X 746       3.991   5.480   2.837                       X
+ATOM    747    X BCS X 747       8.946   3.099  -3.060                       X
+ATOM    748    X BCT X 748       7.626   4.409  -2.324                       X
+ATOM    749    X BCU X 749       6.307   5.719  -1.588                       X
+ATOM    750    X BCV X 750       8.286   3.754  -2.692                       X
+ATOM    751    X BCW X 751       6.967   5.064  -1.956                       X
+ATOM    752    X BCX X 752       5.647   6.374  -1.220                       X
+ATOM    753    X BCY X 753       7.385   5.239   6.634                       X
+ATOM    754    X BCZ X 754       6.149   7.100   6.540                       X
+ATOM    755    X BDA X 755       6.809   6.445   6.172                       X
+ATOM    756    X BDB X 756       6.893   6.996   5.342                       X
+ATOM    757    X BDC X 757       8.549   7.891   1.285                       X
+ATOM    758    X BDD X 758       7.301   4.688   7.465                       X
+ATOM    759    X BDE X 759       6.977   7.547   4.512                       X
+ATOM    760    X BDF X 760     -13.000  -2.203  -0.370                       X
+ATOM    761    X BDG X 761     -12.916  -1.652  -1.200                       X
+ATOM    762    X BDH X 762     -12.172  -1.756  -2.398                       X
+ATOM    763    X BDI X 763     -13.084  -2.754   0.461                       X
+ATOM    764    X BDJ X 764     -12.425  -3.409   0.093                       X
+ATOM    765    X BDK X 765     -12.088  -1.205  -3.228                       X
+ATOM    766    X BDL X 766     -10.847  -1.824   0.100                       X
+ATOM    767    X BDM X 767      -9.851  -0.275  -3.589                       X
+ATOM    768    X BDN X 768      -9.191  -0.930  -3.957                       X
+ATOM    769    X BDO X 769     -10.511   0.380  -3.221                       X
+ATOM    770    X BDP X 770     -10.103  -1.928  -1.098                       X
+ATOM    771    X BDQ X 771     -10.763  -1.273  -0.730                       X
+ATOM    772    X BDR X 772      -9.767   0.276  -4.419                       X
+ATOM    773    X BDS X 773      -9.107  -0.379  -4.787                       X
+ATOM    774    X BDT X 774     -10.427   0.931  -4.051                       X
+ATOM    775    X BDU X 775     -10.019  -1.377  -1.929                       X
+ATOM    776    X BDV X 776     -11.339  -0.067  -1.193                       X
+ATOM    777    X BDW X 777      -9.359  -2.032  -2.297                       X
+ATOM    778    X BDX X 778     -10.679  -0.722  -1.561                       X
+ATOM    779    X BDY X 779      -9.683   0.827  -5.249                       X
+ATOM    780    X BDZ X 780     -10.931  -2.375   0.930                       X
+ATOM    781    X BEA X 781      -8.615  -2.136  -3.495                       X
+ATOM    782    X BEB X 782      -9.935  -0.826  -2.759                       X
+ATOM    783    X BEC X 783     -11.255   0.484  -2.023                       X
+ATOM    784    X BED X 784      -9.275  -1.481  -3.127                       X
+ATOM    785    X BEE X 785     -10.595  -0.171  -2.391                       X
+ATOM    786    X BEF X 786      -9.030  -3.650   3.890                       X
+ATOM    787    X BEG X 787      -8.370  -4.305   3.522                       X
+ATOM    788    X BEH X 788      -8.694  -1.445   0.569                       X
+ATOM    789    X BEI X 789      -4.075  -6.031  -2.007                       X
+ATOM    790    X BEJ X 790      -8.358   0.759  -2.752                       X
+ATOM    791    X BEK X 791      -7.698   0.104  -3.120                       X
+ATOM    792    X BEL X 792      -9.018   1.414  -2.384                       X
+ATOM    793    X BEM X 793      -4.062  -0.967  -8.280                       X
+ATOM    794    X BEN X 794      -6.702   1.653  -6.808                       X
+ATOM    795    X BEO X 795      -3.402  -1.622  -8.648                       X
+ATOM    796    X BEP X 796      -6.042   0.998  -7.176                       X
+ATOM    797    X BEQ X 797      -9.282  -5.303   6.381                       X
+ATOM    798    X BER X 798      -8.623  -5.958   6.013                       X
+ATOM    799    X BES X 799      -8.946  -3.099   3.060                       X
+ATOM    800    X BET X 800      -8.610  -0.894  -0.261                       X
+ATOM    801    X BEU X 801      -7.950  -1.549  -0.629                       X
+ATOM    802    X BEV X 802      -9.270  -0.239   0.107                       X
+ATOM    803    X BEW X 803      -6.954  -0.000  -4.318                       X
+ATOM    804    X BEX X 804      -8.274   1.310  -3.582                       X
+ATOM    805    X BEY X 805      -7.614   0.655  -3.950                       X
+ATOM    806    X BEZ X 806      -5.298   0.894  -8.375                       X
+ATOM    807    X BFA X 807      -4.638   0.239  -8.743                       X
+ATOM    808    X BFB X 808      -5.958   1.549  -8.007                       X
+ATOM    809    X BFC X 809      -9.198  -4.752   5.551                       X
+ATOM    810    X BFD X 810      -8.539  -5.407   5.183                       X
+ATOM    811    X BFE X 811      -8.862  -2.548   2.230                       X
+ATOM    812    X BFF X 812      -8.526  -0.343  -1.091                       X
+ATOM    813    X BFG X 813      -9.846   0.967  -0.355                       X
+ATOM    814    X BFH X 814      -9.186   0.312  -0.723                       X
+ATOM    815    X BFI X 815      -6.870   0.551  -5.148                       X
+ATOM    816    X BFJ X 816      -8.190   1.861  -4.412                       X
+ATOM    817    X BFK X 817      -7.530   1.206  -4.780                       X
+ATOM    818    X BFL X 818      -5.214   1.445  -9.205                       X
+ATOM    819    X BFM X 819      -5.874   2.100  -8.837                       X
+ATOM    820    X BFN X 820      -9.114  -4.201   4.720                       X
+ATOM    821    X BFO X 821      -8.454  -4.856   4.352                       X
+ATOM    822    X BFP X 822      -3.499  -7.237  -1.544                       X
+ATOM    823    X BFQ X 823      -8.778  -1.996   1.400                       X
+ATOM    824    X BFR X 824      -4.159  -6.582  -1.176                       X
+ATOM    825    X BFS X 825      -8.442   0.208  -1.921                       X
+ATOM    826    X BFT X 826      -9.762   1.518  -1.185                       X
+ATOM    827    X BFU X 827      -7.782  -0.447  -2.289                       X
+ATOM    828    X BFV X 828      -9.102   0.863  -1.553                       X
+ATOM    829    X BFW X 829      -6.786   1.102  -5.978                       X
+ATOM    830    X BFX X 830      -7.446   1.757  -5.610                       X
+ATOM    831    X BFY X 831      -5.130   1.996 -10.035                       X
+ATOM    832    X BFZ X 832      -7.537  -2.616   4.728                       X
+ATOM    833    X BGA X 833      -6.877  -3.271   4.360                       X
+ATOM    834    X BGB X 834      -1.922  -5.652  -1.537                       X
+ATOM    835    X BGC X 835      -3.241  -4.342  -0.801                       X
+ATOM    836    X BGD X 836      -7.201  -0.412   1.407                       X
+ATOM    837    X BGE X 837      -2.581  -4.997  -1.169                       X
+ATOM    838    X BGF X 838      -6.541  -1.067   1.039                       X
+ATOM    839    X BGG X 839      -7.861   0.244   1.775                       X
+ATOM    840    X BGH X 840      -2.905  -2.138  -4.122                       X
+ATOM    841    X BGI X 841      -6.865   1.793  -1.914                       X
+ATOM    842    X BGJ X 842      -2.245  -2.793  -4.490                       X
+ATOM    843    X BGK X 843      -6.205   1.138  -2.282                       X
+ATOM    844    X BGL X 844      -7.524   2.448  -1.546                       X
+ATOM    845    X BGM X 845      -5.208   2.687  -5.971                       X
+ATOM    846    X BGN X 846      -7.129  -4.924   6.850                       X
+ATOM    847    X BGO X 847      -6.133  -3.375   3.161                       X
+ATOM    848    X BGP X 848      -7.453  -2.065   3.897                       X
+ATOM    849    X BGQ X 849      -4.153  -5.340   2.058                       X
+ATOM    850    X BGR X 850      -6.793  -2.720   3.529                       X
+ATOM    851    X BGS X 851      -1.837  -5.101  -2.367                       X
+ATOM    852    X BGT X 852      -3.157  -3.791  -1.631                       X
+ATOM    853    X BGU X 853      -7.117   0.140   0.577                       X
+ATOM    854    X BGV X 854      -8.437   1.450   1.313                       X
+ATOM    855    X BGW X 855      -2.497  -4.446  -1.999                       X
+ATOM    856    X BGX X 856      -7.777   0.795   0.945                       X
+ATOM    857    X BGY X 857      -9.096   2.105   1.681                       X
+ATOM    858    X BGZ X 858      -2.821  -1.587  -4.952                       X
+ATOM    859    X BHA X 859      -5.461   1.034  -3.480                       X
+ATOM    860    X BHB X 860      -6.781   2.344  -2.744                       X
+ATOM    861    X BHC X 861      -6.121   1.689  -3.112                       X
+ATOM    862    X BHD X 862      -4.465   2.583  -7.169                       X
+ATOM    863    X BHE X 863      -6.385  -5.028   5.652                       X
+ATOM    864    X BHF X 864      -7.705  -3.718   6.388                       X
+ATOM    865    X BHG X 865      -7.045  -4.373   6.020                       X
+ATOM    866    X BHH X 866      -3.409  -5.444   0.859                       X
+ATOM    867    X BHI X 867      -4.729  -4.134   1.595                       X
+ATOM    868    X BHJ X 868      -6.049  -2.824   2.331                       X
+ATOM    869    X BHK X 869      -7.369  -1.514   3.067                       X
+ATOM    870    X BHL X 870      -2.750  -6.099   0.491                       X
+ATOM    871    X BHM X 871      -4.069  -4.789   1.227                       X
+ATOM    872    X BHN X 872      -5.389  -3.479   1.963                       X
+ATOM    873    X BHO X 873      -6.709  -2.169   2.699                       X
+ATOM    874    X BHP X 874      -8.029  -0.859   3.435                       X
+ATOM    875    X BHQ X 875      -3.073  -3.240  -2.462                       X
+ATOM    876    X BHR X 876      -7.033   0.691  -0.254                       X
+ATOM    877    X BHS X 877      -8.353   2.001   0.482                       X
+ATOM    878    X BHT X 878      -7.693   1.346   0.114                       X
+ATOM    879    X BHU X 879      -5.377   1.585  -4.311                       X
+ATOM    880    X BHV X 880      -6.037   2.240  -3.943                       X
+ATOM    881    X BHW X 881      -7.621  -3.167   5.558                       X
+ATOM    882    X BHX X 882      -6.961  -3.822   5.190                       X
+ATOM    883    X BHY X 883      -8.281  -2.512   5.926                       X
+ATOM    884    X BHZ X 884      -3.325  -4.893   0.029                       X
+ATOM    885    X BIA X 885      -7.285  -0.963   2.237                       X
+ATOM    886    X BIB X 886      -2.665  -5.548  -0.339                       X
+ATOM    887    X BIC X 887      -6.625  -1.618   1.869                       X
+ATOM    888    X BID X 888      -7.945  -0.308   2.605                       X
+ATOM    889    X BIE X 889      -2.989  -2.689  -3.292                       X
+ATOM    890    X BIF X 890      -6.949   1.242  -1.084                       X
+ATOM    891    X BIG X 891      -8.268   2.552  -0.348                       X
+ATOM    892    X BIH X 892      -7.609   1.897  -0.716                       X
+ATOM    893    X BII X 893      -5.952   2.791  -4.773                       X
+ATOM    894    X BIJ X 894      -3.636   3.030  -9.198                       X
+ATOM    895    X BIK X 895      -4.724  -2.892   4.829                       X
+ATOM    896    X BIL X 896      -5.384  -2.237   5.197                       X
+ATOM    897    X BIM X 897      -1.748  -3.308   0.036                       X
+ATOM    898    X BIN X 898      -3.068  -1.998   0.772                       X
+ATOM    899    X BIO X 899      -4.388  -0.688   1.508                       X
+ATOM    900    X BIP X 900      -5.708   0.622   2.244                       X
+ATOM    901    X BIQ X 901      -7.027   1.932   2.980                       X
+ATOM    902    X BIR X 902      -1.088  -3.963  -0.332                       X
+ATOM    903    X BIS X 903      -2.408  -2.653   0.404                       X
+ATOM    904    X BIT X 904      -3.728  -1.343   1.140                       X
+ATOM    905    X BIU X 905      -5.048  -0.033   1.876                       X
+ATOM    906    X BIV X 906      -6.367   1.277   2.612                       X
+ATOM    907    X BIW X 907      -2.732   0.206  -2.549                       X
+ATOM    908    X BIX X 908      -4.051   1.517  -1.813                       X
+ATOM    909    X BIY X 909      -5.371   2.827  -1.077                       X
+ATOM    910    X BIZ X 910      -3.392   0.861  -2.181                       X
+ATOM    911    X BJA X 911      -4.711   2.172  -1.445                       X
+ATOM    912    X BJB X 912      -4.640  -2.341   3.999                       X
+ATOM    913    X BJC X 913      -3.980  -2.996   3.631                       X
+ATOM    914    X BJD X 914      -5.300  -1.686   4.367                       X
+ATOM    915    X BJE X 915      -1.664  -2.757  -0.794                       X
+ATOM    916    X BJF X 916      -2.984  -1.447  -0.058                       X
+ATOM    917    X BJG X 917      -4.304  -0.137   0.678                       X
+ATOM    918    X BJH X 918      -5.623   1.173   1.414                       X
+ATOM    919    X BJI X 919      -6.943   2.484   2.150                       X
+ATOM    920    X BJJ X 920      -1.004  -3.412  -1.162                       X
+ATOM    921    X BJK X 921      -2.324  -2.102  -0.426                       X
+ATOM    922    X BJL X 922      -4.964   0.518   1.046                       X
+ATOM    923    X BJM X 923      -6.283   1.828   1.782                       X
+ATOM    924    X BJN X 924      -5.287   3.378  -1.907                       X
+ATOM    925    X BJO X 925      -4.627   2.723  -2.275                       X
+ATOM    926    X BJP X 926      -0.596  -5.720   0.961                       X
+ATOM    927    X BJQ X 927      -3.236  -3.100   2.433                       X
+ATOM    928    X BJR X 928      -4.556  -1.790   3.169                       X
+ATOM    929    X BJS X 929      -5.876  -0.480   3.905                       X
+ATOM    930    X BJT X 930      -2.576  -3.755   2.065                       X
+ATOM    931    X BJU X 931      -3.896  -2.445   2.801                       X
+ATOM    932    X BJV X 932      -5.216  -1.135   3.537                       X
+ATOM    933    X BJW X 933      -1.580  -2.206  -1.624                       X
+ATOM    934    X BJX X 934      -2.900  -0.896  -0.888                       X
+ATOM    935    X BJY X 935      -4.220   0.414  -0.152                       X
+ATOM    936    X BJZ X 936      -5.539   1.724   0.584                       X
+ATOM    937    X BKA X 937      -6.859   3.035   1.320                       X
+ATOM    938    X BKB X 938      -0.920  -2.861  -1.992                       X
+ATOM    939    X BKC X 939      -2.240  -1.551  -1.256                       X
+ATOM    940    X BKD X 940      -4.880   1.069   0.216                       X
+ATOM    941    X BKE X 941      -6.199   2.380   0.952                       X
+ATOM    942    X BKF X 942      -4.543   3.274  -3.105                       X
+ATOM    943    X BKG X 943      -1.832  -3.859   0.867                       X
+ATOM    944    X BKH X 944      -3.152  -2.549   1.602                       X
+ATOM    945    X BKI X 945      -4.472  -1.239   2.338                       X
+ATOM    946    X BKJ X 946      -5.792   0.071   3.074                       X
+ATOM    947    X BKK X 947      -1.172  -4.514   0.499                       X
+ATOM    948    X BKL X 948      -2.492  -3.204   1.235                       X
+ATOM    949    X BKM X 949      -3.812  -1.894   1.970                       X
+ATOM    950    X BKN X 950      -5.132  -0.584   2.706                       X
+ATOM    951    X BKO X 951      -6.452   0.726   3.442                       X
+ATOM    952    X BKP X 952      -1.496  -1.655  -2.454                       X
+ATOM    953    X BKQ X 953      -2.816  -0.345  -1.718                       X
+ATOM    954    X BKR X 954      -4.136   0.965  -0.982                       X
+ATOM    955    X BKS X 955      -5.455   2.276  -0.246                       X
+ATOM    956    X BKT X 956      -0.836  -2.310  -2.822                       X
+ATOM    957    X BKU X 957      -2.156  -1.000  -2.086                       X
+ATOM    958    X BKV X 958      -3.476   0.310  -1.350                       X
+ATOM    959    X BKW X 959      -4.795   1.621  -0.614                       X
+ATOM    960    X BKX X 960      -6.115   2.931   0.122                       X
+ATOM    961    X BKY X 961      -2.484  -1.341   6.085                       X
+ATOM    962    X BKZ X 962      -3.804  -0.031   6.821                       X
+ATOM    963    X BLA X 963      -3.144  -0.686   6.453                       X
+ATOM    964    X BLB X 964       1.812  -3.067   0.556                       X
+ATOM    965    X BLC X 965       0.492  -1.757   1.292                       X
+ATOM    966    X BLD X 966      -0.828  -0.447   2.028                       X
+ATOM    967    X BLE X 967      -2.148   0.863   2.764                       X
+ATOM    968    X BLF X 968      -3.468   2.173   3.500                       X
+ATOM    969    X BLG X 969      -4.787   3.483   4.236                       X
+ATOM    970    X BLH X 970       1.152  -2.412   0.924                       X
+ATOM    971    X BLI X 971      -0.168  -1.102   1.660                       X
+ATOM    972    X BLJ X 972      -1.488   0.208   2.396                       X
+ATOM    973    X BLK X 973      -2.808   1.518   3.132                       X
+ATOM    974    X BLL X 974      -4.128   2.828   3.868                       X
+ATOM    975    X BLM X 975       2.148  -0.863  -2.764                       X
+ATOM    976    X BLN X 976       0.828   0.447  -2.028                       X
+ATOM    977    X BLO X 977      -0.492   1.757  -1.292                       X
+ATOM    978    X BLP X 978      -1.812   3.067  -0.556                       X
+ATOM    979    X BLQ X 979       1.488  -0.208  -2.396                       X
+ATOM    980    X BLR X 980       0.168   1.102  -1.660                       X
+ATOM    981    X BLS X 981      -1.152   2.412  -0.924                       X
+ATOM    982    X BLT X 982      -2.472   3.722  -0.189                       X
+ATOM    983    X BLU X 983       1.164   2.651  -5.349                       X
+ATOM    984    X BLV X 984      -0.156   3.961  -4.613                       X
+ATOM    985    X BLW X 985       0.504   3.306  -4.981                       X
+ATOM    986    X BLX X 986      -0.815   4.617  -4.245                       X
+ATOM    987    X BLY X 987       1.501   4.856  -8.670                       X
+ATOM    988    X BLZ X 988       2.160   4.201  -9.038                       X
+ATOM    989    X BMA X 989       1.559  -4.721   3.047                       X
+ATOM    990    X BMB X 990       0.240  -3.410   3.783                       X
+ATOM    991    X BMC X 991      -1.080  -2.100   4.519                       X
+ATOM    992    X BMD X 992      -2.400  -0.790   5.255                       X
+ATOM    993    X BME X 993      -3.720   0.520   5.991                       X
+ATOM    994    X BMF X 994       0.900  -4.065   3.415                       X
+ATOM    995    X BMG X 995      -0.420  -2.755   4.151                       X
+ATOM    996    X BMH X 996      -1.740  -1.445   4.887                       X
+ATOM    997    X BMI X 997      -3.060  -0.135   5.623                       X
+ATOM    998    X BMJ X 998       1.896  -2.516  -0.274                       X
+ATOM    999    X BMK X 999       0.576  -1.206   0.462                       X
+ATOM   1000    X BML X1000      -0.744   0.104   1.198                       X
+ATOM   1001    X BMM X1001      -2.064   1.414   1.934                       X
+ATOM   1002    X BMN X1002      -3.384   2.724   2.670                       X
+ATOM   1003    X BMO X1003      -4.703   4.034   3.406                       X
+ATOM   1004    X BMP X1004       1.236  -1.861   0.094                       X
+ATOM   1005    X BMQ X1005      -0.084  -0.551   0.830                       X
+ATOM   1006    X BMR X1006      -1.404   0.759   1.566                       X
+ATOM   1007    X BMS X1007      -2.724   2.069   2.302                       X
+ATOM   1008    X BMT X1008      -4.044   3.379   3.038                       X
+ATOM   1009    X BMU X1009       2.232  -0.312  -3.595                       X
+ATOM   1010    X BMV X1010      -1.728   3.618  -1.387                       X
+ATOM   1011    X BMW X1011       1.572   0.343  -3.227                       X
+ATOM   1012    X BMX X1012       0.252   1.653  -2.491                       X
+ATOM   1013    X BMY X1013      -2.387   4.273  -1.019                       X
+ATOM   1014    X BMZ X1014       1.248   3.202  -6.180                       X
+ATOM   1015    X BNA X1015      -0.071   4.513  -5.444                       X
+ATOM   1016    X BNB X1016       0.588   3.857  -5.812                       X
+ATOM   1017    X BNC X1017       2.244   4.752  -9.868                       X
+ATOM   1018    X BND X1018       1.643  -4.169   2.217                       X
+ATOM   1019    X BNE X1019       0.324  -2.859   2.953                       X
+ATOM   1020    X BNF X1020      -0.996  -1.549   3.689                       X
+ATOM   1021    X BNG X1021      -2.316  -0.239   4.425                       X
+ATOM   1022    X BNH X1022      -3.636   1.071   5.161                       X
+ATOM   1023    X BNI X1023       2.303  -4.824   1.849                       X
+ATOM   1024    X BNJ X1024       0.984  -3.514   2.585                       X
+ATOM   1025    X BNK X1025      -0.336  -2.204   3.321                       X
+ATOM   1026    X BNL X1026      -1.656  -0.894   4.057                       X
+ATOM   1027    X BNM X1027      -2.976   0.416   4.793                       X
+ATOM   1028    X BNN X1028      -4.296   1.726   5.529                       X
+ATOM   1029    X BNO X1029       1.980  -1.965  -1.104                       X
+ATOM   1030    X BNP X1030       0.660  -0.655  -0.368                       X
+ATOM   1031    X BNQ X1031      -0.660   0.655   0.368                       X
+ATOM   1032    X BNR X1032      -1.980   1.965   1.104                       X
+ATOM   1033    X BNS X1033      -3.300   3.275   1.840                       X
+ATOM   1034    X BNT X1034       1.320  -1.310  -0.736                       X
+ATOM   1035    X BNU X1035       0.000   0.000   0.000                       X
+ATOM   1036    X BNV X1036      -1.320   1.310   0.736                       X
+ATOM   1037    X BNW X1037      -2.640   2.620   1.472                       X
+ATOM   1038    X BNX X1038      -3.959   3.930   2.208                       X
+ATOM   1039    X BNY X1039      -1.643   4.169  -2.217                       X
+ATOM   1040    X BNZ X1040       1.332   3.753  -7.010                       X
+ATOM   1041    X BOA X1041       1.992   3.098  -7.378                       X
+ATOM   1042    X BOB X1042       0.672   4.409  -6.642                       X
+ATOM   1043    X BOC X1043       1.728  -3.618   1.387                       X
+ATOM   1044    X BOD X1044       0.408  -2.308   2.123                       X
+ATOM   1045    X BOE X1045      -0.912  -0.998   2.859                       X
+ATOM   1046    X BOF X1046      -2.232   0.312   3.595                       X
+ATOM   1047    X BOG X1047      -3.552   1.622   4.331                       X
+ATOM   1048    X BOH X1048      -4.872   2.932   5.067                       X
+ATOM   1049    X BOI X1049       2.387  -4.273   1.019                       X
+ATOM   1050    X BOJ X1050       1.068  -2.963   1.755                       X
+ATOM   1051    X BOK X1051      -0.252  -1.653   2.491                       X
+ATOM   1052    X BOL X1052      -1.572  -0.343   3.227                       X
+ATOM   1053    X BOM X1053      -2.892   0.967   3.963                       X
+ATOM   1054    X BON X1054      -4.212   2.277   4.699                       X
+ATOM   1055    X BOO X1055       2.064  -1.414  -1.934                       X
+ATOM   1056    X BOP X1056       0.744  -0.104  -1.198                       X
+ATOM   1057    X BOQ X1057      -0.576   1.206  -0.462                       X
+ATOM   1058    X BOR X1058      -1.896   2.516   0.274                       X
+ATOM   1059    X BOS X1059      -3.215   3.826   1.010                       X
+ATOM   1060    X BOT X1060       2.724  -2.069  -2.302                       X
+ATOM   1061    X BOU X1061       1.404  -0.759  -1.566                       X
+ATOM   1062    X BOV X1062       0.084   0.551  -0.830                       X
+ATOM   1063    X BOW X1063      -1.236   1.861  -0.094                       X
+ATOM   1064    X BOX X1064      -2.556   3.171   0.642                       X
+ATOM   1065    X BOY X1065       0.420   2.755  -4.151                       X
+ATOM   1066    X BOZ X1066       1.416   4.305  -7.840                       X
+ATOM   1067    X BPA X1067       2.076   3.649  -8.208                       X
+ATOM   1068    X BPB X1068       7.438  -3.620   0.759                       X
+ATOM   1069    X BPC X1069       6.118  -2.310   1.495                       X
+ATOM   1070    X BPD X1070       0.839   2.931   4.439                       X
+ATOM   1071    X BPE X1071      -0.481   4.241   5.175                       X
+ATOM   1072    X BPF X1072       6.778  -2.965   1.127                       X
+ATOM   1073    X BPG X1073       5.458  -1.655   1.863                       X
+ATOM   1074    X BPH X1074       1.499   2.276   4.071                       X
+ATOM   1075    X BPI X1075       0.179   3.586   4.807                       X
+ATOM   1076    X BPJ X1076      -1.141   4.896   5.543                       X
+ATOM   1077    X BPK X1077       7.774  -1.416  -2.561                       X
+ATOM   1078    X BPL X1078       6.454  -0.105  -1.825                       X
+ATOM   1079    X BPM X1079       5.134   1.205  -1.090                       X
+ATOM   1080    X BPN X1080       3.815   2.515  -0.354                       X
+ATOM   1081    X BPO X1081       2.495   3.825   0.382                       X
+ATOM   1082    X BPP X1082       1.175   5.135   1.118                       X
+ATOM   1083    X BPQ X1083       7.114  -0.760  -2.193                       X
+ATOM   1084    X BPR X1084       5.794   0.550  -1.458                       X
+ATOM   1085    X BPS X1085       4.474   1.860  -0.722                       X
+ATOM   1086    X BPT X1086       3.155   3.170   0.014                       X
+ATOM   1087    X BPU X1087       1.835   4.480   0.750                       X
+ATOM   1088    X BPV X1088       6.790   2.099  -5.146                       X
+ATOM   1089    X BPW X1089       5.471   3.409  -4.410                       X
+ATOM   1090    X BPX X1090       4.151   4.719  -3.674                       X
+ATOM   1091    X BPY X1091       6.131   2.754  -4.778                       X
+ATOM   1092    X BPZ X1092       4.811   4.064  -4.042                       X
+ATOM   1093    X BQA X1093       3.491   5.374  -3.306                       X
+ATOM   1094    X BQB X1094       5.147   6.268  -7.363                       X
+ATOM   1095    X BQC X1095       0.586   1.278   6.930                       X
+ATOM   1096    X BQD X1096      -0.733   2.588   7.666                       X
+ATOM   1097    X BQE X1097      -0.073   1.933   7.298                       X
+ATOM   1098    X BQF X1098       8.842  -4.379  -0.807                       X
+ATOM   1099    X BQG X1099       7.522  -3.069  -0.071                       X
+ATOM   1100    X BQH X1100       6.202  -1.759   0.665                       X
+ATOM   1101    X BQI X1101       4.882  -0.449   1.401                       X
+ATOM   1102    X BQJ X1102       2.243   2.172   2.873                       X
+ATOM   1103    X BQK X1103       0.923   3.482   3.609                       X
+ATOM   1104    X BQL X1104      -0.397   4.792   4.345                       X
+ATOM   1105    X BQM X1105       8.182  -3.724  -0.439                       X
+ATOM   1106    X BQN X1106       6.862  -2.414   0.297                       X
+ATOM   1107    X BQO X1107       5.542  -1.104   1.033                       X
+ATOM   1108    X BQP X1108       1.583   2.827   3.241                       X
+ATOM   1109    X BQQ X1109       0.263   4.137   3.977                       X
+ATOM   1110    X BQR X1110      -1.057   5.447   4.713                       X
+ATOM   1111    X BQS X1111       7.858  -0.864  -3.392                       X
+ATOM   1112    X BQT X1112       6.538   0.446  -2.656                       X
+ATOM   1113    X BQU X1113       5.218   1.756  -1.920                       X
+ATOM   1114    X BQV X1114       3.899   3.066  -1.184                       X
+ATOM   1115    X BQW X1115       2.579   4.376  -0.448                       X
+ATOM   1116    X BQX X1116       1.259   5.686   0.288                       X
+ATOM   1117    X BQY X1117       7.198  -0.209  -3.024                       X
+ATOM   1118    X BQZ X1118       5.878   1.101  -2.288                       X
+ATOM   1119    X BRA X1119       4.559   2.411  -1.552                       X
+ATOM   1120    X BRB X1120       3.239   3.721  -0.816                       X
+ATOM   1121    X BRC X1121       1.919   5.031  -0.080                       X
+ATOM   1122    X BRD X1122       5.555   3.960  -5.241                       X
+ATOM   1123    X BRE X1123       4.235   5.270  -4.505                       X
+ATOM   1124    X BRF X1124       4.895   4.615  -4.873                       X
+ATOM   1125    X BRG X1125       3.575   5.925  -4.137                       X
+ATOM   1126    X BRH X1126       2.974  -2.996   7.949                       X
+ATOM   1127    X BRI X1127       1.654  -1.686   8.685                       X
+ATOM   1128    X BRJ X1128       2.314  -2.341   8.317                       X
+ATOM   1129    X BRK X1129       7.270  -4.722   2.420                       X
+ATOM   1130    X BRL X1130       5.950  -3.412   3.156                       X
+ATOM   1131    X BRM X1131       0.671   1.829   6.100                       X
+ATOM   1132    X BRN X1132      -0.649   3.139   6.836                       X
+ATOM   1133    X BRO X1133       6.610  -4.067   2.788                       X
+ATOM   1134    X BRP X1134       0.011   2.484   6.468                       X
+ATOM   1135    X BRQ X1135       7.606  -2.518  -0.901                       X
+ATOM   1136    X BRR X1136       6.286  -1.208  -0.165                       X
+ATOM   1137    X BRS X1137       4.966   0.103   0.571                       X
+ATOM   1138    X BRT X1138       3.646   1.413   1.307                       X
+ATOM   1139    X BRU X1139       2.327   2.723   2.043                       X
+ATOM   1140    X BRV X1140       1.007   4.033   2.779                       X
+ATOM   1141    X BRW X1141      -0.313   5.343   3.515                       X
+ATOM   1142    X BRX X1142       8.266  -3.173  -1.269                       X
+ATOM   1143    X BRY X1143       6.946  -1.863  -0.533                       X
+ATOM   1144    X BRZ X1144       5.626  -0.553   0.203                       X
+ATOM   1145    X BSA X1145       4.306   0.758   0.939                       X
+ATOM   1146    X BSB X1146       2.987   2.068   1.675                       X
+ATOM   1147    X BSC X1147       1.667   3.378   2.411                       X
+ATOM   1148    X BSD X1148       0.347   4.688   3.147                       X
+ATOM   1149    X BSE X1149       6.622   0.997  -3.486                       X
+ATOM   1150    X BSF X1150       5.302   2.307  -2.750                       X
+ATOM   1151    X BSG X1151       3.983   3.617  -2.014                       X
+ATOM   1152    X BSH X1152       2.663   4.927  -1.278                       X
+ATOM   1153    X BSI X1153       7.282   0.342  -3.854                       X
+ATOM   1154    X BSJ X1154       5.962   1.652  -3.118                       X
+ATOM   1155    X BSK X1155       4.643   2.962  -2.382                       X
+ATOM   1156    X BSL X1156       3.323   4.272  -1.646                       X
+ATOM   1157    X BSM X1157       2.003   5.582  -0.910                       X
+ATOM   1158    X BSN X1158       4.319   5.821  -5.335                       X
+ATOM   1159    X BSO X1159       4.979   5.166  -5.703                       X
+ATOM   1160    X BSP X1160       7.354  -4.171   1.590                       X
+ATOM   1161    X BSQ X1161       6.034  -2.861   2.326                       X
+ATOM   1162    X BSR X1162       0.755   2.380   5.269                       X
+ATOM   1163    X BSS X1163      -0.565   3.690   6.005                       X
+ATOM   1164    X BST X1164      -1.885   5.000   6.741                       X
+ATOM   1165    X BSU X1165       6.694  -3.516   1.958                       X
+ATOM   1166    X BSV X1166       5.374  -2.206   2.694                       X
+ATOM   1167    X BSW X1167       1.415   1.725   4.901                       X
+ATOM   1168    X BSX X1168       0.095   3.035   5.637                       X
+ATOM   1169    X BSY X1169      -1.225   4.345   6.373                       X
+ATOM   1170    X BSZ X1170       7.690  -1.967  -1.731                       X
+ATOM   1171    X BTA X1171       6.370  -0.656  -0.995                       X
+ATOM   1172    X BTB X1172       5.050   0.654  -0.259                       X
+ATOM   1173    X BTC X1173       3.730   1.964   0.477                       X
+ATOM   1174    X BTD X1174       2.411   3.274   1.213                       X
+ATOM   1175    X BTE X1175       1.091   4.584   1.949                       X
+ATOM   1176    X BTF X1176       7.030  -1.312  -1.363                       X
+ATOM   1177    X BTG X1177       5.710  -0.001  -0.627                       X
+ATOM   1178    X BTH X1178       4.390   1.309   0.109                       X
+ATOM   1179    X BTI X1179       3.071   2.619   0.845                       X
+ATOM   1180    X BTJ X1180       1.751   3.929   1.581                       X
+ATOM   1181    X BTK X1181       0.431   5.239   2.317                       X
+ATOM   1182    X BTL X1182       6.706   1.548  -4.316                       X
+ATOM   1183    X BTM X1183       5.387   2.858  -3.580                       X
+ATOM   1184    X BTN X1184       4.067   4.168  -2.844                       X
+ATOM   1185    X BTO X1185       2.747   5.478  -2.108                       X
+ATOM   1186    X BTP X1186       7.366   0.893  -4.684                       X
+ATOM   1187    X BTQ X1187       6.046   2.203  -3.948                       X
+ATOM   1188    X BTR X1188       4.727   3.513  -3.212                       X
+ATOM   1189    X BTS X1189       3.407   4.823  -2.476                       X
+ATOM   1190    X BTT X1190       5.723   5.062  -6.901                       X
+ATOM   1191    X BTU X1191       5.063   5.717  -6.533                       X
+ATOM   1192    X BTV X1192       3.825   4.999   6.114                       X
+ATOM   1193    X BTW X1193       2.505   6.309   6.850                       X
+ATOM   1194    X BTX X1194       4.485   4.343   5.746                       X
+ATOM   1195    X BTY X1195       3.165   5.654   6.482                       X
+ATOM   1196    X BTZ X1196       4.821   6.548   2.425                       X
+ATOM   1197    X BUA X1197       8.457   5.477  -2.736                       X
+ATOM   1198    X BUB X1198       7.137   6.787  -2.000                       X
+ATOM   1199    X BUC X1199       7.797   6.132  -2.368                       X
+ATOM   1200    X BUD X1200       5.229   4.239   4.548                       X
+ATOM   1201    X BUE X1201       3.909   5.550   5.284                       X
+ATOM   1202    X BUF X1202       4.569   4.895   4.916                       X
+ATOM   1203    X BUG X1203       3.249   6.205   5.652                       X
+ATOM   1204    X BUH X1204       6.885   5.134   0.491                       X
+ATOM   1205    X BUI X1205       5.565   6.444   1.227                       X
+ATOM   1206    X BUJ X1206       6.225   5.789   0.859                       X
+ATOM   1207    X BUK X1207       7.881   6.683  -3.198                       X
+ATOM   1208    X BUL X1208       3.993   6.101   4.454                       X
+ATOM   1209    X BUM X1209       4.653   5.446   4.086                       X
+ATOM   1210    X BUN X1210       3.333   6.756   4.822                       X
+ATOM   1211    X BUO X1211       6.969   5.685  -0.339                       X
+ATOM   1212    X BUP X1212       5.649   6.995   0.397                       X
+ATOM   1213    X BUQ X1213       7.629   5.030  -0.707                       X
+ATOM   1214    X BUR X1214       6.309   6.340   0.029                       X
+ATOM   1215    X BUS X1215       7.965   7.234  -4.028                       X
+ATOM   1216    X BUT X1216       4.077   6.652   3.623                       X
+ATOM   1217    X BUU X1217       4.737   5.997   3.255                       X
+ATOM   1218    X BUV X1218       7.053   6.236  -1.169                       X
+ATOM   1219    X BUW X1219       7.713   5.581  -1.537                       X
+ATOM   1220    X BUX X1220       6.393   6.891  -0.801                       X
+ATOM   1221    X BUY X1221       8.131   5.756   7.053                       X
+ATOM   1222    X BUZ X1222       6.812   7.066   7.789                       X
+ATOM   1223    X BVA X1223       7.472   6.411   7.421                       X
+ATOM   1224    X BVB X1224       6.896   7.617   6.959                       X
+ATOM   1225    X BVC X1225       7.556   6.962   6.591                       X
+ATOM   1226    X BVD X1226       8.047   5.205   7.883                       X
+ATOM   1227    X BVE X1227       0.902  -3.445   5.032                       X
+ATOM   1228    X BVF X1228      -0.418  -2.134   5.768                       X
+ATOM   1229    X BVG X1229      -1.737  -0.824   6.504                       X
+ATOM   1230    X BVH X1230      -3.057   0.486   7.240                       X
+ATOM   1231    X BVI X1231      -5.697   3.106   8.712                       X
+ATOM   1232    X BVJ X1232      -6.357   3.761   9.080                       X
+ATOM   1233    X BVK X1233       1.562  -4.100   4.664                       X
+ATOM   1234    X BVL X1234       0.242  -2.789   5.400                       X
+ATOM   1235    X BVM X1235      -1.078  -1.479   6.136                       X
+ATOM   1236    X BVN X1236      -2.397  -0.169   6.872                       X
+ATOM   1237    X BVO X1237      -3.717   1.141   7.608                       X
+ATOM   1238    X BVP X1238       2.558  -2.550   0.975                       X
+ATOM   1239    X BVQ X1239       1.238  -1.240   1.711                       X
+ATOM   1240    X BVR X1240      -0.081   0.070   2.447                       X
+ATOM   1241    X BVS X1241      -1.401   1.380   3.183                       X
+ATOM   1242    X BVT X1242      -2.721   2.690   3.919                       X
+ATOM   1243    X BVU X1243      -4.041   4.000   4.655                       X
+ATOM   1244    X BVV X1244       3.218  -3.205   0.607                       X
+ATOM   1245    X BVW X1245       1.898  -1.895   1.343                       X
+ATOM   1246    X BVX X1246       0.579  -0.585   2.079                       X
+ATOM   1247    X BVY X1247      -0.741   0.725   2.815                       X
+ATOM   1248    X BVZ X1248      -2.061   2.035   3.551                       X
+ATOM   1249    X BWA X1249      -3.381   3.345   4.287                       X
+ATOM   1250    X BWB X1250       2.894  -0.346  -2.346                       X
+ATOM   1251    X BWC X1251       1.575   0.964  -1.610                       X
+ATOM   1252    X BWD X1252       0.255   2.274  -0.874                       X
+ATOM   1253    X BWE X1253      -1.065   3.584  -0.138                       X
+ATOM   1254    X BWF X1254       2.235   0.309  -1.978                       X
+ATOM   1255    X BWG X1255       0.915   1.619  -1.242                       X
+ATOM   1256    X BWH X1256      -0.405   2.929  -0.506                       X
+ATOM   1257    X BWI X1257      -1.725   4.239   0.230                       X
+ATOM   1258    X BWJ X1258       1.911   3.168  -4.931                       X
+ATOM   1259    X BWK X1259       0.591   4.478  -4.195                       X
+ATOM   1260    X BWL X1260       2.571   2.513  -5.299                       X
+ATOM   1261    X BWM X1261       1.251   3.823  -4.563                       X
+ATOM   1262    X BWN X1262       2.907   4.717  -8.619                       X
+ATOM   1263    X BWO X1263       0.986  -2.893   4.202                       X
+ATOM   1264    X BWP X1264      -0.334  -1.583   4.938                       X
+ATOM   1265    X BWQ X1265      -1.653  -0.273   5.674                       X
+ATOM   1266    X BWR X1266      -2.973   1.037   6.410                       X
+ATOM   1267    X BWS X1267      -5.613   3.657   7.882                       X
+ATOM   1268    X BWT X1268       1.646  -3.549   3.834                       X
+ATOM   1269    X BWU X1269       0.326  -2.238   4.570                       X
+ATOM   1270    X BWV X1270      -0.994  -0.928   5.306                       X
+ATOM   1271    X BWW X1271      -2.313   0.382   6.042                       X
+ATOM   1272    X BWX X1272      -3.633   1.692   6.778                       X
+ATOM   1273    X BWY X1273       2.642  -1.999   0.145                       X
+ATOM   1274    X BWZ X1274       1.322  -0.689   0.881                       X
+ATOM   1275    X BXA X1275       0.003   0.621   1.617                       X
+ATOM   1276    X BXB X1276      -1.317   1.931   2.353                       X
+ATOM   1277    X BXC X1277      -2.637   3.241   3.089                       X
+ATOM   1278    X BXD X1278       3.302  -2.654  -0.223                       X
+ATOM   1279    X BXE X1279       1.982  -1.344   0.513                       X
+ATOM   1280    X BXF X1280       0.663  -0.034   1.249                       X
+ATOM   1281    X BXG X1281      -0.657   1.276   1.985                       X
+ATOM   1282    X BXH X1282      -1.977   2.586   2.721                       X
+ATOM   1283    X BXI X1283      -3.297   3.896   3.457                       X
+ATOM   1284    X BXJ X1284       2.979   0.205  -3.176                       X
+ATOM   1285    X BXK X1285       1.659   1.515  -2.440                       X
+ATOM   1286    X BXL X1286       0.339   2.825  -1.704                       X
+ATOM   1287    X BXM X1287      -0.981   4.135  -0.968                       X
+ATOM   1288    X BXN X1288       2.319   0.860  -2.808                       X
+ATOM   1289    X BXO X1289       0.999   2.170  -2.072                       X
+ATOM   1290    X BXP X1290      -0.321   3.480  -1.336                       X
+ATOM   1291    X BXQ X1291      -1.641   4.790  -0.600                       X
+ATOM   1292    X BXR X1292       1.995   3.719  -5.761                       X
+ATOM   1293    X BXS X1293       0.675   5.029  -5.025                       X
+ATOM   1294    X BXT X1294       2.655   3.064  -6.129                       X
+ATOM   1295    X BXU X1295       1.335   4.374  -5.393                       X
+ATOM   1296    X BXV X1296       2.991   5.269  -9.450                       X
+ATOM   1297    X BXW X1297       2.390  -3.653   2.636                       X
+ATOM   1298    X BXX X1298       1.070  -2.342   3.372                       X
+ATOM   1299    X BXY X1299      -0.250  -1.032   4.108                       X
+ATOM   1300    X BXZ X1300      -1.569   0.278   4.844                       X
+ATOM   1301    X BYA X1301      -2.889   1.588   5.580                       X
+ATOM   1302    X BYB X1302      -4.209   2.898   6.315                       X
+ATOM   1303    X BYC X1303       4.370  -5.618   1.532                       X
+ATOM   1304    X BYD X1304       1.730  -2.997   3.004                       X
+ATOM   1305    X BYE X1305       0.410  -1.687   3.740                       X
+ATOM   1306    X BYF X1306      -0.909  -0.377   4.476                       X
+ATOM   1307    X BYG X1307      -2.229   0.933   5.212                       X
+ATOM   1308    X BYH X1308      -3.549   2.243   5.947                       X
+ATOM   1309    X BYI X1309      -4.869   3.553   6.683                       X
+ATOM   1310    X BYJ X1310       2.726  -1.448  -0.685                       X
+ATOM   1311    X BYK X1311       1.407  -0.138   0.051                       X
+ATOM   1312    X BYL X1312       0.087   1.172   0.787                       X
+ATOM   1313    X BYM X1313      -1.233   2.482   1.523                       X
+ATOM   1314    X BYN X1314      -2.553   3.792   2.259                       X
+ATOM   1315    X BYO X1315       3.386  -2.103  -1.053                       X
+ATOM   1316    X BYP X1316       2.066  -0.793  -0.317                       X
+ATOM   1317    X BYQ X1317       0.747   0.517   0.419                       X
+ATOM   1318    X BYR X1318      -0.573   1.827   1.155                       X
+ATOM   1319    X BYS X1319      -1.893   3.137   1.891                       X
+ATOM   1320    X BYT X1320      -3.213   4.447   2.627                       X
+ATOM   1321    X BYU X1321       3.063   0.756  -4.006                       X
+ATOM   1322    X BYV X1322       1.743   2.066  -3.270                       X
+ATOM   1323    X BYW X1323       0.423   3.376  -2.534                       X
+ATOM   1324    X BYX X1324      -0.897   4.686  -1.798                       X
+ATOM   1325    X BYY X1325       2.403   1.411  -3.638                       X
+ATOM   1326    X BYZ X1326       1.083   2.721  -2.902                       X
+ATOM   1327    X BZA X1327      -0.237   4.031  -2.166                       X
+ATOM   1328    X BZB X1328       3.399   2.960  -7.327                       X
+ATOM   1329    X BZC X1329       2.079   4.270  -6.591                       X
+ATOM   1330    X BZD X1330       2.739   3.615  -6.959                       X
+ATOM   1331    X BZE X1331       1.419   4.925  -6.223                       X
+ATOM   1332    X BZF X1332      -1.822  -1.375   7.334                       X
+ATOM   1333    X BZG X1333      -1.162  -2.030   6.966                       X
+ATOM   1334    X BZH X1334       3.794  -4.412   1.069                       X
+ATOM   1335    X BZI X1335       2.474  -3.101   1.805                       X
+ATOM   1336    X BZJ X1336       1.154  -1.791   2.541                       X
+ATOM   1337    X BZK X1337      -0.165  -0.481   3.277                       X
+ATOM   1338    X BZL X1338      -1.485   0.829   4.013                       X
+ATOM   1339    X BZM X1339      -2.805   2.139   4.749                       X
+ATOM   1340    X BZN X1340      -4.125   3.449   5.485                       X
+ATOM   1341    X BZO X1341       3.134  -3.757   1.437                       X
+ATOM   1342    X BZP X1342       1.814  -2.446   2.173                       X
+ATOM   1343    X BZQ X1343       0.494  -1.136   2.909                       X
+ATOM   1344    X BZR X1344      -0.825   0.174   3.645                       X
+ATOM   1345    X BZS X1345      -2.145   1.484   4.381                       X
+ATOM   1346    X BZT X1346      -3.465   2.794   5.117                       X
+ATOM   1347    X BZU X1347      -4.785   4.104   5.853                       X
+ATOM   1348    X BZV X1348       2.810  -0.897  -1.515                       X
+ATOM   1349    X BZW X1349       1.491   0.413  -0.779                       X
+ATOM   1350    X BZX X1350       0.171   1.723  -0.044                       X
+ATOM   1351    X BZY X1351      -1.149   3.033   0.692                       X
+ATOM   1352    X BZZ X1352      -2.469   4.343   1.428                       X
+ATOM   1353    X CAA X1353       3.470  -1.552  -1.883                       X
+ATOM   1354    X CAB X1354       2.151  -0.242  -1.147                       X
+ATOM   1355    X CAC X1355       0.831   1.068  -0.412                       X
+ATOM   1356    X CAD X1356      -0.489   2.378   0.324                       X
+ATOM   1357    X CAE X1357      -1.809   3.688   1.060                       X
+ATOM   1358    X CAF X1358       1.827   2.617  -4.100                       X
+ATOM   1359    X CAG X1359       0.507   3.927  -3.364                       X
+ATOM   1360    X CAH X1360       2.487   1.962  -4.468                       X
+ATOM   1361    X CAI X1361       1.167   3.272  -3.732                       X
+ATOM   1362    X CAJ X1362      -0.153   4.582  -2.996                       X
+ATOM   1363    X CAK X1363       3.483   3.511  -8.157                       X
+ATOM   1364    X CAL X1364       2.163   4.821  -7.421                       X
+ATOM   1365    X CAM X1365       2.823   4.166  -7.789                       X
+ATOM   1366    X CAN X1366       8.184  -3.103   1.178                       X
+ATOM   1367    X CAO X1367       6.865  -1.793   1.914                       X
+ATOM   1368    X CAP X1368       1.585   3.448   4.858                       X
+ATOM   1369    X CAQ X1369       0.265   4.758   5.594                       X
+ATOM   1370    X CAR X1370       7.524  -2.448   1.546                       X
+ATOM   1371    X CAS X1371       6.205  -1.138   2.282                       X
+ATOM   1372    X CAT X1372       2.245   2.793   4.490                       X
+ATOM   1373    X CAU X1373       0.925   4.103   5.226                       X
+ATOM   1374    X CAV X1374      -0.394   5.413   5.962                       X
+ATOM   1375    X CAW X1375       8.521  -0.899  -2.143                       X
+ATOM   1376    X CAX X1376       7.201   0.412  -1.407                       X
+ATOM   1377    X CAY X1377       5.881   1.722  -0.671                       X
+ATOM   1378    X CAZ X1378       4.561   3.032   0.065                       X
+ATOM   1379    X CBA X1379       3.241   4.342   0.801                       X
+ATOM   1380    X CBB X1380       1.922   5.652   1.537                       X
+ATOM   1381    X CBC X1381       7.861  -0.244  -1.775                       X
+ATOM   1382    X CBD X1382       6.541   1.067  -1.039                       X
+ATOM   1383    X CBE X1383       5.221   2.377  -0.303                       X
+ATOM   1384    X CBF X1384       3.901   3.687   0.433                       X
+ATOM   1385    X CBG X1385       2.581   4.997   1.169                       X
+ATOM   1386    X CBH X1386       7.537   2.616  -4.728                       X
+ATOM   1387    X CBI X1387       6.217   3.926  -3.992                       X
+ATOM   1388    X CBJ X1388       4.897   5.236  -3.256                       X
+ATOM   1389    X CBK X1389       6.877   3.271  -4.360                       X
+ATOM   1390    X CBL X1390       5.557   4.581  -3.624                       X
+ATOM   1391    X CBM X1391       4.238   5.891  -2.888                       X
+ATOM   1392    X CBN X1392       6.612  -3.446   4.405                       X
+ATOM   1393    X CBO X1393       7.272  -4.101   4.037                       X
+ATOM   1394    X CBP X1394       8.268  -2.552   0.348                       X
+ATOM   1395    X CBQ X1395       6.949  -1.242   1.084                       X
+ATOM   1396    X CBR X1396       5.629   0.068   1.820                       X
+ATOM   1397    X CBS X1397       2.989   2.689   3.292                       X
+ATOM   1398    X CBT X1398       1.669   3.999   4.028                       X
+ATOM   1399    X CBU X1399       0.350   5.309   4.764                       X
+ATOM   1400    X CBV X1400       8.928  -3.207  -0.020                       X
+ATOM   1401    X CBW X1401       7.609  -1.897   0.716                       X
+ATOM   1402    X CBX X1402       6.289  -0.587   1.452                       X
+ATOM   1403    X CBY X1403       2.329   3.344   3.660                       X
+ATOM   1404    X CBZ X1404       1.009   4.654   4.396                       X
+ATOM   1405    X CCA X1405       8.605  -0.348  -2.973                       X
+ATOM   1406    X CCB X1406       7.285   0.963  -2.237                       X
+ATOM   1407    X CCC X1407       5.965   2.273  -1.501                       X
+ATOM   1408    X CCD X1408       4.645   3.583  -0.765                       X
+ATOM   1409    X CCE X1409       3.325   4.893  -0.029                       X
+ATOM   1410    X CCF X1410       7.945   0.308  -2.605                       X
+ATOM   1411    X CCG X1411       6.625   1.618  -1.869                       X
+ATOM   1412    X CCH X1412       5.305   2.928  -1.133                       X
+ATOM   1413    X CCI X1413       3.985   4.238  -0.397                       X
+ATOM   1414    X CCJ X1414       2.665   5.548   0.339                       X
+ATOM   1415    X CCK X1415       6.301   4.477  -4.822                       X
+ATOM   1416    X CCL X1416       4.981   5.787  -4.086                       X
+ATOM   1417    X CCM X1417       6.961   3.822  -5.190                       X
+ATOM   1418    X CCN X1418       5.641   5.132  -4.454                       X
+ATOM   1419    X CCO X1419       8.016  -4.205   2.839                       X
+ATOM   1420    X CCP X1420       6.696  -2.895   3.575                       X
+ATOM   1421    X CCQ X1421       1.417   2.346   6.518                       X
+ATOM   1422    X CCR X1422       7.356  -3.550   3.207                       X
+ATOM   1423    X CCS X1423       8.353  -2.001  -0.482                       X
+ATOM   1424    X CCT X1424       7.033  -0.691   0.254                       X
+ATOM   1425    X CCU X1425       5.713   0.619   0.990                       X
+ATOM   1426    X CCV X1426       4.393   1.930   1.726                       X
+ATOM   1427    X CCW X1427       3.073   3.240   2.462                       X
+ATOM   1428    X CCX X1428       1.753   4.550   3.198                       X
+ATOM   1429    X CCY X1429       7.693  -1.346  -0.114                       X
+ATOM   1430    X CCZ X1430       6.373  -0.036   0.622                       X
+ATOM   1431    X CDA X1431       5.053   1.275   1.358                       X
+ATOM   1432    X CDB X1432       3.733   2.585   2.094                       X
+ATOM   1433    X CDC X1433       2.413   3.895   2.830                       X
+ATOM   1434    X CDD X1434       1.093   5.205   3.566                       X
+ATOM   1435    X CDE X1435       7.369   1.514  -3.067                       X
+ATOM   1436    X CDF X1436       6.049   2.824  -2.331                       X
+ATOM   1437    X CDG X1437       4.729   4.134  -1.595                       X
+ATOM   1438    X CDH X1438       3.409   5.444  -0.859                       X
+ATOM   1439    X CDI X1439       8.029   0.859  -3.435                       X
+ATOM   1440    X CDJ X1440       6.709   2.169  -2.699                       X
+ATOM   1441    X CDK X1441       5.389   3.479  -1.963                       X
+ATOM   1442    X CDL X1442       4.069   4.789  -1.227                       X
+ATOM   1443    X CDM X1443       2.750   6.099  -0.491                       X
+ATOM   1444    X CDN X1444       6.385   5.028  -5.652                       X
+ATOM   1445    X CDO X1445       5.066   6.338  -4.916                       X
+ATOM   1446    X CDP X1446       5.725   5.683  -5.284                       X
+ATOM   1447    X CDQ X1447       8.100  -3.654   2.008                       X
+ATOM   1448    X CDR X1448       6.781  -2.344   2.744                       X
+ATOM   1449    X CDS X1449       1.501   2.897   5.688                       X
+ATOM   1450    X CDT X1450       7.440  -2.999   2.376                       X
+ATOM   1451    X CDU X1451       6.121  -1.689   3.112                       X
+ATOM   1452    X CDV X1452       2.161   2.242   5.320                       X
+ATOM   1453    X CDW X1453       8.437  -1.450  -1.313                       X
+ATOM   1454    X CDX X1454       7.117  -0.140  -0.577                       X
+ATOM   1455    X CDY X1455       5.797   1.171   0.159                       X
+ATOM   1456    X CDZ X1456       4.477   2.481   0.895                       X
+ATOM   1457    X CEA X1457       3.157   3.791   1.631                       X
+ATOM   1458    X CEB X1458       1.837   5.101   2.367                       X
+ATOM   1459    X CEC X1459       7.777  -0.795  -0.945                       X
+ATOM   1460    X CED X1460       6.457   0.515  -0.209                       X
+ATOM   1461    X CEE X1461       5.137   1.826   0.527                       X
+ATOM   1462    X CEF X1462       3.817   3.136   1.263                       X
+ATOM   1463    X CEG X1463       2.497   4.446   1.999                       X
+ATOM   1464    X CEH X1464       1.178   5.756   2.735                       X
+ATOM   1465    X CEI X1465       7.453   2.065  -3.897                       X
+ATOM   1466    X CEJ X1466       6.133   3.375  -3.161                       X
+ATOM   1467    X CEK X1467       4.813   4.685  -2.425                       X
+ATOM   1468    X CEL X1468       3.494   5.995  -1.690                       X
+ATOM   1469    X CEM X1469       8.113   1.410  -4.265                       X
+ATOM   1470    X CEN X1470       6.793   2.720  -3.529                       X
+ATOM   1471    X CEO X1471       5.473   4.030  -2.793                       X
+ATOM   1472    X CEP X1472       4.153   5.340  -2.058                       X
+ATOM   1473    X CEQ X1473       5.810   6.234  -6.114                       X
+ATOM   1474    X CER X1474       5.892   4.205   5.797                       X
+ATOM   1475    X CES X1475       3.252   6.826   7.269                       X
+ATOM   1476    X CET X1476       5.568   7.065   2.844                       X
+ATOM   1477    X CEU X1477       7.884   7.304  -1.581                       X
+ATOM   1478    X CEV X1478       4.656   6.067   5.703                       X
+ATOM   1479    X CEW X1479       5.316   5.411   5.335                       X
+ATOM   1480    X CEX X1480       3.996   6.722   6.071                       X
+ATOM   1481    X CEY X1481       6.312   6.961   1.646                       X
+ATOM   1482    X CEZ X1482       4.740   6.618   4.872                       X
+ATOM   1483    X CFA X1483       5.400   5.963   4.504                       X
+ATOM   1484    X CFB X1484       7.716   6.202   0.080                       X
+ATOM   1485    X CFC X1485       7.056   6.857   0.448                       X
+ATOM   1486    X CFD X1486       7.800   6.753  -0.751                       X
+ATOM   1487    X CFE X1487       8.460   6.098  -1.119                       X
+ATOM   1488    X CFF X1488       7.140   7.408  -0.383                       X
+ATOM   1489    X CFG X1489       8.878   6.273   7.472                       X
+ATOM   1490    X CFH X1490       8.218   6.928   7.840                       X
+ATOM   1491    X CFI X1491       8.302   7.479   7.010                       X
+ATOM   1492    X CFJ X1492       8.794   5.722   8.302                       X
+ATOM   1493    X CFK X1493       9.454   5.067   7.934                       X

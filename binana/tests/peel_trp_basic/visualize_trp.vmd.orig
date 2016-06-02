@@ -1,0 +1,116 @@
+mol new
+mol rename top hydrophobic
+draw material Glass1
+draw color orange
+draw sphere {3.970000 2.846000 -0.000000} radius 7.000000 
+draw sphere {3.577000 3.654000 1.232000} radius 7.000000 
+draw sphere {4.201000 5.026000 1.321000} radius 7.000000 
+draw sphere {4.023000 5.931000 2.293000} radius 7.000000 
+draw sphere {5.427000 6.842000 0.817000} radius 7.000000 
+draw sphere {6.297000 7.689000 0.120000} radius 7.000000 
+draw sphere {6.814000 7.187000 -1.069000} radius 7.000000 
+draw sphere {6.483000 5.953000 -1.505000} radius 7.000000 
+draw sphere {5.604000 5.117000 -0.786000} radius 7.000000 
+draw sphere {5.083000 5.623000 0.412000} radius 7.000000 
+draw sphere {5.486000 2.705000 -0.000000} radius 7.000000 
+mol new
+mol rename top hydrophilic
+draw material Glass1
+draw color blue
+draw sphere {3.326000 1.548000 -0.000000} radius 7.000000 
+draw sphere {4.812000 7.074000 1.950000} radius 7.000000 
+draw sphere {6.009000 1.593000 -0.000000} radius 7.000000 
+mol new
+mol rename top hb_acceptors
+draw material Glass2
+draw color purple
+draw sphere {6.009000 1.593000 -0.000000} radius 1.000000
+mol new
+mol rename top hb_donors
+draw material Glass1
+draw color cyan
+draw cone {5.636310 -1.717344 0.000000} {3.326000 1.548000 -0.000000} radius 3.356399
+draw cone {5.093341 10.434238 4.101662} {4.812000 7.074000 1.950000} radius 3.356399
+mol new
+mol rename top ar_rings
+draw color tan
+draw sphere {4.908270 7.000438 1.743491} radius 0.5
+draw sphere {4.999483 7.020484 1.617389} radius 0.5
+draw sphere {5.083549 7.017844 1.484915} radius 0.5
+draw sphere {5.158396 6.992585 1.349331} radius 0.5
+draw sphere {5.222183 6.945327 1.213975} radius 0.5
+draw sphere {5.273339 6.877235 1.082180} radius 0.5
+draw sphere {5.310604 6.789986 0.957191} radius 0.5
+draw sphere {5.333060 6.685726 0.842087} radius 0.5
+draw sphere {5.340154 6.567025 0.739701} radius 0.5
+draw sphere {5.331713 6.436804 0.652554} radius 0.5
+draw sphere {5.307943 6.298270 0.582792} radius 0.5
+draw sphere {5.269430 6.154835 0.532133} radius 0.5
+draw sphere {5.217122 6.010029 0.501825} radius 0.5
+draw sphere {5.152308 5.867419 0.492613} radius 0.5
+draw sphere {5.076583 5.730517 0.504725} radius 0.5
+draw sphere {4.991811 5.602692 0.537862} radius 0.5
+draw sphere {4.900081 5.487094 0.591208} radius 0.5
+draw sphere {4.803651 5.386567 0.663450} radius 0.5
+draw sphere {4.704895 5.303588 0.752809} radius 0.5
+draw sphere {4.606245 5.240199 0.857085} radius 0.5
+draw sphere {4.510130 5.197962 0.973709} radius 0.5
+draw sphere {4.418917 5.177916 1.099811} radius 0.5
+draw sphere {4.334851 5.180556 1.232285} radius 0.5
+draw sphere {4.260004 5.205815 1.367869} radius 0.5
+draw sphere {4.196217 5.253073 1.503225} radius 0.5
+draw sphere {4.145061 5.321165 1.635020} radius 0.5
+draw sphere {4.107796 5.408414 1.760009} radius 0.5
+draw sphere {4.085340 5.512674 1.875113} radius 0.5
+draw sphere {4.078246 5.631375 1.977499} radius 0.5
+draw sphere {4.086687 5.761596 2.064646} radius 0.5
+draw sphere {4.110457 5.900130 2.134408} radius 0.5
+draw sphere {4.148970 6.043565 2.185067} radius 0.5
+draw sphere {4.201278 6.188371 2.215375} radius 0.5
+draw sphere {4.266092 6.330981 2.224587} radius 0.5
+draw sphere {4.341817 6.467883 2.212475} radius 0.5
+draw sphere {4.426589 6.595708 2.179338} radius 0.5
+draw sphere {4.518319 6.711306 2.125992} radius 0.5
+draw sphere {4.614749 6.811833 2.053750} radius 0.5
+draw sphere {4.713505 6.894812 1.964391} radius 0.5
+draw sphere {4.812155 6.958201 1.860115} radius 0.5
+draw sphere {6.150492 7.302947 0.049969} radius 0.5
+draw sphere {6.241727 7.323008 -0.076115} radius 0.5
+draw sphere {6.325812 7.320387 -0.208577} radius 0.5
+draw sphere {6.400675 7.295148 -0.344156} radius 0.5
+draw sphere {6.464474 7.247912 -0.479514} radius 0.5
+draw sphere {6.515639 7.179844 -0.611318} radius 0.5
+draw sphere {6.552908 7.092618 -0.736322} radius 0.5
+draw sphere {6.575364 6.988382 -0.851448} radius 0.5
+draw sphere {6.582454 6.869704 -0.953861} radius 0.5
+draw sphere {6.574005 6.739506 -1.041041} radius 0.5
+draw sphere {6.550223 6.600992 -1.110839} radius 0.5
+draw sphere {6.511694 6.457575 -1.161538} radius 0.5
+draw sphere {6.459367 6.312785 -1.191888} radius 0.5
+draw sphere {6.394531 6.170188 -1.201144} radius 0.5
+draw sphere {6.318782 6.033295 -1.189076} radius 0.5
+draw sphere {6.233985 5.905476 -1.155982} radius 0.5
+draw sphere {6.142229 5.789879 -1.102677} radius 0.5
+draw sphere {6.045771 5.689351 -1.030473} radius 0.5
+draw sphere {5.946989 5.606366 -0.941148} radius 0.5
+draw sphere {5.848313 5.542969 -0.836902} radius 0.5
+draw sphere {5.752174 5.500719 -0.720302} radius 0.5
+draw sphere {5.660940 5.480658 -0.594219} radius 0.5
+draw sphere {5.576855 5.483280 -0.461756} radius 0.5
+draw sphere {5.501991 5.508519 -0.326177} radius 0.5
+draw sphere {5.438192 5.555754 -0.190819} radius 0.5
+draw sphere {5.387028 5.623823 -0.059015} radius 0.5
+draw sphere {5.349759 5.711049 0.065988} radius 0.5
+draw sphere {5.327303 5.815284 0.181115} radius 0.5
+draw sphere {5.320212 5.933962 0.283528} radius 0.5
+draw sphere {5.328662 6.064161 0.370707} radius 0.5
+draw sphere {5.352444 6.202674 0.440506} radius 0.5
+draw sphere {5.390973 6.346092 0.491204} radius 0.5
+draw sphere {5.443299 6.490882 0.521555} radius 0.5
+draw sphere {5.508135 6.633479 0.530810} radius 0.5
+draw sphere {5.583884 6.770372 0.518742} radius 0.5
+draw sphere {5.668681 6.898191 0.485648} radius 0.5
+draw sphere {5.760438 7.013787 0.432343} radius 0.5
+draw sphere {5.856895 7.114316 0.360139} radius 0.5
+draw sphere {5.955678 7.197300 0.270815} radius 0.5
+draw sphere {6.054353 7.260698 0.166569} radius 0.5
