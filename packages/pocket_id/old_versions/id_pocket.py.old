@@ -1,0 +1,65 @@
+import packages.pymolecule.pymolecule as pymolecule
+import sys
+import numpy
+import convexhull
+import helper
+from scipy import spatial
+
+reso = 5.0
+dist_cutoff = 3.0
+
+# Step 1: load in the protein
+molecule = pymolecule.Molecule()
+molecule.load_pdb_into('1XDN.protein.pdb',False,False,False)
+
+# Step 2. create a KDTree of the protein points for fast distance comparisons
+molecule_distance_tree = spatial.KDTree(molecule.get_coordinates()) # note, in newer versions of scipy use cKDTree
+
+# Step 3: calculate the convex hull of the protein
+convex_hull_3d = convexhull.ConvexHull()
+akl_toussaint_pts = convex_hull_3d.akl_toussaint(molecule.get_coordinates()) # quickly reduces input size
+hull = convex_hull_3d.gift_wrapping_3d(akl_toussaint_pts) # calculate convex hull using gift wrapping algorithm
+
+# Step 4. get a box of equispaced points around the protein, snapped to reso
+
+def snap_float(val, reso):
+    return numpy.floor(val / reso) * reso
+
+def make_box_of_points(box, reso):
+    min_x = snap_float(bounding_box[0][0], reso)
+    min_y = snap_float(bounding_box[0][1], reso)
+    min_z = snap_float(bounding_box[0][2], reso)
+    max_x = snap_float(bounding_box[1][0], reso) + 0.1
+    max_y = snap_float(bounding_box[1][1], reso) + 0.1
+    max_z = snap_float(bounding_box[1][2], reso) + 0.1
+    
+    x, y, z = numpy.mgrid[min_x:max_x:reso, min_y:max_y:reso, min_z:max_z:reso]
+    return numpy.array(zip(x.ravel(), y.ravel(), z.ravel()))
+
+bounding_box = molecule.get_bounding_box()
+box_of_pts = make_box_of_points(bounding_box, reso)
+
+# Step 5. remove the points in this box that are too close to protein atoms.
+# For simplicity's sake, don't worry about atomic radii. Just a simple cutoff.
+box_of_pts_distance_tree = spatial.KDTree(box_of_pts) # note, in newer versions of scipy use cKDTree
+sparce_distance_matrix = molecule_distance_tree.sparse_distance_matrix(box_of_pts_distance_tree, dist_cutoff)
+indicies_of_box_pts_close_to_molecule_points = numpy.unique(sparce_distance_matrix.tocsr().indices) #tocsr()
+box_of_pts = numpy.delete(box_of_pts, indicies_of_box_pts_close_to_molecule_points, axis=0) # remove the ones that are too close to molecule atoms
+
+# Step 6. remove points outside the convex hull
+def point_pts_inside_convex_hull(pts, hull): # you might consider moving this into the convex hull class
+    # Note this would be much faster if it were matrix-based intead of point-by-point based.
+    
+    global convex_hull_3d
+    new_pts = [] # Can preallocate numpy array size because I don't know beforehand how many points will be in the hull
+    
+    for pt in pts: 
+        if convex_hull_3d.outside_hull(pt, hull) == False: new_pts.append(pt)
+        
+    return numpy.array(new_pts)
+    
+pts_in_hull = point_pts_inside_convex_hull(box_of_pts, hull)
+print helper.numpy_to_pdb(pts_in_hull, "X")
+
+#pt_outside = convex_hull_3d.outside_hull(pt, hull) # check if pt is outside hull
+

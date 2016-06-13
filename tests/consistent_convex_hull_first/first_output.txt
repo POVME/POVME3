@@ -1,0 +1,30 @@
+
+If you use POVME in your research, please cite the following reference:
+  Durrant, J. D., C. A. de Oliveira, et al. (2011). "POVME: An algorithm
+  for measuring binding-pocket volumes." J Mol Graph Model 29(5): 773-776.
+
+Parameters:
+	SaveTabbedVolumeFile: True
+	SaveIndividualPocketVolumes: True
+	SavePocketVolumesTrajectory: True
+	DistanceCutoff: 1.09
+	ConvexHullExclusion: first
+	OutputEqualNumPointsPerFrame: True
+	UseDiskNotMemory: False
+	SaveColoredMap: False
+	PointsIncludeRegions: sphere at (65.0, 98.0, 50.0), radius = 16.0
+	CalculateSurfaceArea: False
+	SavePoints: True
+	NumProcessors: 5
+	SaveVolumetricDensityDX: False
+	CompressOutput: False
+	MaxGrowIterations: 10000000000.0
+	PDBFileName: 4NSS.pdb
+	SavePocketVolumesNumpy: False
+	OutputFilenamePrefix: ./first_
+	SaveVolumetricDensityNpy: False
+	GridSpacing: 1.0
+	ContiguousPocketSeedRegions: sphere at (67.0, 102.0, 57.0), radius = 4.0
+	ContiguousPointsCriteria: 3
+
+Reading frames from 4NSS.pdb
