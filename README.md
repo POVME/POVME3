@@ -79,9 +79,9 @@ Show binding pocket as spheres
 
 `Peel`, heavily based on [Binana](jacob durant), enables us to color the binding site shape with relevant chemical features, such as hydrogen bond donors/acceptors, potential pi-stacking interactions, and hydrophobic pockets. This is a standalone library that will eventually be broken out into its own package. `Peel` contains the `Algebra` class, which enables comparisons of and mathematical operations on binding pocket shapes.
 
-`Clustering` is a package that ensembles of binding site shapes and perform clustering and principal component analysis on them. Clustering can be used to find metastable binding site shapes; principal component analysis can be used to find correlated motions in binding pockets.
+`Clustering` is a package that ensembles of binding site shapes and perform clustering and principal component analysis on them. Clustering can be used to find metastable binding site shapes; principal component analysis can be used to find correlated subpockets in binding sites.
 
-[`Pocket ID`](jacob durant) is a library that runs successive, course iterations of POVME analysis on a whole protein to find binding pockets.
+[`Pocket ID`](jacob durant) is a library that runs successive, coarse iterations of POVME analysis on a whole protein to find binding pockets.
 
 [`PyMolecule`](jacob durant) (soon to be replaced with something more reasonable, probably MDTraj or Prody) is a class to read `.pdb` files, which is the standard format for protein structures.
 
