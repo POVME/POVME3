@@ -2,3 +2,4 @@ __init__.pyc
 *output
 .DS_Store
 .pypirc
+dist

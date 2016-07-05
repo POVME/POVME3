@@ -1,4 +1,5 @@
 from distutils.core import setup
+
 setup(
   name = 'povme',
   packages = ['povme'],
@@ -18,5 +19,5 @@ setup(
     "Programming Language :: Python :: 2.7",
     "Topic :: Scientific/Engineering :: Bio-Informatics",
     "Topic :: Scientific/Engineering :: Chemistry"
-  ],
+  ]
 )
