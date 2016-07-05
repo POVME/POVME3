@@ -1,0 +1,17 @@
+machine:
+  python:
+    version: pypy-2.7.9
+
+dependencies:
+  pre:
+    - pip install .
+
+test:
+  override:
+    - ./tests.sh
+
+# deployment:
+#   production:
+#     branch: master
+#     commands:
+#       - fab deploy
