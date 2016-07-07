@@ -3,6 +3,11 @@ rm -rf virtualenvs venv .pyenv
 echo
 echo
 
+echo deactivate
+deactivate
+echo
+echo
+
 echo cd
 cd
 echo
