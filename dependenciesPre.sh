@@ -30,7 +30,7 @@ cd ..
 echo conda update --yes --quiet conda
 conda update --yes --quiet conda
 
-conda install python numpy scipy cython nose coverage matplotlib sphinx pillow
+conda install --yes python numpy scipy cython nose coverage matplotlib sphinx pillow
 
 #echo conda create -n testenv --yes --quiet python numpy scipy cython nose coverage matplotlib sphinx pillow
 #conda create -n testenv --yes --quiet python numpy scipy cython nose coverage matplotlib sphinx pillow
