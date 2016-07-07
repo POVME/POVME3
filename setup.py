@@ -3,7 +3,7 @@ from distutils.core import setup
 setup(
   name = 'POVME',
   packages = ['POVME'],
-  version = '3.0.1',
+  version = '3.0.1a',
   description = 'POVME (Pocket VOlume MEasurer) is a Python package for extracting actionable information from ensembles of protein structures for use in drug design.',
   author = 'Jeff Wagner',
   author_email = 'jwagnerjpl@gmail.com',
