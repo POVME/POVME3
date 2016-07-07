@@ -1,1 +1,1 @@
-from POVME2 import *
+from POVME3 import *
