@@ -30,13 +30,13 @@ machine:
 
 checkout:
   post:
-    rm -rf virtualenvs venv .pyenv
+    - rm -rf virtualenvs venv .pyenv
 
 dependencies:
   pre:
     #  Install dependencies with miniconda
     #- pushd .
-    - . dependenciesPre.sh
+    - source dependenciesPre.sh
 
 
 test:
