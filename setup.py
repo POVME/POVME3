@@ -10,6 +10,7 @@ setup(
   url = 'https://github.com/POVME/POVME',
   download_url = 'https://github.com/POVME/POVME/tarball/2.0',
   setup_requires=['scipy','numpy'],
+  build_requires=['scipy','numpy'],
   install_requires=['scipy','numpy'],
   keywords = ['protein folding', 'protein', 'pocket volume measurer', 'computational protein folding', 'protein structures', 'drug design'],
   classifiers = [
