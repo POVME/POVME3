@@ -1,4 +1,4 @@
-source activate testenv 
+deactivate
 cd POVME/tests
 python ./runRegTests.py
 cd ../../
