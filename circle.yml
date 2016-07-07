@@ -26,10 +26,10 @@
 #   python:
 #     version: pypi-2.7.9
 
- dependencies:
-   pre:
-     - sudo apt-get install python-numpy python-scipy
-     - pip install .
+dependencies:
+  pre:
+    - sudo apt-get install python-numpy python-scipy
+    - pip install .
 
 
 test:
