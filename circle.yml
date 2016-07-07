@@ -37,6 +37,8 @@ dependencies:
     #  Install dependencies with miniconda
     #- pushd .
     - source dependenciesPre.sh
+  override:
+    - echo "Hello"
 
 
 test:
