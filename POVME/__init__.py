@@ -1,1 +1,1 @@
-from POVME2.py import runit
+from POVME2 import *
