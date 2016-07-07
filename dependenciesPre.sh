@@ -64,3 +64,8 @@ echo
 #echo
 #echo
 #sudo apt-get install python-numpy python-scipy
+
+echo python setup.py install
+python setup.py install
+echo 
+echo
