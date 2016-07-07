@@ -1,1 +1,3 @@
-python ./POVME/tests/runRegTests.py
+cd POVME/tests
+python ./runRegTests.py
+cd ../../
