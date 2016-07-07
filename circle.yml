@@ -38,7 +38,7 @@ dependencies:
     #- pushd .
     - source dependenciesPre.sh
   override:
-    - echo "Hello"
+    - echo "I don't know if we can have a blank override, but I already did setup.py install in dependenciesPre.sh in the anaconda install (instead of the un-numpy-able inferred environment) so I'll just have it print this message."
 
 
 test:
