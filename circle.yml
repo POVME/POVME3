@@ -1,10 +1,10 @@
-machine:
-  python:
-    version: pypy-2.7.9
+# machine:
+#   python:
+#     version: pypi-2.7.9
 
-dependencies:
-  pre:
-    - pip install .
+# dependencies:
+#   pre:
+#     - pip install .
 
 test:
   override:
