@@ -3,3 +3,4 @@ __init__.pyc
 .DS_Store
 .pypirc
 dist
+MANIFEST
