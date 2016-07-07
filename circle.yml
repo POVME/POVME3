@@ -1,10 +1,36 @@
 # machine:
+#   pre:
+    
+     #-  Install dependencies with miniconda
+     #- pushd .
+     #- cd
+     #- mkdir -p download
+     #- cd download
+     #- echo "Cached in $HOME/download :"
+     #- ls -l
+     #- if [[ ! -f miniconda.sh ]]
+     #- then
+    #    - wget https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh O miniconda.sh
+    # - fi
+    # - chmod +x miniconda.sh && ./miniconda.sh -b -p $HOME/miniconda
+    # - cd ..
+    # - export PATH="$HOME/miniconda/bin:$PATH"
+    # - conda update --yes --quiet conda
+    # - popd
+
+    # - # Configure the conda environment and put it in the path using the
+    # - # provided versions
+    # - conda create -n testenv --yes --quiet python numpy scipy cython nose coverage matplotlib sphinx pillow
+    # - source activate testenv     
+
 #   python:
 #     version: pypi-2.7.9
 
-# dependencies:
-#   pre:
-#     - pip install .
+ dependencies:
+   pre:
+     - sudo apt-get install python-numpy python-scipy
+     - pip install .
+
 
 test:
   override:
