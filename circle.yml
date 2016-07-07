@@ -28,7 +28,7 @@
 
 dependencies:
   pre:
-    -  Install dependencies with miniconda
+    #  Install dependencies with miniconda
     - pushd .
     - cd
     - mkdir -p download
