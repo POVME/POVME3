@@ -24,7 +24,7 @@ rawRegTests = [i for i in rawRegTests if not i.strip()[0]=='#']
 
 regTests = []
 results = {}
-arunPath = os.getcwd()+'/../../arun'
+arunPath = os.getcwd()+'/../arun'
 
 
 regexFileName = "file_comparison_ignore_regex"
