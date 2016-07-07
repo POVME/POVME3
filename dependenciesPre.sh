@@ -75,6 +75,16 @@ echo
 #echo
 #sudo apt-get install python-numpy python-scipy
 
+echo cd
+cd
+echo
+echo
+
+echo cd POVME
+cd POVME
+echo
+echo
+
 echo python setup.py install
 python setup.py install
 echo 
