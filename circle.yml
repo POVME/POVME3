@@ -1,4 +1,6 @@
-# machine:
+machine:
+  environment:
+    PATH: $HOME/miniconda/bin:$PATH
 #   pre:
     
      #-  Install dependencies with miniconda
