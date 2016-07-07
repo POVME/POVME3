@@ -1,3 +1,8 @@
+echo rm -rf virtualenvs venv .pyenv
+rm -rf virtualenvs venv .pyenv
+echo
+echo
+
 echo cd
 cd
 echo
