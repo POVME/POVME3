@@ -28,7 +28,9 @@
 
 dependencies:
   pre:
-    - sudo apt-get install python-numpy python-scipy
+    - conda create -n testenv --yes --quiet python numpy scipy cython nose coverage matplotlib sphinx pillow
+    - source activate testenv     
+    #- sudo apt-get install python-numpy python-scipy
     - pip install .
 
 
