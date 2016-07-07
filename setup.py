@@ -1,8 +1,8 @@
 from distutils.core import setup
 
 setup(
-  name = 'povme',
-  packages = ['povme'],
+  name = 'POVME',
+  packages = ['POVME'],
   version = '3.0',
   description = 'POVME (Pocket VOlume MEasurer) is a Python package for extracting actionable information from ensembles of protein structures for use in drug design.',
   author = 'Jeff Wagner',
