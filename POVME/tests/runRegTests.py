@@ -7,7 +7,7 @@ import re
 import subprocess
 import time
 import argparse
-
+import sys
 
 
 @contextlib.contextmanager
@@ -152,6 +152,7 @@ def runTests(args):
     print '%i tests passed, %i tests failed' %(nPassed, nFailed)
     if nFailed > 0:
         print "TEST SUITE FAILED"
+        sys.exit(1)
 
 
         
