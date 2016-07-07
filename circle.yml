@@ -35,9 +35,9 @@ dependencies:
     - cd download
     - echo "Cached in $HOME/download :"
     - ls -l
-    - if [[ ! -f miniconda.sh ]]
+    #- if [[ ! -f miniconda.sh ]]
     #- then
-    -   wget https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh O miniconda.sh
+    - wget https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh O miniconda.sh
     #- fi
     - chmod +x miniconda.sh && ./miniconda.sh -b -p $HOME/miniconda
     - cd ..
