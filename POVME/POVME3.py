@@ -11,12 +11,12 @@ import math
 import sys
 import time
 import numpy
-import packages.pymolecule.pymolecule as pymolecule
+import POVME.packages.pymolecule.pymolecule as pymolecule
 import gzip
 import os
 import shutil
 #import random
-import packages.binana.peel as peel
+import POVME.packages.binana.peel as peel
 import multiprocessing
 import platform
 
@@ -1290,7 +1290,6 @@ class Region:
             total_pts = self.__snap(total_pts, reso)
 
         if self.region_type == "CYLINDER":
-            import packages.binana.peel as peel
             ### First, make a featureMap of all possible points
             box_dim = 1.1 * pow(self.height*self.height + self.radius*self.radius, 0.5)
 
