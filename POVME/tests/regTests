@@ -1,11 +1,11 @@
 # Test_name   Folder   Run commands
-consistent_convex_hull_first consistent_convex_hull_first ../../POVME3.py sample_POVME_input_first.ini
-consistent_convex_hull_max consistent_convex_hull_max ../../POVME3.py sample_POVME_input_max.ini
-#consistent_convex_hull_average consistent_convex_hull_average ../../POVME3.py sample_POVME_input_average.ini
-consistent_convex_hull_each consistent_convex_hull_each ../../POVME3.py sample_POVME_input_each.ini
-ala ala ../../POVME3.py sample_POVME_input_ala.ini
-bad_inclusion_area_ala_offtarget bad_inclusion_area_ala_offtarget ../../POVME3.py sample_POVME_input_ala_offtarget.ini 1> special_stdout_catcher 2> special_stderr_catcher || true
-trp trp ../../POVME3.py sample_POVME_input_trp.ini
+#consistent_convex_hull_first consistent_convex_hull_first ../../POVME3.py sample_POVME_input_first.ini
+#consistent_convex_hull_max consistent_convex_hull_max ../../POVME3.py sample_POVME_input_max.ini
+##consistent_convex_hull_average consistent_convex_hull_average ../../POVME3.py sample_POVME_input_average.ini
+#consistent_convex_hull_each consistent_convex_hull_each ../../POVME3.py sample_POVME_input_each.ini
+#ala ala ../../POVME3.py sample_POVME_input_ala.ini
+#bad_inclusion_area_ala_offtarget bad_inclusion_area_ala_offtarget ../../POVME3.py sample_POVME_input_ala_offtarget.ini 1> special_stdout_catcher 2> special_stderr_catcher || true
+#trp trp ../../POVME3.py sample_POVME_input_trp.ini
 defined_region_inclusion defined_region_inclusion ../../POVME3.py POVME_defined_region_inclusion.ini
 defined_region_inclusion_and_seed defined_region_inclusion_and_seed ../../POVME3.py POVME_defined_region_inclusion_and_seed.ini
 load_inclusion load_inclusion ../../POVME3.py POVME_load_inclusion.ini

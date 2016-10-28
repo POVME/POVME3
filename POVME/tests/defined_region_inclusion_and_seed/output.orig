@@ -1,7 +1,7 @@
 ---------------------------------
 START
 ---------------------------------
-[['GRIDSPACING', '1.0'], ['INCLUSIONSPHERE', '27 51 28 15'], ['SEEDSPHERE', '27 51 28 6'], ['PDBFILENAME', '2fsz_noLig_short.pdb'], ['DISTANCECUTOFF', '1.09'], ['CONVEXHULLEXCLUSION', 'none'], ['CONTIGUOUSPOINTSCRITERIA', '3'], ['NUMPROCESSORS', '8'], ['OUTPUTFILENAMEPREFIX', './defined_region_inclusion_and_seed_'], ['COMPRESSOUTPUT', 'false']]
+[['GRIDSPACING', '1.0'], ['INCLUSIONSPHERE', '27 51 28 15'], ['SEEDSPHERE', '27 51 28 6'], ['PDBFILENAME', '2fsz_noLig_short.pdb'], ['DISTANCECUTOFF', '1.09'], ['CONVEXHULLEXCLUSION', 'none'], ['CONTIGUOUSPOINTSCRITERIA', '3'], ['NUMPROCESSORS', '2'], ['OUTPUTFILENAMEPREFIX', './defined_region_inclusion_and_seed_'], ['COMPRESSOUTPUT', 'false']]
 
 If you use POVME in your research, please cite the following reference:
   Durrant, J. D., C. A. de Oliveira, et al. (2011). "POVME: An algorithm
@@ -13,7 +13,7 @@ Parameters:
 	OutputFrameFilenamePrefix: ./defined_region_inclusion_and_seed_frameInfo/
 	MaxGrowIterations: 10000000000.0
 	GridSpacing: 1.0
-	NumProcessors: 8
+	NumProcessors: 2
 	ContiguousPocketSeedRegions: sphere at (27.0, 51.0, 28.0), radius = 6.0
 	DistanceCutoff: 1.09
 	CompressOutput: False
@@ -29,16 +29,16 @@ ABOUT TO LOAD RECEPTORS
 ---------------------------------
 
 Reading frames from 2fsz_noLig_short.pdb
-	Further processing frame 8
-	Further processing frame 6
-	Further processing frame 7
-	Further processing frame 4
+	Further processing frame 1
 	Further processing frame 3
 	Further processing frame 5
-	Further processing frame 2
-	Further processing frame 10
-	Further processing frame 1
+	Further processing frame 7
 	Further processing frame 9
+	Further processing frame 2
+	Further processing frame 4
+	Further processing frame 6
+	Further processing frame 8
+	Further processing frame 10
 ---------------------------------
 RECEPTORS LOADED
 ---------------------------------
@@ -59,14 +59,7 @@ Calculating the pocket volume of each frame
 ---------------------------------
 STARTING CALC VOLUME
 ---------------------------------
-	Frame 3:  Volume 3263.0 A^3  Surf. A. 1296.0 A^2
----------------------------------
-FINISHING CALC VOLUME
----------------------------------
----------------------------------
-STARTING CALC VOLUME
----------------------------------
-	Frame 4:  Volume 3098.0 A^3  Surf. A. 1495.0 A^2
+	Frame 1:  Volume 3167.0 A^3  Surf. A. 1431.0 A^2
 ---------------------------------
 FINISHING CALC VOLUME
 ---------------------------------
@@ -80,35 +73,14 @@ FINISHING CALC VOLUME
 ---------------------------------
 STARTING CALC VOLUME
 ---------------------------------
-	Frame 10:  Volume 2959.0 A^3  Surf. A. 1571.0 A^2
----------------------------------
-FINISHING CALC VOLUME
----------------------------------
----------------------------------
-STARTING CALC VOLUME
----------------------------------
-	Frame 2:  Volume 3443.0 A^3  Surf. A. 1443.0 A^2
----------------------------------
-FINISHING CALC VOLUME
----------------------------------
----------------------------------
-STARTING CALC VOLUME
----------------------------------
-	Frame 7:  Volume 3208.0 A^3  Surf. A. 1580.0 A^2
----------------------------------
-FINISHING CALC VOLUME
----------------------------------
----------------------------------
-STARTING CALC VOLUME
----------------------------------
-	Frame 6:  Volume 3124.0 A^3  Surf. A. 1493.0 A^2
----------------------------------
-FINISHING CALC VOLUME
----------------------------------
----------------------------------
-STARTING CALC VOLUME
----------------------------------
 	Frame 9:  Volume 3148.0 A^3  Surf. A. 1424.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 4:  Volume 3098.0 A^3  Surf. A. 1495.0 A^2
 ---------------------------------
 FINISHING CALC VOLUME
 ---------------------------------
@@ -122,7 +94,35 @@ FINISHING CALC VOLUME
 ---------------------------------
 STARTING CALC VOLUME
 ---------------------------------
-	Frame 1:  Volume 3167.0 A^3  Surf. A. 1431.0 A^2
+	Frame 3:  Volume 3263.0 A^3  Surf. A. 1296.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 7:  Volume 3208.0 A^3  Surf. A. 1580.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 2:  Volume 3443.0 A^3  Surf. A. 1443.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 6:  Volume 3124.0 A^3  Surf. A. 1493.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 10:  Volume 2959.0 A^3  Surf. A. 1571.0 A^2
 ---------------------------------
 FINISHING CALC VOLUME
 ---------------------------------
@@ -143,7 +143,7 @@ FRAME        | VOLUME (A^3) | SURF. A. (A^2)
 9            |   3148.0     |   1424.0
 10           |   2959.0     |   1571.0
 
-Execution time = 57.3782892227 sec
+Execution time = 134.470149994 sec
 
 ---------------------------------
 ABOUT TO CALCULATE OCCUPANCY AVERAGE
