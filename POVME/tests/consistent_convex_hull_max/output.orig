@@ -1,0 +1,114 @@
+---------------------------------
+START
+---------------------------------
+[['GRIDSPACING', '1.0'], ['INCLUSIONSPHERE', '65.0 98.0 50.0 16.0'], ['PDBFILENAME', '4NSS.pdb'], ['DISTANCECUTOFF', '1.09'], ['CONVEXHULLEXCLUSION', 'max'], ['SEEDSPHERE', '67.0 102.0 57.0 4.0'], ['CONTIGUOUSPOINTSCRITERIA', '3'], ['NUMPROCESSORS', '1'], ['OUTPUTFILENAMEPREFIX', './max_'], ['COMPRESSOUTPUT', 'false']]
+
+If you use POVME in your research, please cite the following reference:
+  Durrant, J. D., C. A. de Oliveira, et al. (2011). "POVME: An algorithm
+  for measuring binding-pocket volumes." J Mol Graph Model 29(5): 773-776.
+
+Parameters:
+	OutputFilenamePrefix: ./max_
+	PointsIncludeRegions: sphere at (65.0, 98.0, 50.0), radius = 16.0
+	OutputFrameFilenamePrefix: ./max_frameInfo/
+	MaxGrowIterations: 10000000000.0
+	GridSpacing: 1.0
+	NumProcessors: 1
+	ContiguousPocketSeedRegions: sphere at (67.0, 102.0, 57.0), radius = 4.0
+	DistanceCutoff: 1.09
+	CompressOutput: False
+	PDBFileName: 4NSS.pdb
+	ConvexHullExclusion: max
+	SaveRegions: False
+	ContiguousPointsCriteria: 3
+---------------------------------
+PARAMETERS DEFINED
+---------------------------------
+---------------------------------
+ABOUT TO LOAD RECEPTORS
+---------------------------------
+
+Reading frames from 4NSS.pdb
+	Further processing frame 1
+	Further processing frame 2
+	Further processing frame 3
+	Further processing frame 4
+	Further processing frame 5
+---------------------------------
+RECEPTORS LOADED
+---------------------------------
+
+
+Generating the pocket-encompassing point field
+
+Saving the point field as a PDB and NPY file
+	Point field saved to ./max_frameInfo/inclusion.pdb to permit visualization
+	Point field saved to ./max_frameInfo/inclusion.npy to optionally load for the volume calculation
+
+
+Saving the contiguous-pocket seed points as a PDB and NPY file
+	Contiguous-pocket seed points saved to ./max_frameInfo/seed.pdb to permit visualization
+	Point field saved to ./max_frameInfo/seed.npy to optionally load for the volume calculation
+
+Calculating the pocket volume of each frame
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 1:  Volume 2108.0 A^3  Surf. A. 986.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 2:  Volume 2472.0 A^3  Surf. A. 1054.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 3:  Volume 2393.0 A^3  Surf. A. 1088.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 4:  Volume 2156.0 A^3  Surf. A. 1113.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 5:  Volume 2383.0 A^3  Surf. A. 1047.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+VOLUMES CALCULATED
+---------------------------------
+
+FRAME        | VOLUME (A^3) | SURF. A. (A^2)
+-------------+--------------+----------------
+1            |   2108.0     |   986.0
+2            |   2472.0     |   1054.0
+3            |   2393.0     |   1088.0
+4            |   2156.0     |   1113.0
+5            |   2383.0     |   1047.0
+
+Execution time = 202.570852995 sec
+
+---------------------------------
+ABOUT TO CALCULATE OCCUPANCY AVERAGE
+---------------------------------
+---------------------------------
+CALCULATED OCCUPANCY AVERAGE
+---------------------------------
+---------------------------------
+ABOUT TO CALCULATE COLOR MAPS
+---------------------------------
+---------------------------------
+CALCULATED COLOR MAPS
+---------------------------------

@@ -1,5 +1,7 @@
 # Implementation of Clustering Algorithms in POVME
 # By Celia Wong
+# Advised by Jeff Wagner
+# Amaro Lab, UCSD
 
 import scipy.cluster.vq, scipy.cluster.hierarchy
 import argparse
@@ -10,7 +12,7 @@ import csv
 import copy
 import itertools
 import collections
-import fnmatch
+#import fnmatch
 import pylab
 import packages.binana.peel as peel
 #import matplotlib.pyplot
@@ -22,7 +24,7 @@ class InputReader():
         #self.frames = 0
         self.overlapMatrix = []
         self.prefixToTrajectory = {}
-        self.indexToFileName = {}
+        self.indexToNpyFile = {}
         self.indexToFrame = {}
         self.indexToPrefix = {}
 
@@ -60,13 +62,13 @@ class InputReader():
     def read_indexFile(self,indexToFrameFile):
         if indexToFrameFile == None:
             return
-        #self.indexToFileName = {}
+        #self.indexToNpyFile = {}
         #self.indexToFrame = {}
         with open(indexToFrameFile) as csvfile:
             fieldnames = ['index','frameFile']
             reader = csv.DictReader(csvfile, fieldnames=fieldnames)
             for row in reader:
-                self.indexToFileName[int(row['index'])] = row['frameFile']
+                self.indexToNpyFile[int(row['index'])] = row['frameFile']
                 if self.indexToFrame != None:
                     try:
                         frameNumber = row['frameFile'].split('frame_')[-1].replace('.npy','')
@@ -74,9 +76,9 @@ class InputReader():
                         framePrefix = row['frameFile'].split('/')[-1].replace('frame_%s.npy'%(frameNumber),'')
                         self.indexToPrefix[int(row['index'])] = framePrefix
                     except:
-                        print "Unable to strip frame number or prefix from input filename %s. Disabling frame number output." %(row['frameFile'])
-                        self.indexToFrame = None
-                        self.indexToPrefix = None
+                        raise Exception("Unable to strip frame number or prefix from input filename %s. Disabling frame number output." %(row['frameFile']))
+                        #self.indexToFrame = None
+                        #self.indexToPrefix = None
                 #self.coordinates.append(numpy.load(row['frame']))
         
 
@@ -137,11 +139,48 @@ class Cluster():
         self.frames = len(self.overlap_values)
         self.indexToFrame = input_reader.indexToFrame
         self.indexToPrefix = input_reader.indexToPrefix
-        self.indexToFileName = input_reader.indexToFileName
+        self.indexToNpyFile = input_reader.indexToNpyFile
         self.prefixToTrajectory = input_reader.prefixToTrajectory
         self.avgLinkage = None
         self.whited_overlap_values = None
 
+        self.do_sanity_checks()
+
+    def do_sanity_checks(self):
+        self.check_commandline_inputs()
+        self.ensure_file_prefixes_map_to_trajectories()
+        #self.ensure_trajectories_exist() #Check performed during -T argument parsing instead
+        
+    def check_commandline_inputs(self):
+        if (self.indexToNpyFile == {}) and (self.prefixToTrajectory != {}):
+            raise Exception("ERROR! Given pdb trajectory (-t/T) but not given index file (-i). Output will return matrix indices instead of frame numbers or cluster representative structures.")
+        elif self.indexToNpyFile == {}:
+            print "Not given index file (-i). Clustering will return matrix indices, but not trajectory frame numbers or members/representatives."
+        elif (self.indexToNpyFile != {}) and(self.prefixToTrajectory == {}):
+            print "Given index file (-i) but not prefix-to-trajectory mapping (-t or -T). Clustering will return prefix and frame numbers of cluster members, but will not extract representatives."
+        elif (self.indexToNpyFile != {}) and (self.prefixToTrajectory != {}):
+            print "Given index file (-i) and prefix-to-trajectory mapping (-t or -T). Clustering will return prefix and frame numbers of cluster members, and will extract representatives."
+
+    def ensure_file_prefixes_map_to_trajectories(self):
+        if (self.prefixToTrajectory == {}) or (self.indexToNpyFile == {}):
+            print "No -i and/or -t/T arguments given - Skipping file-prefix-to-trajectory mapping completeness test"
+            return
+        else:        
+            allPrefixesSet = set(self.indexToPrefix.values())
+            for prefix in allPrefixesSet:
+                if not(prefix in self.prefixToTrajectory.keys()):
+                    raise Exception('File prefix %s not found in -t arguments (which are %r)' %(prefix, self.prefixToTrajectory.keys()))
+        return
+        
+    def ensure_trajectories_exist(self):
+        if self.prefixToTrajectory == {}:
+            print "No -t/T arguments given. Skipping trajectory-file-existence check"
+        else:
+            for trajectoryFile in self.prefixToTrajectory.values():
+                if not(os.path.exists(trajectoryFile)):
+                    raise Exception("Trajectory file %s not found" %(trajectoryFile))
+            
+            
     def kmeans_cluster(self,number_clusters):
 
         if self.whited_overlap_values == None:
@@ -268,20 +307,20 @@ class Cluster():
 
 
         
-        if (self.indexToFrame == None) and (self.indexToFileName != None):
+        if (self.indexToFrame == {}) and (self.indexToNpyFile != {}):
             repsFileName = '%scluster_reps.csv' %(outputPrefix)
             membersFileName = '%scluster_members.csv' %(outputPrefix)
-            print "Unable to extract frame numbers from file names. Writing out file names to %s and %s" %(repsFileName, membersFileName)
+            print "Unable to extract frame numbers from file names. Writing out npy file names to %s and %s" %(repsFileName, membersFileName)
             with open(repsFileName,'wb') as of:
-                cluster_rep_file_names = [str(self.indexToFileName[i]) for i in centroid_list]
+                cluster_rep_file_names = [str(self.indexToNpyFile[i]) for i in centroid_list]
                 of.write('\n'.join(cluster_rep_file_names))
             with open(membersFileName,'wb') as of:
                 for cluster in list_of_clusters:
-                    cluster_member_file_names =[str(self.indexToFileName[i]) for i in cluster] 
+                    cluster_member_file_names =[str(self.indexToNpyFile[i]) for i in cluster] 
                     of.write(' '.join(cluster_member_file_names))
                     of.write('\n')
             
-        elif (self.indexToFrame == None) and (self.indexToFileName == None):
+        elif (self.indexToFrame == {}) and (self.indexToNpyFile == {}):
             print "No matrix-index-to-trajectory-frame mapping given. Writing out matrix indices"
             with open('%scluster_reps.csv' %(outputPrefix),'wb') as of:
                 of.write('\n'.join([str(i) for i in centroid_list]))
@@ -290,7 +329,7 @@ class Cluster():
                     of.write(' '.join([str(i) for i in cluster]))
                     of.write('\n')
                     
-        elif (self.indexToFrame != None):
+        elif (self.indexToFrame != {}):
             repsFileName = '%scluster_reps.csv' %(outputPrefix)
             membersFileName = '%scluster_members.csv' %(outputPrefix)
             print "Matrix-index-to-trajectory-frame mapping given. Writing out trajectory frames to %s and %s." %(repsFileName, membersFileName)
@@ -302,39 +341,46 @@ class Cluster():
                 of.write('\n'.join(cluster_rep_strings))
             with open(membersFileName,'wb') as of:
                 for cluster in list_of_clusters:
-                    cluster_member_frame_nums =[str(self.indexToFrame[i]) for i in cluster] 
+                    cluster_member_frame_nums =[str(self.indexToFrame[i]) for i in cluster]
                     cluster_member_prefixes = [str(self.indexToPrefix[i]) for i in cluster]
                     cluster_member_strings = ['_'.join(i) for i in zip(cluster_member_prefixes, cluster_member_frame_nums)]
                     of.write(' '.join(cluster_member_strings))
                     of.write('\n')
-                    
-        if (self.indexToFrame != None) and (self.prefixToTrajectory != None):
-            print "Extracting trajectory frames"
-            extractNewWay = True
-            if extractNewWay == True:
-                matrixIndex2Cluster = {}
-                for index, centroid in enumerate(centroid_list):
-                    matrixIndex2Cluster[centroid] = index
-                clusterInd2CentFileName = self.extractFrames(matrixIndex2Cluster, outputPrefix, reps=True)
-            #else:
-            #    print 'list_of_clusters', list_of_clusters
-            #    for clusterIndex,cluster in enumerate(list_of_clusters):
-            #        print clusterIndex, cluster
-            #        outputDir = '%scluster%i' %(outputPrefix, clusterIndex)
-            #        if not os.path.exists(outputDir):
-            #            os.system('mkdir %s' %(outputDir))
-            #        #for matrixIndex in cluster:
-            #        #    self.extractFrame(matrixIndex, outputDir, rep=False)
-            #        self.extractFrame(centroid_list[clusterIndex], outputDir, rep=True)
-        return clusterInd2CentFileName
-                    
 
+        if (self.indexToFrame != {}) and (self.prefixToTrajectory != {}):
+            print "Extracting trajectory frames"
+            matrixIndex2Cluster = {}
+            for index, centroid in enumerate(centroid_list):
+                matrixIndex2Cluster[centroid] = index
+            clusterInd2CentFileName = self.extractFrames(matrixIndex2Cluster, outputPrefix, reps=True)
+        else:
+            clusterInd2CentFileName = {}
+        return clusterInd2CentFileName
+        
+    def outputAllFrames(self, list_of_clusters, outputPrefix):
+        ## check to make sure we'll be able to map all matrix indices to files
+        for clusterInd, cluster in enumerate(list_of_clusters):
+            #print cluster
+            #print indexToFrame.keys()
+            for matrixInd in cluster:
+                if not(matrixInd in self.indexToFrame.keys()):
+                    raise Exception('User requested all frame pdbs to be output to cluster directories, but the program is unable to map all overlap matrix indices to trajectory/frame combinations. Make sure that -t/-T and -i arguments cover all frames and prefixes. Index: %i Cluster: %i' %(matrixInd, clusterInd))
+
+        ## If all mappings exist, extract all relevant frames
+        matrixInd2Cluster = {}
+        for clusterInd, cluster in enumerate(list_of_clusters):
+            for matrixInd in cluster:
+                matrixInd2Cluster[matrixInd] = clusterInd
+        self.extractFrames(matrixInd2Cluster, outputPrefix, reps=False)
+        
+            
+    
     def extractFrames(self, matrixIndex2Cluster, outputPrefix, reps=False):
         framesToExtract = {}
         clusterInd2CentFileName = {}
         for thisMatrixIndex in matrixIndex2Cluster:
             thisCluster = matrixIndex2Cluster[thisMatrixIndex]
-            npyFileName = self.indexToFileName[thisMatrixIndex]
+            npyFileName = self.indexToNpyFile[thisMatrixIndex]
             npyFilePrefix = npyFileName.split('/')[-1].split('frame_')[0]
             frameNum = int(npyFileName.split('/')[-1].split('frame_')[-1].replace('.npy',''))
             prefixMatch = ''
@@ -345,11 +391,11 @@ class Cluster():
                         prefixMatch = trajPrefix
                     else: # If a matching prefix has already been found
                         raise Exception('ERROR - file %s matches prefix %s and %s' %(npyFileName, trajPrefix, prefixMatch))
-            ## If no prefix-to-pdb mapping was found, assume that the pdb is named the same as the npy file  
-            if prefixMatch == '':
-                trajFileName = npyFilePrefix + '.pdb'
-            else:
-                trajFileName = self.prefixToTrajectory[prefixMatch]
+            ## Disabled this block - All prefix-to-trajectory matching should be explicit. This caused an error when POVME was run whith a blank prefix
+            #if prefixMatch == '':
+            #    trajFileName = npyFilePrefix + '.pdb'
+            #else:
+            trajFileName = self.prefixToTrajectory[prefixMatch]
 
             ## Figure out the directory and filename that this frame should be written to    
             outputDir = '%scluster%i' %(outputPrefix, thisCluster)
@@ -367,7 +413,7 @@ class Cluster():
             framesToExtract[trajFileName][frameNum] = fullOutputFileName
             
         for trajFileName in framesToExtract:
-            frameCounter = 0
+            frameCounter = 1
             frameData = ''
             with open(trajFileName) as fo:
                 for line in fo:
@@ -380,11 +426,15 @@ class Cluster():
                                 of.write(frameData)
                         frameData = ''
                         frameCounter += 1
+                if frameData != '':
+                    thisOutputFileName = framesToExtract[trajFileName][frameCounter]
+                    with open(thisOutputFileName,'wb') as of:
+                        of.write(frameData)
         return clusterInd2CentFileName
         
-                
+    '''                
     def extractFrame(self, matrixIndex, outputDir, rep=False):
-        npyFileName = self.indexToFileName[matrixIndex]
+        npyFileName = self.indexToNpyFile[matrixIndex]
         npyFilePrefix = npyFileName.split('/')[-1].split('frame_')[0]
         frameNum = int(npyFileName.split('/')[-1].split('frame_')[-1].replace('.npy',''))
         prefixMatch = ''
@@ -415,7 +465,7 @@ class Cluster():
         
         with open(outputFileName,'wb') as of:
             of.write(frameData)
-            
+            '''            
     def generate_difference_maps(self, list_of_clusters, clusterInd2CentFileName, outputPrefix):
         print "Generating difference maps"
         #nFrames = len(frame_assignments)
@@ -428,8 +478,10 @@ class Cluster():
             nClusterFrames = len(cluster)
             thisClusterCounts = {}
             for matrixIndex in cluster:
-                npyFilename = self.indexToFileName[matrixIndex]
+                npyFilename = self.indexToNpyFile[matrixIndex]
                 points = numpy.load(npyFilename)
+                if len(points) == 0:
+                    continue
                 # If the list has intensity values
                 if points.shape[1]==4:
                     for point in points:
@@ -441,9 +493,9 @@ class Cluster():
                         tuplePoint = tuple(point)
                         allFrameCounts[tuplePoint] = allFrameCounts.get(tuplePoint,0) + (1.0/nFrames)
                         thisClusterCounts[tuplePoint] = thisClusterCounts.get(tuplePoint,0) + (1.0/nClusterFrames)
-                
+                        
             clusterCounts.append(thisClusterCounts)
-        
+            
         allPoints = numpy.array(allFrameCounts.keys())
         allFrameMap = peel.featureMap.fromPovmeList(allPoints, justCoords = True, skinDistance=2.)
         allFrameMap.data[:] = 0.0
@@ -483,7 +535,7 @@ mol addfile {%s} waitfor all
 mol addrep top
 #mol addrep !MOLID!
 mol modmaterial 2 top Transparent
-mol modstyle 2 top Isosurface 0.2500000 0 0 0 1 1
+mol modstyle 2 top Isosurface 0.2500000 2 0 0 1 1
 #mol modstyle 2 !MOLID! Isosurface 0.2500000 2 2 1 1 1
 #green
 mol modcolor 2 top ColorID 12
@@ -492,7 +544,7 @@ mol addfile {%s} waitfor all
 mol addrep top
 #mol addrep !MOLID!
 mol modmaterial 3 top Transparent
-mol modstyle 3 top Isosurface -0.7500000 0 0 0 1 1
+mol modstyle 3 top Isosurface -0.7500000 3 0 0 1 1
 #mol modstyle 3 !MOLID! Isosurface -0.2500000 3 2 1 1 1
 #red
 mol modcolor 3 top ColorID 1
@@ -548,8 +600,40 @@ mol modstyle 4 top NewCartoon 0.300000 10.000000 4.100000 0
         with open('%svisualizeAll.vmd' %(outputPrefix),'wb') as of:
             of.write(plotAll)
 
+        ## Write gobstopper view script
+        gobstopperViewHeader = '''
 
-                
+display projection Orthographic
+color Display Background white
+material add copy RTChrome
+material change ambient Material23 0.00000
+material change diffuse Material23 1.00000
+material change specular Material23 0.00000
+material change shininess Material23 0.00000
+material change mirror Material23 0.00000
+material change opacity Material23 0.00000
+material change outline Material23 0.00000
+material change outlinewidth Material23 0.00000
+material change transmode Material23 1.00000
+
+
+'''
+        templateGobstopperViewScript = '''
+
+mol new {!!!CLUSTER AVERAGE FILENAME!!!} waitfor all
+mol modstyle 0 top Isosurface 0.7500000 0 0 1 1 1
+#mol modstyle 0 !MOLID! Isosurface 0.2500000 0 1 1 1 1
+#white
+mol modcolor 0 top ColorID 8
+
+mol addrep top
+mol modstyle 1 top Isosurface 0.250000 1 0 1 1 1
+#blue
+mol modcolor 1 top ColorID 0 
+mol showrep top 1 0 
+
+
+'''
             
     # cluster parameter is a list of lists - each list is a cluster
     # Return values:
@@ -648,6 +732,9 @@ class main():
                             help='Set min, min:max, or min:max:skip values for number of clusters that the Kelley penalty can consider.')
         parser.add_argument('-o', nargs='?', default='',
                             help='Specify an output prefix.')
+        parser.add_argument('-a', action='store_true',
+                            help='Output all frames into cluster subdirectories (not just cluster reps).')
+        
         args = parser.parse_args(sys.argv[1:])
         #''' Initial options '''
         #command_input = {}
@@ -682,12 +769,7 @@ class main():
         
         #if command_input['indexToFrames'] =='':
         #print args.i
-        if args.i == None and ((args.t != None) or (args.T != None)): 
-            print "WARNING! Given pdb trajectory (-t/T) but not given index file (-i). Output will return matrix indices instead of frame numbers or cluster representative structures."
-        elif args.i == None:
-            print "Not given index file (-i). Clustering will return matrix indices, but not trajectory frame numbers or members/representatives."
-        elif args.i != None and ((args.t != None) or (args.T != None)): 
-            print "Given index file (-i) and prefix-to-trajectory mapping (-t or -T). Clustering will return prefix and frame numbers of cluster members, and will extract representatives."
+ 
 
         
 #        if command_input['pdb_file'] == '':
@@ -717,7 +799,8 @@ class main():
         #if args.i != None:
         csv_input.read_indexFile(args.i)
         csv_input.parse_traj_inputs(args.t, args.T)
-        print csv_input.prefixToTrajectory
+
+        #print csv_input.prefixToTrajectory
         #1/0
         #else:
             #If the user didn't specify an index file, make a dictionary that just returns the input number
@@ -727,7 +810,7 @@ class main():
 
         #coordinates = Cluster(csv_input.coordinates,csv_input.frames,csv_input.overlapMatrix,csv_input.frameToFileName)
         clustering_obj = Cluster(csv_input)
-        print args.n
+        #print args.n
         if args.n != None:
             if args.N != None:
                 raise Exception('Both -n and -N command line options specified.')
@@ -845,8 +928,13 @@ class main():
 
         clusterInd2CentFileName = clustering_obj.find_centroids(list_of_clusters, args.o)
 
+        ## If desired, output all frames in this cluster
+        if args.a == True:
+            clustering_obj.outputAllFrames(list_of_clusters, args.o)
+        
         ## Generate cluster characteristics
-        clustering_obj.generate_difference_maps(list_of_clusters, clusterInd2CentFileName, args.o)
+        if (clustering_obj.indexToFrame != {}) and (clustering_obj.prefixToTrajectory != {}):
+            clustering_obj.generate_difference_maps(list_of_clusters, clusterInd2CentFileName, args.o)
         
 
 

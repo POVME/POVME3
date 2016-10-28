@@ -1,0 +1,80 @@
+---------------------------------
+START
+---------------------------------
+[['GRIDSPACING', '1.0'], ['INCLUSIONSPHERE', '-2 0 2 5'], ['PDBFILENAME', 'trp.pdb'], ['DISTANCECUTOFF', '1.09'], ['CONVEXHULLEXCLUSION', 'none'], ['SEEDSPHERE', '-2 0 2 3'], ['CONTIGUOUSPOINTSCRITERIA', '3'], ['NUMPROCESSORS', '5'], ['OUTPUTFILENAMEPREFIX', './trp_'], ['COMPRESSOUTPUT', 'false']]
+
+If you use POVME in your research, please cite the following reference:
+  Durrant, J. D., C. A. de Oliveira, et al. (2011). "POVME: An algorithm
+  for measuring binding-pocket volumes." J Mol Graph Model 29(5): 773-776.
+
+Parameters:
+	OutputFilenamePrefix: ./trp_
+	PointsIncludeRegions: sphere at (-2.0, 0.0, 2.0), radius = 5.0
+	OutputFrameFilenamePrefix: ./trp_frameInfo/
+	MaxGrowIterations: 10000000000.0
+	GridSpacing: 1.0
+	NumProcessors: 5
+	ContiguousPocketSeedRegions: sphere at (-2.0, 0.0, 2.0), radius = 3.0
+	DistanceCutoff: 1.09
+	CompressOutput: False
+	PDBFileName: trp.pdb
+	ConvexHullExclusion: none
+	SaveRegions: False
+	ContiguousPointsCriteria: 3
+---------------------------------
+PARAMETERS DEFINED
+---------------------------------
+---------------------------------
+ABOUT TO LOAD RECEPTORS
+---------------------------------
+
+Reading frames from trp.pdb
+Too many processors requested (5 requested, vs 1 frames to analyze). Lowering number requested.
+	Further processing frame 1
+---------------------------------
+RECEPTORS LOADED
+---------------------------------
+
+
+Generating the pocket-encompassing point field
+
+Saving the point field as a PDB and NPY file
+	Point field saved to ./trp_frameInfo/inclusion.pdb to permit visualization
+	Point field saved to ./trp_frameInfo/inclusion.npy to optionally load for the volume calculation
+
+
+Saving the contiguous-pocket seed points as a PDB and NPY file
+	Contiguous-pocket seed points saved to ./trp_frameInfo/seed.pdb to permit visualization
+	Point field saved to ./trp_frameInfo/seed.npy to optionally load for the volume calculation
+
+Calculating the pocket volume of each frame
+Too many processors requested (5 requested, vs 1 frames to analyze). Lowering number requested.
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 1:  Volume 127.0 A^3  Surf. A. 102.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+VOLUMES CALCULATED
+---------------------------------
+
+FRAME        | VOLUME (A^3) | SURF. A. (A^2)
+-------------+--------------+----------------
+1            |   127.0      |   102.0
+
+Execution time = 2.25143694878 sec
+
+---------------------------------
+ABOUT TO CALCULATE OCCUPANCY AVERAGE
+---------------------------------
+---------------------------------
+CALCULATED OCCUPANCY AVERAGE
+---------------------------------
+---------------------------------
+ABOUT TO CALCULATE COLOR MAPS
+---------------------------------
+---------------------------------
+CALCULATED COLOR MAPS
+---------------------------------

@@ -1,6 +1,8 @@
-# Calculates the binding site overlap between different conformations of the same protein.
+# Calculates the binding site overlap between sets of POVME outputs.
 # Started July 9th, 2014
 # Celia Wong
+# Advised by Jeff Wagner
+# Amaro Lab, UCSD
 
 import numpy
 import sys
@@ -36,16 +38,25 @@ class Trajectory():
         expr = re.compile('frame_\d*.npy')
         #frameNo = re.findall(traj_file, 'frame_([0-9]+).npy')
         #frameNo = re.findall(traj_file, 'frame_([0-9]+)_aromatic.npy')
-        
-        count = 1
-        for i in range(len(traj_file)):
-            match_value = expr.search(traj_file[i])
-            if match_value:
-                self.volumetric_filename.append(traj_file[i])
-                self.frames += 1
-                self.coordinates.append(set([tuple(dummy_atom) for dummy_atom in numpy.load(traj_file[i])]))
-                self.frameToFileName[count] = traj_file[i]
-                count += 1
+        sortedFramesAndNames = [(int(re.findall('frame_([0-9]+).npy',name)[0]), name) for name in traj_file]
+        sortedFramesAndNames.sort(key=lambda x:x[0])
+        sortedNames = [i[1] for i in sortedFramesAndNames]
+        print sortedNames
+        self.frames = len(sortedNames)
+        for index, fileName in enumerate(sortedNames):
+            self.volumetric_filename.append(fileName)
+            self.coordinates.append(set([tuple(dummy_atom) for dummy_atom in numpy.load(fileName)]))
+            self.frameToFileName[index] = fileName
+            
+        #count = 0
+        #for i in range(len(traj_file)):
+        #    match_value = expr.search(traj_file[i])
+        #    if match_value:
+        #        self.volumetric_filename.append(traj_file[i])
+        #        self.frames += 1
+        #        self.coordinates.append(set([tuple(dummy_atom) for dummy_atom in numpy.load(traj_file[i])]))
+        #        self.frameToFileName[count] = traj_file[i]
+        #        count += 1
                 
                 
         #print self.volumetric_filename
@@ -145,6 +156,7 @@ class main():
         
         parser.add_option("-f", dest = "filename", action = "callback", callback = vararg_callback, help = "All files from POVME that you want to run similarity calculations on.")
         parser.add_option("-c", action = "store_true", dest="color", help = "run similarity calculations on colored output from POVME")
+        parser.add_option("--csv", action = "store_true", dest="csv", help = "save human-readable CSV distance matrices.")
         (options, args) = parser.parse_args(argv)
         
         #print command_input['traj_file']
@@ -153,6 +165,18 @@ class main():
         #file_input.read_traj(argv)
         file_input.read_traj(options.filename, options.color)
 
+
+
+        ''' Saving which index refers to which frame file for use in clustering '''
+        
+        frames_dict = file_input.frameToFileName
+        with open('indexMapToFrames.csv','wb') as csvfile:
+            fieldnames = ['index','frame']
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            
+            for i in frames_dict:
+                writer.writerow({"index": i, "frame" : frames_dict[i]})
+        
         overlap_value = Overlap(file_input.coordinates)
         aromatic_overlap = Overlap(file_input.aromatic_coordinates)
         hbondAcc_overlap = Overlap(file_input.hbondAcceptor_coordinates)
@@ -163,11 +187,30 @@ class main():
         
         '''Make a matrix of number of overlapping coordinates first'''
         
-        # Always calculate the overlapping points for volumetric 
+        # Always calculate the overlapping points for volumetric
+        overlapStyle = 2
         num_overlap = numpy.empty([file_input.frames,file_input.frames], dtype=float)
-        for f1 in range(num_frames):
-            for f2 in range(num_frames):
-                num_overlap[f1,f2] = overlap_value.number_overlap(f1, f2)
+        if overlapStyle == 1:
+            for f1 in range(num_frames):
+                for f2 in range(f1,num_frames):
+                    num_overlap[f1,f2] = overlap_value.number_overlap(f1, f2)
+        elif overlapStyle == 2:
+            allPointsSet = set()
+            for f1 in range(num_frames):
+                for coord in file_input.coordinates[f1]:
+                    allPointsSet.add(coord)
+            coord2vectPos = dict([(coord, i) for i, coord in enumerate(allPointsSet)])
+            nVectPos = len(allPointsSet)
+            vecPosMatrix = numpy.zeros((num_frames, nVectPos), dtype=numpy.bool)
+            for f1 in range(num_frames):
+                for point in file_input.coordinates[f1]:
+                    vecPosMatrix[f1,coord2vectPos[point]] = 1
+            for f1 in range(num_frames):
+                for f2 in range(f1,num_frames):
+                    #raise Exception('There\'s a problem here. In comparing two frames in chris condon\'s pockets, values >1 were found in the tanimoto matrix.')
+                    num_overlap[f1,f2] = numpy.count_nonzero(vecPosMatrix[f1,:] & vecPosMatrix[f2,:])
+                    num_overlap[f2,f1] = num_overlap[f1,f2]
+                    
         
         # Only calculate the colored option if the color option was set
         if (options.color):
@@ -193,7 +236,6 @@ class main():
 
         print "Starting Tanimoto calculations"
 
-        print "Overlap Matrix for Tanimoto calculation"
         tanimoto_matrix = numpy.empty([file_input.frames,file_input.frames],dtype=float)
         
         if (options.color):
@@ -222,6 +264,7 @@ class main():
                     colored_tanimoto_matrix[f1,f2] = average_similarity             
                     colored_tanimoto_matrix[f2,f1] = average_similarity
                 
+        print "Overlap Matrix for Tanimoto calculation"
         print tanimoto_matrix
         
         if (options.color):
@@ -233,10 +276,10 @@ class main():
             print hbondDon_tanimoto_matrix
             
         print "\n"
-                
-        numpy.savetxt(os.getcwd()+'/POVME_Tanimoto_matrix.csv', tanimoto_matrix, delimiter=',')
+        if (options.csv):
+            numpy.savetxt(os.getcwd()+'/POVME_Tanimoto_matrix.csv', tanimoto_matrix, delimiter=',')
         
-        if (options.color):
+        if (options.color) and (options.csv):
             numpy.savetxt(os.getcwd()+'/POVME_Tanimoto_matrix_aromatic.csv', aromatic_tanimoto_matrix, delimiter=',')
             numpy.savetxt(os.getcwd()+'/POVME_Tanimoto_matrix_hbondAcceptor.csv', hbondAcc_tanimoto_matrix, delimiter=',')
             numpy.savetxt(os.getcwd()+'/POVME_Tanimoto_matrix_hbondDonor.csv', hbondDon_tanimoto_matrix, delimiter=',')
@@ -270,6 +313,7 @@ class main():
                 
                     colored_tversky_matrix[f1,f2] = (hbondAcc_tversky_matrix[f1,f2] + hbondDon_tversky_matrix[f1,f2] + tversky_matrix[f1,f2] + aromatic_tversky_matrix[f1,f2])/4
 
+        print "Overlap Matrix for Tversky calculation"
         print tversky_matrix
         
         if (options.color):
@@ -282,10 +326,10 @@ class main():
             
         print "\n"
         
+        if (options.csv):
+            numpy.savetxt(os.getcwd()+'/POVME_Tversky_matrix.csv',tversky_matrix,delimiter=',')
         
-        numpy.savetxt(os.getcwd()+'/POVME_Tversky_matrix.csv',tversky_matrix,delimiter=',')
-        
-        if (options.color):
+        if (options.color) and (options.csv):
             numpy.savetxt(os.getcwd()+'/POVME_Tversky_matrix_aromatic.csv',aromatic_tversky_matrix,delimiter=',')        
             numpy.savetxt(os.getcwd()+'/POVME_Tversky_matrix_hbondAcceptor.csv',hbondAcc_tversky_matrix,delimiter=',')        
             numpy.savetxt(os.getcwd()+'/POVME_Tversky_matrix_hbondDonor.csv',hbondDon_tversky_matrix,delimiter=',')
@@ -299,17 +343,8 @@ class main():
             numpy.save('hbondAcc_tversky_matrix.npy', hbondAcc_tversky_matrix)
             numpy.save('hbondDon_tversky_matrix.npy', hbondDon_tversky_matrix)
                 
-        ''' Saving which index refers to which frame file for use in clustering '''
-        
-        frames_dict = file_input.frameToFileName
-        print "Map of index numbers to npy files"
-        print frames_dict
+        #print "Map of index numbers to npy files"
+        #print frames_dict
 
-        with open('indexMapToFrames.csv','wb') as csvfile:
-            fieldnames = ['index','frame']
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            
-            for i in frames_dict:
-                writer.writerow({"index": i, "frame" : frames_dict[i]})
             
 if __name__ == "__main__": main(sys.argv)

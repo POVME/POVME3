@@ -13,10 +13,15 @@ import textwrap
 import getopt
 from numpy.lib.recfunctions import append_fields
 import multiprocessing
+import warnings
 
 # POVME Pocket ID 1.0 is a program for identifying protein pockets and generating
 # appropriate pocket-encompassing inclusion spheres. These spheres, modified as required,
 # can then be used as POVME input.
+
+# Supress errors
+numpy.seterr(all='ignore')
+warnings.simplefilter("ignore") # no "One of the clusters is empty." warnings
 
 # Some classes are required to support the loading and manipulation of 3D molecular information
 

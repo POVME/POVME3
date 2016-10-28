@@ -111,7 +111,9 @@ class Multithreading():
             if num_processors <= 0: num_processors = cpu_count
 
             # reduce the number of processors if too many have been specified
-            if len(inputs) < num_processors: num_processors = len(inputs)
+            if len(inputs) < num_processors:
+                print 'Too many processors requested (%i requested, vs %i frames to analyze). Lowering number requested.' %(num_processors, len(inputs)) 
+                num_processors = len(inputs)
 
             if len(inputs) == 0: # if there are no inputs, there's nothing to do.
                 self.results = []
@@ -144,10 +146,14 @@ class Multithreading():
             processes = []
             for i in range(num_processors):
                 p = multiprocessing.Process(target=threads[i].runit, args=(running, mutex, results_queue, inputs_divided[i]))
+                p.daemon = True
                 p.start()
                 processes.append(p)
 
-            while running.value > 0: is_running = 0 # wait for everything to finish
+            while running.value > 0:
+                # wait for everything to finish 
+                is_running = 0 
+                time.sleep(1)
 
             # compile all results into one list
             for thread in threads:
@@ -175,6 +181,8 @@ class MultithreadingTaskGeneral:
         mutex.acquire()
         running.value -= 1
         mutex.release()
+        if self.results == 'ERROR':
+            running = -1
         results_queue.put(self.results)
 
     def value_func(self, item, results_queue): # so overwriting this function
@@ -678,24 +686,24 @@ component "data" value 3"""
     assert (nx * ny * nz) == N, "Something is wrong with the freq_mat array: it is not a prismatic shape"
 
     # 3. write the header and footer
-    if parameters['SaveVolumetricDensityDX'] == True:
-        if parameters['CompressOutput'] == True: dx_file = gzip.open(parameters['OutputFilenamePrefix'] + "volumetric_density.dx.gz",'wb')
-        else: dx_file = open(parameters['OutputFilenamePrefix'] + "volumetric_density.dx",'w')
+    #if parameters['SaveVolumetricDensityDX'] == True:
+    if parameters['CompressOutput'] == True: dx_file = gzip.open(parameters['OutputFrameFilenamePrefix'] + "volumetric_density.dx.gz",'wb')
+    else: dx_file = open(parameters['OutputFrameFilenamePrefix'] + "volumetric_density.dx",'w')
 
-        header = header_template % (nx, ny, nz, minx, miny, minz, resx, resy, resz, nx, ny, nz, N) # format the header
-        footer = footer_template # the footer needs no formatting
-        dx_file.write(header)
-        newline_counter = 1
-        for i in range(N): # write the data to the DX file
-            dx_file.write("%8.6e" % freq_mat[i,3])
-            if newline_counter == 3:
-                newline_counter = 0
-                dx_file.write("\n")
-            else:
-                dx_file.write(" ")
-            newline_counter += 1
-        dx_file.write(footer)
-        dx_file.close
+    header = header_template % (nx, ny, nz, minx, miny, minz, resx, resy, resz, nx, ny, nz, N) # format the header
+    footer = footer_template # the footer needs no formatting
+    dx_file.write(header)
+    newline_counter = 1
+    for i in range(N): # write the data to the DX file
+        dx_file.write("%8.6e" % freq_mat[i,3])
+        if newline_counter == 3:
+            newline_counter = 0
+            dx_file.write("\n")
+        else:
+            dx_file.write(" ")
+        newline_counter += 1
+    dx_file.write(footer)
+    dx_file.close
     return
 
 def determineMaxConvexHull(index_and_pdbs,parameters):
@@ -703,10 +711,10 @@ def determineMaxConvexHull(index_and_pdbs,parameters):
     all_surface_atoms = None
     for this_index, this_pdb in index_and_pdbs:
         # you may need to load it from disk if the user so specified
-        if parameters['UseDiskNotMemory'] == True: # so you need to load it from disk
-            pym_filename = this_pdb
-            this_pdb = pymolecule.Molecule()
-            this_pdb.fileio.load_pym_into(pym_filename)
+        #if parameters['UseDiskNotMemory'] == True: # so you need to load it from disk
+        pym_filename = this_pdb
+        this_pdb = pymolecule.Molecule()
+        this_pdb.fileio.load_pym_into(pym_filename)
         convex_hull_3d = ConvexHull()
 
         # get the coordinates of the non-hydrogen atoms (faster to discard hydrogens)
@@ -739,15 +747,18 @@ def determineMaxConvexHull(index_and_pdbs,parameters):
 
 
 def determineAvgConvexHull(index_and_pdbs,parameters):
+    ## THIS IS SUPER DANGEROUS - What if the user passes in different proteins?? Then the atom indices may not match up, so we can't just average their coordinates. I'll leave this code around, but the program will crash if anyone tries to use it!
+    raise Exception('There are currently serious potential problems with using a convex hull with the "average" setting.')
+    
     ## This takes the average positions of the atoms in the structures and makes a convex hull around that
     begintime = time.time() # measure execution time
     all_not_hydros = None
     for this_index, this_pdb in index_and_pdbs:
         # you may need to load it from disk if the user so specified
-        if parameters['UseDiskNotMemory'] == True: # so you need to load it from disk
-            pym_filename = this_pdb
-            this_pdb = pymolecule.Molecule()
-            this_pdb.fileio.load_pym_into(pym_filename)
+        #if parameters['UseDiskNotMemory'] == True: # so you need to load it from disk
+        pym_filename = this_pdb
+        this_pdb = pymolecule.Molecule()
+        this_pdb.fileio.load_pym_into(pym_filename)
         convex_hull_3d = ConvexHull()
 
         # get the coordinates of the non-hydrogen atoms (faster to discard hydrogens)
@@ -783,10 +794,10 @@ def determineFirstConvexHull(index_and_pdbs,parameters):
     for this_index, this_pdb in index_and_pdbs:
         if this_index == 1:
             # you may need to load it from disk if the user so specified
-            if parameters['UseDiskNotMemory'] == True: # so you need to load it from disk
-                pym_filename = this_pdb
-                this_pdb = pymolecule.Molecule()
-                this_pdb.fileio.load_pym_into(pym_filename)
+            #if parameters['UseDiskNotMemory'] == True: # so you need to load it from disk
+            pym_filename = this_pdb
+            this_pdb = pymolecule.Molecule()
+            this_pdb.fileio.load_pym_into(pym_filename)
             convex_hull_3d  = ConvexHull()
 
             # get the coordinates of the non-hydrogen atoms (faster to discard hydrogens)
@@ -826,6 +837,7 @@ class MultithreadingCalcVolumeTask(MultithreadingTaskGeneral):
         print 'STARTING CALC VOLUME'#,hp.heap()
         print '---------------------------------'
 
+
         frame_indx = item[0]
         pdb = item[1]
         parameters = item[2]
@@ -833,15 +845,24 @@ class MultithreadingCalcVolumeTask(MultithreadingTaskGeneral):
         pts = parameters['pts_orig'] # also works, so keep because faster
 
         # if the user wants to save empty points (points that are removed), then we need a copy of the original
-        if parameters['OutputEqualNumPointsPerFrame'] == True:
-            pts_orig_temp = pts.copy()
+        #if parameters['OutputEqualNumPointsPerFrame'] == True:
+        pts_orig_temp = pts.copy()
+        # Adjust for the coloring skin distance, to get the max possible # of points for color maps
+        color_skin_distance = 2
+        max_color_pts_fm = peel.featureMap.fromPovmeList(pts.copy(),
+                                                            skinDistance=color_skin_distance)
+        for i in range(int(color_skin_distance+1)):
+            max_color_pts_fm.grow_region()
+        max_color_pts = max_color_pts_fm.toPovmeList()
+        
+        
 
         # you may need to load it from disk if the user so specified
-        if parameters['UseDiskNotMemory'] == True: # so you need to load it from disk
-            pym_filename = pdb
-            pdb = pymolecule.Molecule()
-            pdb.fileio.load_pym_into(pym_filename)
-
+        #if parameters['UseDiskNotMemory'] == True: # so you need to load it from disk
+        pym_filename = pdb
+        pdb = pymolecule.Molecule()
+        pdb.fileio.load_pym_into(pym_filename)
+            
         # Strip out the ligand if the user left it in
         if parameters['DefinePocketByLigand'] != '':
             ligand_atoms = pdb.select_atoms({'resname_stripped':parameters['DefinePocketByLigand']})
@@ -871,28 +892,35 @@ class MultithreadingCalcVolumeTask(MultithreadingTaskGeneral):
 
         # keep only relevant atoms
         #if len(index_to_keep) > 0: close_pdb = pdb.selections.create_molecule_from_selection(index_to_keep) #NEWPYM
-        if len(index_to_keep) > 0: close_pdb = pdb.selections.get_molecule_from_selection(index_to_keep)
-
-        # get the vdw radii of each protein atom
-        vdw = numpy.ones(len(close_pdb.information.get_coordinates())) # so the default vdw is 1.0
-
-        # get vdw... you might want to fill this out with additional vdw values
-        vdw[numpy.nonzero(close_pdb.information.get_atom_information()['element_stripped'] == "H")[0]] = 1.2
-        vdw[numpy.nonzero(close_pdb.information.get_atom_information()['element_stripped'] == "C")[0]] = 1.7
-        vdw[numpy.nonzero(close_pdb.information.get_atom_information()['element_stripped'] == "N")[0]] = 1.55
-        vdw[numpy.nonzero(close_pdb.information.get_atom_information()['element_stripped'] == "O")[0]] = 1.52
-        vdw[numpy.nonzero(close_pdb.information.get_atom_information()['element_stripped'] == "F")[0]] = 1.47
-        vdw[numpy.nonzero(close_pdb.information.get_atom_information()['element_stripped'] == "P")[0]] = 1.8
-        vdw[numpy.nonzero(close_pdb.information.get_atom_information()['element_stripped'] == "S")[0]] = 1.8
-        #print sum(vdw==1)
-        #1/0
-        vdw = numpy.repeat(numpy.array([vdw]).T, len(pts), axis=1)
-        # now identify the points that are close to the protein atoms
-        dists = cdist(close_pdb.information.get_coordinates(), pts)
-        close_pt_index = numpy.nonzero((dists < (vdw + parameters['DistanceCutoff'])))[1]
-
-        # now keep the appropriate points
-        pts = numpy.delete(pts, close_pt_index, axis=0)
+        if len(index_to_keep) > 0:
+            close_pdb = pdb.selections.get_molecule_from_selection(index_to_keep)
+            #close_pdb = pdb.selections.get_molecule_from_selection(index_to_keep)
+            # get the vdw radii of each protein atom
+            vdw = numpy.ones(len(close_pdb.information.get_coordinates())) # so the default vdw is 1.0
+    
+            # get vdw... you might want to fill this out with additional vdw values
+            vdw[numpy.nonzero(close_pdb.information.get_atom_information()['element_stripped'] == "H")[0]] = 1.2
+            vdw[numpy.nonzero(close_pdb.information.get_atom_information()['element_stripped'] == "C")[0]] = 1.7
+            vdw[numpy.nonzero(close_pdb.information.get_atom_information()['element_stripped'] == "N")[0]] = 1.55
+            vdw[numpy.nonzero(close_pdb.information.get_atom_information()['element_stripped'] == "O")[0]] = 1.52
+            vdw[numpy.nonzero(close_pdb.information.get_atom_information()['element_stripped'] == "F")[0]] = 1.47
+            vdw[numpy.nonzero(close_pdb.information.get_atom_information()['element_stripped'] == "P")[0]] = 1.8
+            vdw[numpy.nonzero(close_pdb.information.get_atom_information()['element_stripped'] == "S")[0]] = 1.8
+            #print sum(vdw==1)
+            #1/0
+            vdw = numpy.repeat(numpy.array([vdw]).T, len(pts), axis=1)
+            # now identify the points that are close to the protein atoms
+            dists = cdist(close_pdb.information.get_coordinates(), pts)
+            close_pt_index = numpy.nonzero((dists < (vdw + parameters['DistanceCutoff'])))[1]
+    
+            # now keep the appropriate points
+            pts = numpy.delete(pts, close_pt_index, axis=0)
+            
+        ### If there are no atoms close to the inclusion region, put the desired behavior here
+        else:
+            log('ERROR: There are no atoms near the inclusion region.', parameters)
+            self.results = ['FAILURE']
+            return
 
         # exclude points outside convex hull
         if parameters['ConvexHullExclusion'].lower() == 'each':
@@ -940,7 +968,7 @@ class MultithreadingCalcVolumeTask(MultithreadingTaskGeneral):
 
 
         # Now, enforce contiguity if needed
-        if len(parameters['ContiguousPocketSeedRegions']) > 0 and len(pts) > 0:
+        if not(parameters['contig_pts'] is None):
             # first, for each point, determine how many neighbors it has
             cutoff_dist = parameters['GridSpacing'] * 1.01 * math.sqrt(3) # to count kiddy-corner points too
             pts_dists = squareform(pdist(pts))
@@ -950,11 +978,12 @@ class MultithreadingCalcVolumeTask(MultithreadingTaskGeneral):
             pts = pts[numpy.nonzero(neighbor_counts >= parameters['ContiguousPointsCriteria'])[0]]
 
             # get all the points in the defined parameters['ContiguousPocket'] seed regions
-            contig_pts = parameters['ContiguousPocketSeedRegions'][0].points_set(parameters['GridSpacing'])
-            for Contig in parameters['ContiguousPocketSeedRegions'][1:]: contig_pts = numpy.vstack((contig_pts, Contig.points_set(parameters['GridSpacing'])))
-            contig_pts = unique_rows(contig_pts)
+            contig_pts = parameters['contig_pts']
+            #contig_pts = parameters['ContiguousPocketSeedRegions'][0].points_set(parameters['GridSpacing'])
+            #for Contig in parameters['ContiguousPocketSeedRegions'][1:]: contig_pts = numpy.vstack((contig_pts, Contig.points_set(parameters['GridSpacing'])))
+            #contig_pts = unique_rows(contig_pts)
 
-            try: # error here if there are no points of contiguous seed region outside of protein volume.
+            try: # error here if there are no points of contiguous seed region inside of protein volume.
                 # now just get the ones that are not near the protein
                 contig_pts = pts[numpy.nonzero(cdist(contig_pts, pts) < 1e-7)[1]]
 
@@ -977,123 +1006,142 @@ class MultithreadingCalcVolumeTask(MultithreadingTaskGeneral):
 
         # now write the pdb and calculate the volume
         volume = len(pts) * math.pow(parameters['GridSpacing'],3)
+        
+        
+        #if parameters['SaveIndividualPocketVolumes'] == True:
+        frame_text = ""
+        frame_text = frame_text + "REMARK Frame " + str(frame_indx) + "\n"
+        frame_text = frame_text + "REMARK Volume = " + repr(volume) + " Cubic Angstroms\n"
+        frame_text = frame_text + numpy_to_pdb(pts,'X')
 
+        #if parameters['OutputEqualNumPointsPerFrame'] == True:
+        # you need to find the points that are in pts_deleted but not in pts
+        tmp = reduce(lambda x, y: x |  numpy.all(pts_orig_temp == y, axis=-1), pts, numpy.zeros(pts_orig_temp.shape[:1], dtype=numpy.bool))
+        indices = numpy.where(tmp)[0]
+        pts_deleted = numpy.delete(pts_orig_temp, indices, axis=0)
 
-        if parameters['SaveIndividualPocketVolumes'] == True:
+        pts_deleted = -99.*numpy.ones(pts_deleted.shape) # So extra points will be in an almost-certainly irrelevant place (-99,-99,-99). These can be easily hidden with your visualization software.
+        frame_text = frame_text + numpy_to_pdb(pts_deleted,'X',"XXX")
+
+        frame_text = frame_text + "END\n"
+
+        if parameters['CompressOutput'] == True: fl = gzip.open(parameters['OutputFrameFilenamePrefix'] + "frame_" + str(frame_indx) + ".pdb.gz", 'wb')
+        else: fl = open(parameters['OutputFrameFilenamePrefix'] + "frame_" + str(frame_indx) + ".pdb", 'w')
+        fl.write(frame_text)
+        fl.close()
+
+        extra_data_to_add = {}
+        #if ((parameters['SaveVolumetricDensityDX'] == True) or 
+        #    (parameters['SaveVolumetricDensityNpy'] == True) or
+        #    (parameters['SavePocketVolumesNumpy'] == True)): 
+        extra_data_to_add['SaveVolumetricDensity'] = pts
+
+        #if parameters['SaveColoredMap'] == True:
+        colorIntensityThreshold = 0.02
+        #By default, this will do all colors ('hbondAcceptor','hbondDonor','aromatic','hydrophobic', 'hydrophilic', 'hydrophobicity')
+        my_peel = peel.peel(pdb, peel.defaultParams)
+        
+        coloredMaps = my_peel.color_povme_map(pts, parameters['GridSpacing'], skin=color_skin_distance)
+        ### When this uses pts_copy, it colors features which may be buried on one map
+        #coloredMaps = my_peel.color_povme_map(pts_orig_temp, parameters['GridSpacing'])
+        extra_data_to_add['SaveColoredMap'] = coloredMaps
+        #if parameters['CalculateSurfaceArea'] == True:
+        ptsFeatureMap = peel.featureMap.fromPovmeList(pts, parameters['GridSpacing'], skinDistance = 2, justCoords = True)
+        grownPoints = ptsFeatureMap.grow_region(returnPointsAdded = True, ways = 6)
+        grownPointsSet = set([tuple(i) for i in grownPoints])
+        #print 'list(grownPointsSet)[0]', list(grownPointsSet)[0]
+        if coloredMaps['adjacency'].size != 0:    
+            adjacentPointsSet = set([tuple(i) for i in coloredMaps['adjacency'][:,:3]])
+        else:
+            adjacentPointsSet = set()
+        #print 'list(adjacentPointsSet)[0]',list(adjacentPointsSet)[0]
+        #surfacePointsFeatureMap = peel.featureMap.fromPovmeList(surfacePoints)
+        #my_algebra = peel.algebra()
+        #vecScoreFunc = lambda x, y: x | y
+        #surfaceFeatureMap = my_algebra.scoreOne([surfacePointsFeatureMap, coloredMaps['adjacency']], vecScoreFunc)
+        #surfA = surfaceFeatureMap.data
+        surfacePointsSet = grownPointsSet.intersection(adjacentPointsSet)
+        surfacePointsNpArray = numpy.array(list(surfacePointsSet))
+        
+        surfArea = len(surfacePointsNpArray) * parameters['GridSpacing']
+
+        frame_text = ""
+        frame_text = frame_text + "REMARK Frame " + str(frame_indx) + "\n"
+        frame_text = frame_text + "REMARK Feature Surface Area = " + repr(surfArea) + " Square Angstroms\n"
+        if coloredMaps['hydrophobic'].size != 0:
+            sumHydrophobic = numpy.sum(coloredMaps['hydrophobic'][:,3])
+        else:
+            sumHydrophobic = 0.
+        if coloredMaps['hydrophilic'].size != 0:
+            sumHydrophilic = numpy.sum(coloredMaps['hydrophilic'][:,3])
+        else:
+            sumHydrophilic = 0.
+        if sumHydrophobic + sumHydrophilic > 0:
+            hydrophobicFraction = sumHydrophobic / (sumHydrophobic + sumHydrophilic)
+        else:
+            hydrophobicFraction = 0.
+        frame_text = frame_text + "REMARK Hydrophobicity Fraction = " + repr(hydrophobicFraction) + "\n"
+        frame_text = frame_text + numpy_to_pdb(surfacePointsNpArray, 'X','XXX')
+
+        if parameters['CompressOutput'] == True:
+            of = gzip.open(parameters['OutputFrameFilenamePrefix'] + "frame_" + str(frame_indx) + "_surface.pdb.gz", 'wb')
+        else:
+            of = open(parameters['OutputFrameFilenamePrefix'] + "frame_" + str(frame_indx) + "_surface.pdb", 'wb')
+        of.write(frame_text)
+        of.close()
+                
+
+        surfA = len(surfacePointsSet) * pow(parameters['GridSpacing'], 3)
+        extra_data_to_add['CalculateSurfaceArea'] = surfA
+        #print "Surface Area for frame %r: %r" %(frame_indx, len(surfacePointsSet.intersection(adjacentPointsSet)))
+        #if parameters['SaveIndividualPocketVolumes'] == True:
+        for color in coloredMaps.keys():
+            #First make a copy of coloredMaps[color] that only contains the points over the intensity threshold
+            #print color, coloredMaps[color]
+            #log('AAAAA' + color + str(frame_indx), parameters)
+            thisMap = numpy.array(coloredMaps[color])
+            #if parameters['SavePocketVolumesNumpy'] == True:
+            numpy.save(parameters['OutputFrameFilenamePrefix'] + "frame_" + str(frame_indx) +'_' + color + ".npy", thisMap)
+            #log('BBBBB' + color + str(frame_indx), parameters)
+            #print thisMap
+            if len(thisMap) == 0:
+                overThresholdIndices = numpy.array([])
+                thisMapOverThreshold = numpy.array([])
+            else:
+                overThresholdIndices = thisMap[:,3]>colorIntensityThreshold
+                thisMapOverThreshold = thisMap[overThresholdIndices][:,:3]
+            #if len(overThresholdIndices) == 0:
+            #    continue
+            #log( 'CCCCC' + color + str(frame_indx), parameters)
+            #log('DDDDD' + color + str(frame_indx), parameters)
             frame_text = ""
             frame_text = frame_text + "REMARK Frame " + str(frame_indx) + "\n"
-            frame_text = frame_text + "REMARK Volume = " + repr(volume) + " Cubic Angstroms\n"
-            frame_text = frame_text + numpy_to_pdb(pts,'X')
+            frame_text = frame_text + "REMARK Feature Volume = " + repr(len(thisMapOverThreshold)) + " Cubic Angstroms\n"
+            frame_text = frame_text + numpy_to_pdb(thisMapOverThreshold,'X')
+            #log( 'EEEEE' + color + str(frame_indx), parameters)
+            #print color, overThreshold
+            #if parameters['OutputEqualNumPointsPerFrame'] == True:
+            # you need to find the points that are in pts_deleted but not in pts
+            #tmp = reduce(lambda x, y: x |  numpy.all(pts_orig_temp == y, axis=-1), thisMapOverThreshold, numpy.zeros(pts_orig_temp.shape[:1], dtype=numpy.bool))
+            #indices = numpy.where(tmp)[0]
+            #pts_deleted = numpy.delete(pts_orig_temp, indices, axis=0)
 
-            if parameters['OutputEqualNumPointsPerFrame'] == True:
-                # you need to find the points that are in pts_deleted but not in pts
-                tmp = reduce(lambda x, y: x |  numpy.all(pts_orig_temp == y, axis=-1), pts, numpy.zeros(pts_orig_temp.shape[:1], dtype=numpy.bool))
-                indices = numpy.where(tmp)[0]
-                pts_deleted = numpy.delete(pts_orig_temp, indices, axis=0)
-
-                pts_deleted = numpy.zeros(pts_deleted.shape) # So extra points will always be at the origin. These can be easily hidden with your visualization software.
-                frame_text = frame_text + numpy_to_pdb(pts_deleted,'X',"XXX")
+            #pts_deleted = numpy.zeros(pts_deleted.shape) # So extra points will always be at the origin. These can be easily hidden with your visualization software.
+            #The above commented out code should work but I was unable to debug it. Instead, here's a much simpler implementation
+            pts_deleted = -99.*numpy.ones((max_color_pts.shape[0]-thisMapOverThreshold.shape[0],3))
+            frame_text = frame_text + numpy_to_pdb(pts_deleted,'X',"XXX")
 
             frame_text = frame_text + "END\n"
 
-            if parameters['CompressOutput'] == True: fl = gzip.open(parameters['OutputFilenamePrefix'] + "frame_" + str(frame_indx) + ".pdb.gz", 'wb')
-            else: fl = open(parameters['OutputFilenamePrefix'] + "frame_" + str(frame_indx) + ".pdb", 'w')
+            if parameters['CompressOutput'] == True: fl = gzip.open(parameters['OutputFrameFilenamePrefix'] + "frame_" + str(frame_indx) +'_' + color + ".pdb.gz", 'wb')
+            else: fl = open(parameters['OutputFrameFilenamePrefix'] + "frame_" + str(frame_indx) +'_' + color + ".pdb", 'w')
             fl.write(frame_text)
             fl.close()
 
-        extra_data_to_add = {}
-        if ((parameters['SaveVolumetricDensityDX'] == True) or
-            (parameters['SaveVolumetricDensityNpy'] == True) or
-            (parameters['SavePocketVolumesNumpy'] == True)):
-            extra_data_to_add['SaveVolumetricDensity'] = pts
-
-        if parameters['SaveColoredMap'] == True:
-            import packages.binana.peel as peel
-            colorIntensityThreshold = 0.02
-            #By default, this will do all colors ('hbondAcceptor','hbondDonor','aromatic','hydrophobic', 'hydrophilic', 'hydrophobicity')
-            my_peel = peel.peel(pdb, peel.defaultParams)
-            coloredMaps = my_peel.color_povme_map(pts, parameters['GridSpacing'], skin=2.0)
-            ### When this uses pts_copy, it colors features which may be buried on one map
-            #coloredMaps = my_peel.color_povme_map(pts_orig_temp, parameters['GridSpacing'])
-            extra_data_to_add['SaveColoredMap'] = coloredMaps
-            if parameters['CalculateSurfaceArea'] == True:
-                ptsFeatureMap = peel.featureMap.fromPovmeList(pts, parameters['GridSpacing'], skinDistance = 2, justCoords = True)
-                grownPoints = ptsFeatureMap.grow_region(returnPointsAdded = True, ways = 6)
-                grownPointsSet = set([tuple(i) for i in grownPoints])
-                #print 'list(grownPointsSet)[0]', list(grownPointsSet)[0]
-                adjacentPointsSet = set([tuple(i) for i in coloredMaps['adjacency'][:,:3]])
-                #print 'list(adjacentPointsSet)[0]',list(adjacentPointsSet)[0]
-                #surfacePointsFeatureMap = peel.featureMap.fromPovmeList(surfacePoints)
-                #my_algebra = peel.algebra()
-                #vecScoreFunc = lambda x, y: x | y
-                #surfaceFeatureMap = my_algebra.scoreOne([surfacePointsFeatureMap, coloredMaps['adjacency']], vecScoreFunc)
-                #surfA = surfaceFeatureMap.data
-                surfacePointsSet = grownPointsSet.intersection(adjacentPointsSet)
-                surfacePointsNpArray = numpy.array(list(surfacePointsSet))
-
-                surfArea = len(surfacePointsNpArray) * parameters['GridSpacing']
-
-                frame_text = ""
-                frame_text = frame_text + "REMARK Frame " + str(frame_indx) + "\n"
-                frame_text = frame_text + "REMARK Feature Surface Area = " + repr(surfArea) + " Square Angstroms\n"
-                sumHydrophobic = numpy.sum(coloredMaps['hydrophobic'][:,3])
-                sumHydrophilic = numpy.sum(coloredMaps['hydrophilic'][:,3])
-                hydrophobicFraction = sumHydrophobic / (sumHydrophobic + sumHydrophilic)
-                frame_text = frame_text + "REMARK Hydrophobicity Score = " + repr(hydrophobicFraction) + "\n"
-                frame_text = frame_text + numpy_to_pdb(surfacePointsNpArray, 'X','XXX')
-
-                if parameters['CompressOutput'] == True:
-                    of = gzip.open(parameters['OutputFilenamePrefix'] + "frame_" + str(frame_indx) + "_surface.pdb.gz", 'wb')
-                else:
-                    of = open(parameters['OutputFilenamePrefix'] + "frame_" + str(frame_indx) + "_surface.pdb", 'wb')
-                of.write(frame_text)
-                of.close()
-
-
-                surfA = len(surfacePointsSet) * pow(parameters['GridSpacing'], 3)
-                extra_data_to_add['CalculateSurfaceArea'] = surfA
-                print "Surface Area for frame %r: %r" %(frame_indx, len(surfacePointsSet.intersection(adjacentPointsSet)))
-            if parameters['SaveIndividualPocketVolumes'] == True:
-                for color in coloredMaps.keys():
-                    #First make a copy of coloredMaps[color] that only contains the points over the intensity threshold
-                    #print color, coloredMaps[color]
-                    thisMap = numpy.array(coloredMaps[color])
-                    if len(thisMap) == 0:
-                        continue
-                    if parameters['SavePocketVolumesNumpy'] == True:
-                        numpy.save(parameters['OutputFilenamePrefix'] + "frame_" + str(frame_indx) +'_' + color + ".npy", thisMap)
-                    #print thisMap
-                    overThresholdIndices = thisMap[:,3]>colorIntensityThreshold
-                    #if len(overThresholdIndices) == 0:
-                    #    continue
-                    thisMapOverThreshold = thisMap[overThresholdIndices][:,:3]
-                    frame_text = ""
-                    frame_text = frame_text + "REMARK Frame " + str(frame_indx) + "\n"
-                    frame_text = frame_text + "REMARK Feature Volume = " + repr(len(thisMapOverThreshold)) + " Cubic Angstroms\n"
-                    frame_text = frame_text + numpy_to_pdb(thisMapOverThreshold,'X')
-                    #print color, overThreshold
-                    if parameters['OutputEqualNumPointsPerFrame'] == True:
-                        # you need to find the points that are in pts_deleted but not in pts
-                        #tmp = reduce(lambda x, y: x |  numpy.all(pts_orig_temp == y, axis=-1), thisMapOverThreshold, numpy.zeros(pts_orig_temp.shape[:1], dtype=numpy.bool))
-                        #indices = numpy.where(tmp)[0]
-                        #pts_deleted = numpy.delete(pts_orig_temp, indices, axis=0)
-
-                        #pts_deleted = numpy.zeros(pts_deleted.shape) # So extra points will always be at the origin. These can be easily hidden with your visualization software.
-                        #The above commented out code should work but I was unable to debug it. Instead, here's a much simpler implementation
-                        pts_deleted = numpy.zeros((pts_orig_temp.shape[0]-thisMapOverThreshold.shape[0],3))
-                        frame_text = frame_text + numpy_to_pdb(pts_deleted,'X',"XXX")
-
-                    frame_text = frame_text + "END\n"
-
-                    if parameters['CompressOutput'] == True: fl = gzip.open(parameters['OutputFilenamePrefix'] + "frame_" + str(frame_indx) +'_' + color + ".pdb.gz", 'wb')
-                    else: fl = open(parameters['OutputFilenamePrefix'] + "frame_" + str(frame_indx) +'_' + color + ".pdb", 'w')
-                    fl.write(frame_text)
-                    fl.close()
-
-        if parameters['CalculateSurfaceArea'] == True:
-            log("\tFrame " + str(frame_indx) + ":  Volume " + repr(volume) + " A^3  Surf. A. " + repr(surfA) + " A^2", parameters)
-        else:
-            log("\tFrame " + str(frame_indx) + ": " + repr(volume) + " A^3", parameters)
+        #if parameters['CalculateSurfaceArea'] == True:
+        log("\tFrame " + str(frame_indx) + ":  Volume " + repr(volume) + " A^3  Surf. A. " + repr(surfA) + " A^2", parameters)
+        #else:
+        #    log("\tFrame " + str(frame_indx) + ": " + repr(volume) + " A^3", parameters)
         self.results.append((frame_indx, volume, extra_data_to_add))
         print '---------------------------------'
         print 'FINISHING CALC VOLUME'#,hp.heap()
@@ -1103,7 +1151,7 @@ class MultithreadingCalcVolumeTask(MultithreadingTaskGeneral):
         #else: self.results.append((frame_indx, volume))
 
 class MultithreadingDefIncRegByLigTask(MultithreadingTaskGeneral):
-    '''A class for going through many frames of a trajectory and making a unified
+    '''A class for going through many frames of a trajectory and making a unified 
        inclusion region based on the ligand position in each'''
 
     def value_func(self, item, results_queue):
@@ -1120,21 +1168,23 @@ class MultithreadingDefIncRegByLigTask(MultithreadingTaskGeneral):
         parameters = item[2]
 
         # you may need to load it from disk if the user so specified
-        if parameters['UseDiskNotMemory'] == True: # so you need to load it from disk
-            pym_filename = pdb
-            pdb = pymolecule.Molecule()
-            pdb.fileio.load_pym_into(pym_filename)
+        #if parameters['UseDiskNotMemory'] == True: # so you need to load it from disk
+        pym_filename = pdb
+        pdb = pymolecule.Molecule()
+        pdb.fileio.load_pym_into(pym_filename)
 
         ligand_atoms = pdb.select_atoms({'resname_stripped':parameters['DefinePocketByLigand']})
+        print parameters['DefinePocketByLigand']
+        print ligand_atoms
         ligand_coords = pdb.get_coordinates()[ligand_atoms].round()
         ligand_coords_set = set([tuple(row) for row in ligand_coords])
         self.results.append(ligand_coords_set)
+        
+        
+        
 
 
-
-
-
-
+        
 class MultithreadingStringToMoleculeTask(MultithreadingTaskGeneral):
     '''A class for loading PDB frames (as strings) into pymolecule.Molecule objects.'''
 
@@ -1161,12 +1211,12 @@ class MultithreadingStringToMoleculeTask(MultithreadingTaskGeneral):
 
 
         log("\tFurther processing frame " + str(index), parameters)
-        if parameters['UseDiskNotMemory'] == False: # so load the whole trajectory into memory
-            self.results.append((index, tmp))
-        else: # save to disk, record filename
-            pym_filename = "." + os.sep + ".povme_tmp" + os.sep + "frame_" + str(index) + ".pym"
-            tmp.fileio.save_pym(pym_filename, save_bonds = True, save_filename=False, save_remarks=False, save_hierarchy=False, save_coordinates_undo_point=False)
-            self.results.append((index, pym_filename))
+        #if parameters['UseDiskNotMemory'] == False: # so load the whole trajectory into memory
+        #self.results.append((index, tmp))
+        #else: # save to disk, record filename
+        pym_filename = "." + os.sep + ".povme_tmp" + os.sep + "frame_" + str(index) + ".pym"
+        tmp.fileio.save_pym(pym_filename, save_bonds = True, save_filename=False, save_remarks=False, save_hierarchy=False, save_coordinates_undo_point=False)
+        self.results.append((index, pym_filename))
 
 class Region:
     '''A class for defining regions that will be filled with points.'''
@@ -1255,7 +1305,7 @@ class Region:
                                              gridYBotLeft, gridYTopRight,
                                              gridZBotLeft, gridZTopRight],
                                             reso, boolean=True)
-
+            
             cylFeatureMap.add_disc(peel.point(self.center), self.height, peel.point(self.axis), 0, self.radius, bidirectional=True)
             total_pts = cylFeatureMap.toPovmeList()[:,:3]
             total_pts = self.__snap(total_pts, reso)
@@ -1524,43 +1574,56 @@ class runit():
         parameters['GridSpacing'] = 1.0 # default
         parameters['PointsIncludeRegions'] = []
         parameters['PointsExcludeRegions'] = []
-        parameters['SavePoints'] = False # default
-        parameters['LoadPointsFilename'] = '' # default
+        parameters['SaveRegions'] = False # default
+        parameters['LoadInclusionPointsFilename'] = '' # default
+        parameters['LoadSeedPointsFilename'] = '' # default
         parameters['PDBFileName'] = "" # default
         parameters['DistanceCutoff'] = 1.09 # default is VDW radius of hydrogen
         parameters['DefinePocketByLigand'] = ''
-        parameters['ConvexHullExclusion'] = 'each'
+        parameters['ConvexHullExclusion'] = 'none'
         parameters['ContiguousPocketSeedRegions'] = []
         parameters['ContiguousPointsCriteria'] = 4
         parameters['NumProcessors'] = 4
         parameters['MaxGrowIterations'] = 1e10
-        parameters['UseDiskNotMemory'] = False
+        #parameters['UseDiskNotMemory'] = False
         #parameters['UsePyhull'] = False
         #parameters['UseScipyConvexHull'] = False
         parameters['OutputFilenamePrefix'] = "POVME_output." + time.strftime("%m-%d-%y") + "." + time.strftime("%H-%M-%S") + os.sep
-        parameters['SaveIndividualPocketVolumes'] = False
-        parameters['SavePocketVolumesTrajectory'] = False
-        parameters['SavePocketVolumesNumpy'] = False
-        parameters['OutputEqualNumPointsPerFrame'] = False
-        parameters['SaveTabbedVolumeFile'] = False
-        parameters['SaveVolumetricDensityDX'] = False
-        parameters['SaveVolumetricDensityNpy'] = False
-        parameters['SaveColoredMap'] = False
-        parameters['CalculateSurfaceArea'] = False
+        #parameters['SaveIndividualPocketVolumes'] = False
+        #parameters['SavePocketVolumesTrajectory'] = False
+        #parameters['SavePocketVolumesNumpy'] = False
+        #parameters['OutputEqualNumPointsPerFrame'] = False
+        #parameters['SaveTabbedVolumeFile'] = False
+        #parameters['SaveVolumetricDensityDX'] = False
+        #parameters['SaveVolumetricDensityNpy'] = False
+        #parameters['SaveColoredMap'] = False
+        #parameters['CalculateSurfaceArea'] = False
         parameters['CompressOutput'] = False
         parameters['NumFrames'] = -1 # This is a parameter for debugging purposes only.
 
         float_parameters = ["GridSpacing", "DistanceCutoff"]
-        boolean_parameters = ["SavePoints", "CompressOutput", "UseDiskNotMemory", "XXXUsePyhull","XXXUseScipyConvexHull",
-                              "SaveVolumetricDensityDX","SaveVolumetricDensityNpy", "OutputEqualNumPointsPerFrame",
-                              "SaveIndividualPocketVolumes", "SaveTabbedVolumeFile", "SavePocketVolumesTrajectory",
-                              "SavePocketVolumesNumpy", "SaveColoredMap", "CalculateSurfaceArea"]
+        boolean_parameters = ["CompressOutput"]
         int_parameters = ["NumFrames", "ContiguousPointsCriteria", "NumProcessors", "MaxGrowIterations"]
-        string_parameters = ["OutputFilenamePrefix", "PDBFileName", "LoadPointsFilename", "ConvexHullExclusion", "DefinePocketByLigand"]
+        string_parameters = ["OutputFilenamePrefix", "PDBFileName", "LoadInclusionPointsFilename", "LoadSeedPointsFilename", 
+                             "ConvexHullExclusion", "DefinePocketByLigand"]
+        other_parameters = ["InclusionSphere","InclusionBox","InclusionCylinder",
+                            "ExclusionSphere","ExclusionBox","ExclusionCylinder",
+                            "SeedSphere","SeedBox","SeedCylinder"]
+
+        ## Make a list of all the possible input parameters for config file validation
+        all_parameters = []
+        all_parameters += float_parameters
+        all_parameters += boolean_parameters
+        all_parameters += int_parameters
+        all_parameters += string_parameters
+        all_parameters += other_parameters
+        all_parameters_lower = [i.lower() for i in all_parameters]
 
         print config.entities
 
         for entity in config.entities:
+            if not(entity[0].lower() in all_parameters_lower):
+                raise Exception('%s is not a valid parameter. Valid parameters are: %r' %(entity[0],all_parameters))
             try:
                 index = [p.upper() for p in float_parameters].index(entity[0])
                 parameters[float_parameters[index]] = float(entity[1])
@@ -1583,7 +1646,7 @@ class runit():
             except: pass
 
             # Regions are handled separately for each parameter...
-            if entity[0] == "POINTSINCLUSIONSPHERE":
+            if entity[0].upper() == "INCLUSIONSPHERE":
                 Include = Region()
                 items = entity[1].split(' ')
                 Include.center[0] = float(items[0])
@@ -1592,7 +1655,7 @@ class runit():
                 Include.radius = float(items[3])
                 Include.region_type = "SPHERE"
                 parameters['PointsIncludeRegions'].append(Include)
-            elif entity[0] == "POINTSINCLUSIONBOX":
+            elif entity[0].upper() == "INCLUSIONBOX":
                 Include = Region()
                 items = entity[1].split(' ')
                 Include.center[0] = float(items[0])
@@ -1603,7 +1666,7 @@ class runit():
                 Include.box_dimen[2] = float(items[5])
                 Include.region_type = "BOX"
                 parameters['PointsIncludeRegions'].append(Include)
-            elif entity[0] == "POINTSINCLUSIONCYLINDER":
+            elif entity[0].upper() == "INCLUSIONCYLINDER":
                 Include = Region()
                 items = entity[1].split(' ')
                 Include.center[0] = float(items[0])
@@ -1616,7 +1679,7 @@ class runit():
                 Include.height = float(items[7])
                 Include.region_type = "CYLINDER"
                 parameters['PointsIncludeRegions'].append(Include)
-            if entity[0] == "CONTIGUOUSPOCKETSEEDSPHERE":
+            if entity[0].upper() == "SEEDSPHERE":
                 Contig = Region()
                 items = entity[1].split(' ')
                 Contig.center[0] = float(items[0])
@@ -1625,7 +1688,7 @@ class runit():
                 Contig.radius = float(items[3])
                 Contig.region_type = "SPHERE"
                 parameters['ContiguousPocketSeedRegions'].append(Contig)
-            elif entity[0] == "CONTIGUOUSPOCKETSEEDBOX":
+            elif entity[0].upper() == "SEEDBOX":
                 Contig = Region()
                 items = entity[1].split(' ')
                 Contig.center[0] = float(items[0])
@@ -1636,7 +1699,7 @@ class runit():
                 Contig.box_dimen[2] = float(items[5])
                 Contig.region_type = "BOX"
                 parameters['ContiguousPocketSeedRegions'].append(Contig)
-            elif entity[0] == "POINTSEXCLUSIONSPHERE":
+            elif entity[0].upper() == "EXCLUSIONSPHERE":
                 Exclude = Region()
                 items = entity[1].split(' ')
                 Exclude.center[0] = float(items[0])
@@ -1645,7 +1708,7 @@ class runit():
                 Exclude.radius = float(items[3])
                 Exclude.region_type = "SPHERE"
                 parameters['PointsExcludeRegions'].append(Exclude)
-            elif entity[0] == "POINTSEXCLUSIONBOX":
+            elif entity[0].upper() == "EXCLUSIONBOX":
                 Exclude = Region()
                 items = entity[1].split(' ')
                 Exclude.center[0] = float(items[0])
@@ -1661,9 +1724,18 @@ class runit():
         # If the output prefix includes a directory, create that directory if necessary
         if os.sep in parameters['OutputFilenamePrefix']:
             output_dirname = os.path.dirname(parameters['OutputFilenamePrefix'])
+            
             #if os.path.exists(output_dirname): shutil.rmtree(output_dirname) # So delete the directory if it already exists.
             try: os.mkdir(output_dirname)
             except: pass
+            
+        output_frame_dirname = parameters['OutputFilenamePrefix'] + 'frameInfo/'
+        parameters['OutputFrameFilenamePrefix'] = output_frame_dirname
+                    
+        try: os.mkdir(output_frame_dirname)
+        except: pass
+
+ 
 
         #Clear the log to remove data from previous runs
         clearLog(parameters)
@@ -1672,9 +1744,9 @@ class runit():
         log('', parameters)
 
         # create temp swap directory if needed
-        if parameters['UseDiskNotMemory'] == True:
-            if os.path.exists('.' + os.sep + '.povme_tmp'): shutil.rmtree('.' + os.sep + '.povme_tmp')
-            os.mkdir('.' + os.sep + '.povme_tmp')
+        #if parameters['UseDiskNotMemory'] == True:
+        if os.path.exists('.' + os.sep + '.povme_tmp'): shutil.rmtree('.' + os.sep + '.povme_tmp')
+        os.mkdir('.' + os.sep + '.povme_tmp')
 
         # print out parameters
         log("Parameters:", parameters)
@@ -1715,33 +1787,33 @@ class runit():
             if parameters['DefinePocketByLigand'] != '':
                 # Get all the ligand coordinates from all frames (rounded to nearest integer)
                 lig_coords = Multithreading([(index, pdb_object, parameters) for index, pdb_object in index_and_pdbs], parameters['NumProcessors'], MultithreadingDefIncRegByLigTask)
-
+                
                 # Put them all in one set
                 lig_coords_all_frames_set = set()
-                if len(lig_coords.results) == 0:
+                if len(lig_coords.results[0]) == 0:
                     log('ERROR: No ligand found with resname %s.' %(parameters['DefinePocketByLigand']))
                     raise Exception('ERROR: No ligand found resname %s.' %(parameters['DefinePocketByLigand']))
                 for frame_coords_set in lig_coords.results:
                     lig_coords_all_frames_set = lig_coords_all_frames_set.union(frame_coords_set)
-
+                
                 lig_coords_array = numpy.array(list(lig_coords_all_frames_set))
 
                 # Make a featureMap out of the points
-                inclusion_region_fm = peel.featureMap.fromPovmeList(lig_coords_array,
+                inclusion_region_fm = peel.featureMap.fromPovmeList(lig_coords_array, 
                                                                     skinDistance = 3)
-
+                                
                 #Take the positions of the ligand atoms and make them seed regions
                 contig_pts = inclusion_region_fm.toPovmeList()[:,:3]
-
+                
                 # Then grow the region by 3 angstroms
                 growIterations = int(numpy.round(3. / parameters['GridSpacing']))
                 for growIter in range(growIterations):
                     inclusion_region_fm.grow_region()
                 pts = inclusion_region_fm.toPovmeList()[:,:3]
-
-
-
-
+                                                                    
+                
+        
+        
         if (len(parameters['PointsIncludeRegions']) > 0): # so create the point file
 
             log("\nGenerating the pocket-encompassing point field", parameters)
@@ -1754,93 +1826,135 @@ class runit():
             else:
                 for Included in parameters['PointsIncludeRegions']: pts = numpy.vstack((pts, Included.points_set(parameters['GridSpacing'])))
             pts = unique_rows(pts)
-            # get all the points of the exclusion regions
-            if len(parameters['PointsExcludeRegions']) > 0:
-                pts_exclusion = parameters['PointsExcludeRegions'][0].points_set(parameters['GridSpacing'])
-                for Excluded in parameters['PointsExcludeRegions'][1:]: pts_exclusion = numpy.vstack((pts_exclusion, Excluded.points_set(parameters['GridSpacing'])))
-                pts_exclusion = unique_rows(pts_exclusion)
-                # remove the exclusion points from the inclusion points
-                # I think there ought to be a set-based way of doing this,
-                # but I'm going to go for the pairwise comparison.
-                # consider rewriting later
-                index_to_remove = numpy.nonzero(cdist(pts, pts_exclusion) < 1e-7)[0]
-                pts = numpy.delete(pts, index_to_remove, axis=0)
 
-        if (len(parameters['ContiguousPocketSeedRegions']) > 0):
-            # get all the contiguous points
-            if contig_pts == None:
-                contig_pts = parameters['ContiguousPocketSeedRegions'][0].points_set(parameters['GridSpacing'])
-                for Contig in parameters['ContiguousPocketSeedRegions'][1:]: contig_pts = numpy.vstack((contig_pts, Contig.points_set(parameters['GridSpacing'])))
+
+
+            
+        if (parameters['LoadInclusionPointsFilename'] != ''):
+            log("\nLoading the inclusion point-field NPY file...", parameters)
+            loadedPoints = numpy.load(parameters['LoadInclusionPointsFilename'])
+            if (pts is None):
+                pts = loadedPoints
             else:
-                for Contig in parameters['ContiguousPocketSeedRegions']: contig_pts = numpy.vstack((contig_pts, Contig.points_set(parameters['GridSpacing'])))
+                pts = numpy.vstack(pts,loadedPoints)
+        #else: parameters['pts_orig'] = pts
 
+
+            
+        # get all the points of the exclusion regions
+        if len(parameters['PointsExcludeRegions']) > 0:
+            pts_exclusion = parameters['PointsExcludeRegions'][0].points_set(parameters['GridSpacing'])
+            for Excluded in parameters['PointsExcludeRegions'][1:]: pts_exclusion = numpy.vstack((pts_exclusion, Excluded.points_set(parameters['GridSpacing'])))
+            pts_exclusion = unique_rows(pts_exclusion)
+            # remove the exclusion points from the inclusion points
+            # I think there ought to be a set-based way of doing this,
+            # but I'm going to go for the pairwise comparison.
+            # consider rewriting later
+            index_to_remove = numpy.nonzero(cdist(pts, pts_exclusion) < 1e-7)[0]
+            pts = numpy.delete(pts, index_to_remove, axis=0)
+
+
+        if pts is None: raise Exception('No inclusion region defined')
+        
+        pts = unique_rows(pts)
+        parameters['pts_orig'] = pts
+
+        ## Here's where we generate the seed region, if applicable. There may already be some points here if the user is using a ligand-defined pocket
+        if (len(parameters['ContiguousPocketSeedRegions']) > 0) or (parameters['LoadSeedPointsFilename'] != ''): 
+            if (len(parameters['ContiguousPocketSeedRegions']) > 0):
+                # get all the contiguous points
+                if contig_pts == None:
+                    contig_pts = parameters['ContiguousPocketSeedRegions'][0].points_set(parameters['GridSpacing'])
+                    for Contig in parameters['ContiguousPocketSeedRegions'][1:]: contig_pts = numpy.vstack((contig_pts, Contig.points_set(parameters['GridSpacing'])))
+                else:
+                    for Contig in parameters['ContiguousPocketSeedRegions']: contig_pts = numpy.vstack((contig_pts, Contig.points_set(parameters['GridSpacing'])))
+                        
+                contig_pts = unique_rows(contig_pts)      
+            
+            if (parameters['LoadSeedPointsFilename'] != ''):
+                log("\nLoading the seed point-field NPY file...", parameters)
+                loadedPoints = numpy.load(parameters['LoadSeedPointsFilename'])
+                if (contig_pts is None):
+                    contig_pts = loadedPoints
+                else:
+                    contig_pts = numpy.vstack(contig_pts,loadedPoints)
+            
             contig_pts = unique_rows(contig_pts)
-
-
+        
+        parameters['contig_pts'] = contig_pts
+        
         # save the points as PDB
-        if parameters['SavePoints'] == True:
+        #if parameters['SaveRegions'] == True:
 
-            # First, save the point field itself
+        # First, save the point field itself
 
-            log("\nSaving the point field as a PDB and NPY file", parameters)
+        log("\nSaving the point field as a PDB and NPY file", parameters)
 
-            points_filename = parameters['OutputFilenamePrefix'] + "point_field.pdb"
+        inclusion_points_pdb_filename = parameters['OutputFrameFilenamePrefix'] + "inclusion.pdb"
 
-            if parameters['CompressOutput'] == True: afile = gzip.open(points_filename + ".gz", 'wb')
-            else: afile = open(points_filename,'w')
+        if parameters['CompressOutput'] == True: afile = gzip.open(inclusion_points_pdb_filename + ".gz", 'wb')
+        else: afile = open(inclusion_points_pdb_filename,'w')
 
-            afile.write(numpy_to_pdb(pts, "X"))
+        afile.write(numpy_to_pdb(pts, "X"))
+        afile.close()
+
+        log("\tPoint field saved to " + inclusion_points_pdb_filename + " to permit visualization", parameters)
+        # save the points as npy if requested
+        inclusion_points_npy_filename = parameters['OutputFrameFilenamePrefix'] + "inclusion.npy"
+        numpy.save(inclusion_points_npy_filename, pts)
+        log("\tPoint field saved to " + inclusion_points_npy_filename + " to optionally load for the volume calculation", parameters)
+            
+        log("", parameters)
+
+        # Now, save the contiguous seed points as well, if specified.
+        #if (parameters['DefinePocketByLigand'] != '') or (len(parameters['ContiguousPocketSeedRegions']) > 0):
+        if not(contig_pts is None):
+            
+            
+            log("\nSaving the contiguous-pocket seed points as a PDB and NPY file", parameters)
+            
+            seed_points_pdb_filename = parameters['OutputFrameFilenamePrefix'] + "seed.pdb"
+
+            if parameters['CompressOutput'] == True: afile = gzip.open(seed_points_pdb_filename + ".gz", 'wb')
+            else: afile = open(seed_points_pdb_filename,'w')
+
+            afile.write(numpy_to_pdb(contig_pts, "X"))
             afile.close()
-
-            log("\tPoint field saved to " + points_filename + " to permit visualization", parameters)
+            
+            log("\tContiguous-pocket seed points saved to " + seed_points_pdb_filename + " to permit visualization", parameters)
             # save the points as npy if requested
-            numpy.save(points_filename + ".npy", pts)
-            log("\tPoint field saved to " + points_filename + ".npy to optionally load for the volume calculation", parameters)
-
+            seed_points_npy_filename = parameters['OutputFrameFilenamePrefix'] + "seed.npy"
+            numpy.save(seed_points_npy_filename, contig_pts)
+            log("\tPoint field saved to " + seed_points_npy_filename + " to optionally load for the volume calculation", parameters)
             log("", parameters)
-
-            # Now, save the contiguous seed points as well, if specified.
-            if (parameters['DefinePocketByLigand'] != '') or (len(parameters['ContiguousPocketSeedRegions']) > 0):
-
-
-                log("\nSaving the contiguous-pocket seed points as a PDB file", parameters)
-
-                points_filename = parameters['OutputFilenamePrefix'] + "contiguous_pocket_seed_points.pdb"
-
-                if parameters['CompressOutput'] == True: afile = gzip.open(points_filename + ".gz", 'wb')
-                else: afile = open(points_filename,'w')
-
-                afile.write(numpy_to_pdb(contig_pts, "X"))
-                afile.close()
-
-                log("\tContiguous-pocket seed points saved to " + points_filename + " to permit visualization", parameters)
-                log("", parameters)
 
 
         if parameters['PDBFileName'] != '': # so there's a PDB point specified for calculating the volume.
-            if (pts is None) and (parameters['DefinePocketByLigand'] == ''):
-                log("\nLoading the point-field NPY file...", parameters)
-                parameters['pts_orig'] = numpy.load(parameters['LoadPointsFilename'])
-            else: parameters['pts_orig'] = pts
 
-
+            
             # Precompute the convex hull to be used on all frames, if so requested
             if parameters['ConvexHullExclusion'].lower() == "max":
                 convexHull, crossProducts = determineMaxConvexHull(index_and_pdbs,parameters)
-            # This would be really complex to implement. Consider it for later maybe?
+            ## This would be really complex to implement. Consider it for later maybe?
             #if parameters['ConvexHullExclusion'].lower() == "min":
             #    pass
-            elif parameters['ConvexHullExclusion'].lower() == "average":
-                convexHull, crossProducts = determineAvgConvexHull(index_and_pdbs,parameters)
+            ## "average" requires the atom indices to reamin constant in order to get their average positions. If the user passes in different proteins, this will almost certainly break.    
+            #elif parameters['ConvexHullExclusion'].lower() == "average":
+            #    convexHull, crossProducts = determineAvgConvexHull(index_and_pdbs,parameters)
             elif parameters['ConvexHullExclusion'].lower() == "first":
                 convexHull, crossProducts = determineFirstConvexHull(index_and_pdbs,parameters)
-            else:
+            elif parameters['ConvexHullExclusion'].lower() == "each":
                 convexHull = None
                 crossProducts = None
+            elif parameters['ConvexHullExclusion'].lower() == "none":
+                convexHull = None
+                crossProducts = None
+            else:
+                raise Exception("ConvexHullExlusion keyword not recognized. '%s' is not one of ['none','max','first','each']" %(parameters['ConvexHullExclusion'].lower()))
             parameters['ConvexHullTriangles'] = convexHull
             parameters['ConvexHullCrossProducts'] = crossProducts
-
-
+                
+            
             log("Calculating the pocket volume of each frame", parameters)
             tmp = Multithreading([(index, pdb_object, parameters) for index, pdb_object in index_and_pdbs], parameters['NumProcessors'], MultithreadingCalcVolumeTask)
             print '---------------------------------'
@@ -1849,66 +1963,75 @@ class runit():
 
             # delete the temp swap directory if necessary
 
-            if parameters['UseDiskNotMemory'] == True:
-                if os.path.exists('.' + os.sep + '.povme_tmp'): shutil.rmtree('.' + os.sep + '.povme_tmp')
+            #if parameters['UseDiskNotMemory'] == True:
+            if os.path.exists('.' + os.sep + '.povme_tmp'): shutil.rmtree('.' + os.sep + '.povme_tmp')
 
             # display the results
             volume_dic = {}
             frame_dic = {}
             for index, result in enumerate(tmp.results):
+                
+                if result == 'FAILURE':
+                    log('A failure was logged in one of the threads. Aborting run!', parameters)
+                    raise Exception('A failure was logged in one of the threads. Aborting run!')
                 volume_dic[result[0]] = result[1]
                 frame_dic[result[0]] = index
             log("", parameters)
-            if parameters['CalculateSurfaceArea'] == True:
-                log("FRAME        | VOLUME (A^3) | SURF. A. (A^2)", parameters)
-                log("-------------+--------------+----------------", parameters)
-                for i in sorted(volume_dic.keys()): log(str(i).ljust(13) + "|   " + str(volume_dic[i]).ljust(11) + "|   " + str(tmp.results[frame_dic[i]][2]['CalculateSurfaceArea']), parameters)
-
-            else:
-                log("FRAME        | VOLUME (A^3)", parameters)
-                log("-------------+-------------", parameters)
-                for i in sorted(volume_dic.keys()): log(str(i).ljust(13) + "| " + str(volume_dic[i]), parameters)
+            #if parameters['CalculateSurfaceArea'] == True:
+            log("FRAME        | VOLUME (A^3) | SURF. A. (A^2)", parameters)
+            log("-------------+--------------+----------------", parameters)
+            for i in sorted(volume_dic.keys()): log(str(i).ljust(13) + "|   " + str(volume_dic[i]).ljust(11) + "|   " + str(tmp.results[frame_dic[i]][2]['CalculateSurfaceArea']), parameters)
+                
+            #else:
+            #    log("FRAME        | VOLUME (A^3)", parameters)
+            #    log("-------------+-------------", parameters)
+            #    for i in sorted(volume_dic.keys()): log(str(i).ljust(13) + "| " + str(volume_dic[i]), parameters)
 
             log("", parameters)
             log("Execution time = " + str(time.time()-start_time) + " sec", parameters)
             log("", parameters)
 
             # if the user requested a separate volume file, save that as well
-            if parameters['SaveTabbedVolumeFile'] == True:
-                if parameters['CompressOutput'] == True: f = gzip.open(parameters['OutputFilenamePrefix'] + "volumes.tabbed.txt.gz", 'wb')
-                else: f = open(parameters['OutputFilenamePrefix'] + "volumes.tabbed.txt", 'w')
+            #if parameters['SaveTabbedVolumeFile'] == True:
+            if parameters['CompressOutput'] == True: f = gzip.open(parameters['OutputFilenamePrefix'] + "volumes.tabbed.txt.gz", 'wb')
+            else: f = open(parameters['OutputFilenamePrefix'] + "volumes.tabbed.txt", 'w')
 
-                for i in sorted(volume_dic.keys()): f.write(str(i) + "\t" + str(volume_dic[i]) + "\n")
-                f.close()
+            for i in sorted(volume_dic.keys()): f.write(str(i) + "\t" + str(volume_dic[i]) + "\n")
+            f.close()
 
             # if the user wanted a single trajectory containing all the volumes, generate that here.
-            if parameters['SavePocketVolumesTrajectory'] == True:
-                if parameters['CompressOutput'] == True: traj_file = gzip.open(parameters['OutputFilenamePrefix'] + "volume_trajectory.pdb.gz", 'wb')
-                else: traj_file = open(parameters['OutputFilenamePrefix'] + "volume_trajectory.pdb", 'w')
+            #if parameters['SavePocketVolumesTrajectory'] == True:
+            if parameters['CompressOutput'] == True: traj_file = gzip.open(parameters['OutputFilenamePrefix'] + "volume_trajectory.pdb.gz", 'wb')
+            else: traj_file = open(parameters['OutputFilenamePrefix'] + "volume_trajectory.pdb", 'w')
+
+            for frame_index in range(1,len(volume_dic.keys())+1):
+                if parameters['CompressOutput'] == True: frame_file = gzip.open(parameters['OutputFrameFilenamePrefix'] + "frame_" + str(frame_index) + ".pdb.gz", 'rb')
+                else: frame_file = open(parameters['OutputFrameFilenamePrefix'] + "frame_" + str(frame_index) + ".pdb", 'r')
+
+                traj_file.write(frame_file.read())
+                frame_file.close()
+                if parameters['CompressOutput'] == True: os.remove(parameters['OutputFrameFilenamePrefix'] + "frame_" + str(frame_index) + ".pdb.gz")
+                else: os.remove(parameters['OutputFrameFilenamePrefix'] + "frame_" + str(frame_index) + ".pdb")
+                    
+
+            traj_file.close()
+
+            #if parameters['SaveColoredMap'] == True:
+            colors = tmp.results[0][2]['SaveColoredMap'].keys()
+            for color in colors:
+                if parameters['CompressOutput'] == True: traj_file = gzip.open(parameters['OutputFilenamePrefix'] + color + "_trajectory.pdb.gz", 'wb')
+                else: traj_file = open(parameters['OutputFilenamePrefix'] + color + "_volume_trajectory.pdb", 'w')
 
                 for frame_index in range(1,len(volume_dic.keys())+1):
-                    if parameters['CompressOutput'] == True: frame_file = gzip.open(parameters['OutputFilenamePrefix'] + "frame_" + str(frame_index) + ".pdb.gz", 'rb')
-                    else: frame_file = open(parameters['OutputFilenamePrefix'] + "frame_" + str(frame_index) + ".pdb", 'r')
+                    if parameters['CompressOutput'] == True: frame_file = gzip.open(parameters['OutputFrameFilenamePrefix'] + "frame_" + str(frame_index) + "_" + color + ".pdb.gz", 'rb')
+                    else: frame_file = open(parameters['OutputFrameFilenamePrefix'] + "frame_" + str(frame_index) + "_" + color + ".pdb", 'r')
 
                     traj_file.write(frame_file.read())
                     frame_file.close()
-
+                            
+                    if parameters['CompressOutput'] == True: os.remove(parameters['OutputFrameFilenamePrefix'] + "frame_" + str(frame_index) + "_" + color + ".pdb.gz")
+                    else: os.remove(parameters['OutputFrameFilenamePrefix'] + "frame_" + str(frame_index) + "_" + color + ".pdb")
                 traj_file.close()
-
-                if parameters['SaveColoredMap'] == True:
-                    colors = tmp.results[0][2]['SaveColoredMap'].keys()
-                    for color in colors:
-                        if parameters['CompressOutput'] == True: traj_file = gzip.open(parameters['OutputFilenamePrefix'] + color + "_trajectory.pdb.gz", 'wb')
-                        else: traj_file = open(parameters['OutputFilenamePrefix'] + color + "_volume_trajectory.pdb", 'w')
-
-                        for frame_index in range(1,len(volume_dic.keys())+1):
-                            if parameters['CompressOutput'] == True: frame_file = gzip.open(parameters['OutputFilenamePrefix'] + "frame_" + str(frame_index) + "_" + color + ".pdb.gz", 'rb')
-                            else: frame_file = open(parameters['OutputFilenamePrefix'] + "frame_" + str(frame_index) + "_" + color + ".pdb", 'r')
-
-                            traj_file.write(frame_file.read())
-                            frame_file.close()
-
-                        traj_file.close()
 
                 #        pdbText = ''
                 #        for frame in range(1, len(frame_dic) + 1):
@@ -1921,15 +2044,15 @@ class runit():
                 #        outFile.close()
 
             # If the user wanted a npz file of the frames, produce those here
-            if parameters['SavePocketVolumesNumpy'] == True:
-                #kwargs = {}
-                #fileObj = open(parameters['OutputFilenamePrefix'] + "frames.npz",'w')
-                for frame in range(len(frame_dic)):
-                    fileName = "%sframe_%s.npy" %(parameters['OutputFilenamePrefix'], frame+1)
-                    index = frame_dic[frame+1]
-                    numpy.save(fileName, tmp.results[index][2]['SaveVolumetricDensity'])
-                    #kwargs[str(frame)] = tmp.results[index][2]['SaveVolumetricDensityDX']
-                #numpy.savez(fileObj, **kwargs)
+            #if parameters['SavePocketVolumesNumpy'] == True:
+            #kwargs = {}
+            #fileObj = open(parameters['OutputFilenamePrefix'] + "frames.npz",'w')
+            for frame in range(len(frame_dic)):
+                fileName = "%sframe_%s.npy" %(parameters['OutputFrameFilenamePrefix'], frame+1)
+                index = frame_dic[frame+1]
+                numpy.save(fileName, tmp.results[index][2]['SaveVolumetricDensity'])
+                #kwargs[str(frame)] = tmp.results[index][2]['SaveVolumetricDensityDX']
+            #numpy.savez(fileObj, **kwargs)
 
 
 
@@ -1937,28 +2060,102 @@ class runit():
             print 'ABOUT TO CALCULATE OCCUPANCY AVERAGE'#,hp.heap()
             print '---------------------------------'
             # Generate the frame-averages volumetric density map
-            if parameters['SaveVolumetricDensityDX'] == True or parameters['SaveVolumetricDensityNpy'] == True:
-                unique_points = {}
+            #if parameters['SaveVolumetricDensityDX'] == True or parameters['SaveVolumetricDensityNpy'] == True:
+            unique_points = {}
 
+            overall_min = numpy.ones(3) * 1e100
+            overall_max = numpy.ones(3) * -1e100
+
+            for result in tmp.results:
+                pts = result[2]['SaveVolumetricDensity']
+
+                if len(pts) > 0:
+                    amin = numpy.min(pts,axis=0)
+                    amax = numpy.max(pts,axis=0)
+
+                    overall_min = numpy.min(numpy.vstack((overall_min, amin)), axis=0)
+                    overall_max = numpy.max(numpy.vstack((overall_max, amax)), axis=0)
+
+                    for pt in pts:
+                        pt_key = str(pt[0]) + ";" + str(pt[1]) + ";" + str(pt[2])
+                        try: unique_points[pt_key] = unique_points[pt_key] + 1
+                        except: unique_points[pt_key] = 1
+            if overall_min[0] == 1e100:
+                log("ERROR! Cannot save volumetric density file because no volumes present in any frame.", parameters)
+            else:
+                xpts = numpy.arange(overall_min[0], overall_max[0] + parameters['GridSpacing'], parameters['GridSpacing'])
+                ypts = numpy.arange(overall_min[1], overall_max[1] + parameters['GridSpacing'], parameters['GridSpacing'])
+                zpts = numpy.arange(overall_min[2], overall_max[2] + parameters['GridSpacing'], parameters['GridSpacing'])
+
+                all_pts = numpy.zeros((len(xpts)*len(ypts)*len(zpts), 4))
+                #print 'AVERAGE 50% '#,hp.heap()
+
+                i = 0
+                for x in xpts:
+                    for y in ypts:
+                        for z in zpts:
+                            key = str(x) + ";" + str(y) + ";" + str(z)
+                            all_pts[i][0] = x
+                            all_pts[i][1] = y
+                            all_pts[i][2] = z
+
+                            try: all_pts[i][3] = unique_points[key]
+                            except: pass
+
+                            i = i + 1
+
+                # convert the counts in the fourth column into frequencies
+                all_pts[:,3] = all_pts[:,3] / len(tmp.results)
+                # if the user requested a volumetric density map in dx format, then generate it here
+                #if parameters['SaveVolumetricDensityDX'] == True:
+                dx_freq(all_pts, parameters) # save the dx file
+                # if the user requested a volumetric density map in numpy format, then generate it here
+                #if parameters['SaveVolumetricDensityNpy'] == True:
+                fileName = parameters['OutputFrameFilenamePrefix'] + "volumetric_density.npy"
+                numpy.save(fileName, all_pts)
+
+
+
+            print '---------------------------------'
+            print 'CALCULATED OCCUPANCY AVERAGE'#,hp.heap()
+            print '---------------------------------'
+
+
+            #if parameters['SaveColoredMap'] == True:
+
+            print '---------------------------------'
+            print 'ABOUT TO CALCULATE COLOR MAPS'#,hp.heap()
+            print '---------------------------------'
+
+            #print 'Saving Colored Maps!'
+            #start = time.time()
+            
+
+            colors = tmp.results[0][2]['SaveColoredMap'].keys()
+            for color in colors:
                 overall_min = numpy.ones(3) * 1e100
                 overall_max = numpy.ones(3) * -1e100
+                unique_points = {}
 
+                # This can be massively simplified by just adding the densities together and then using featureMap's write dx function
+                # HOWEVER these are in point-list form, so they can't be directly added 
                 for result in tmp.results:
-                    pts = result[2]['SaveVolumetricDensity']
+                    pts = result[2]['SaveColoredMap'][color]
 
                     if len(pts) > 0:
-                        amin = numpy.min(pts,axis=0)
-                        amax = numpy.max(pts,axis=0)
+                        amin = numpy.min(pts,axis=0)[:3]
+                        amax = numpy.max(pts,axis=0)[:3]
 
                         overall_min = numpy.min(numpy.vstack((overall_min, amin)), axis=0)
                         overall_max = numpy.max(numpy.vstack((overall_max, amax)), axis=0)
 
                         for pt in pts:
                             pt_key = str(pt[0]) + ";" + str(pt[1]) + ";" + str(pt[2])
-                            try: unique_points[pt_key] = unique_points[pt_key] + 1
-                            except: unique_points[pt_key] = 1
+                            unique_points[pt_key] = unique_points.get(pt_key,0.) + pt[3]
+                #print 'time to sum maps for %s: %s' %(color, str(time.time()-start))
+                #start2=time.time()
                 if overall_min[0] == 1e100:
-                    log("ERROR! Cannot save volumetric density file because no volumes present in any frame.", parameters)
+                    log("WARNING! Cannot save color file for %s because no color present in any frame." %(color), parameters)
                 else:
                     xpts = numpy.arange(overall_min[0], overall_max[0] + parameters['GridSpacing'], parameters['GridSpacing'])
                     ypts = numpy.arange(overall_min[1], overall_max[1] + parameters['GridSpacing'], parameters['GridSpacing'])
@@ -1979,89 +2176,19 @@ class runit():
                                 except: pass
 
                                 i = i + 1
-
+                    #print 'time to linearize array: ', time.time()-start2
+                    #start3=time.time()
                     # convert the counts in the fourth column into frequencies
                     all_pts[:,3] = all_pts[:,3] / len(tmp.results)
-                    # if the user requested a volumetric density map in dx format, then generate it here
-                    if parameters['SaveVolumetricDensityDX'] == True:
-                        dx_freq(all_pts, parameters) # save the dx file
-                    # if the user requested a volumetric density map in numpy format, then generate it here
-                    if parameters['SaveVolumetricDensityNpy'] == True:
-                        fileName = parameters['OutputFilenamePrefix'] + "volumetric_density.npy"
-                        numpy.save(fileName, all_pts)
-
-
-
+                    colorParams = parameters.copy()
+                    colorParams['OutputFrameFilenamePrefix'] = colorParams.get('OutputFrameFilenamePrefix','')+color+'_'
+                    dx_freq(all_pts, colorParams) # save the dx file
+                    #if parameters['SaveVolumetricDensityNpy'] == True:
+                    numpy.save(colorParams['OutputFrameFilenamePrefix']+'volumetric_density.npy', all_pts)
+                    #print 'time to save map for %s: %s' %(color, str(time.time()-start3))
             print '---------------------------------'
-            print 'CALCULATED OCCUPANCY AVERAGE'#,hp.heap()
+            print 'CALCULATED COLOR MAPS'#,hp.heap()
             print '---------------------------------'
-
-            print '---------------------------------'
-            print 'ABOUT TO CALCULATE COLOR MAPS'#,hp.heap()
-            print '---------------------------------'
-
-            if parameters['SaveColoredMap'] == True:
-                #print 'Saving Colored Maps!'
-                start = time.time()
-
-                overall_min = numpy.ones(3) * 1e100
-                overall_max = numpy.ones(3) * -1e100
-                colors = tmp.results[0][2]['SaveColoredMap'].keys()
-                for color in colors:
-                    unique_points = {}
-
-                    # This can be massively simplified by just adding the densities together and then using featureMap's write dx function
-                    # HOWEVER these are in point-list form, so they can't be directly added
-                    for result in tmp.results:
-                        pts = result[2]['SaveColoredMap'][color]
-
-                        if len(pts) > 0:
-                            amin = numpy.min(pts,axis=0)[:3]
-                            amax = numpy.max(pts,axis=0)[:3]
-
-                            overall_min = numpy.min(numpy.vstack((overall_min, amin)), axis=0)
-                            overall_max = numpy.max(numpy.vstack((overall_max, amax)), axis=0)
-
-                            for pt in pts:
-                                pt_key = str(pt[0]) + ";" + str(pt[1]) + ";" + str(pt[2])
-                                unique_points[pt_key] = unique_points.get(pt_key,0.) + pt[3]
-                    #print 'time to sum maps for %s: %s' %(color, str(time.time()-start))
-                    start2=time.time()
-                    if overall_min[0] == 1e100:
-                        log("WARNING! Cannot save color file for %s because no color present in any frame." %(color), parameters)
-                    else:
-                        xpts = numpy.arange(overall_min[0], overall_max[0] + parameters['GridSpacing'], parameters['GridSpacing'])
-                        ypts = numpy.arange(overall_min[1], overall_max[1] + parameters['GridSpacing'], parameters['GridSpacing'])
-                        zpts = numpy.arange(overall_min[2], overall_max[2] + parameters['GridSpacing'], parameters['GridSpacing'])
-
-                        all_pts = numpy.zeros((len(xpts)*len(ypts)*len(zpts), 4))
-
-                        i = 0
-                        for x in xpts:
-                            for y in ypts:
-                                for z in zpts:
-                                    key = str(x) + ";" + str(y) + ";" + str(z)
-                                    all_pts[i][0] = x
-                                    all_pts[i][1] = y
-                                    all_pts[i][2] = z
-
-                                    try: all_pts[i][3] = unique_points[key]
-                                    except: pass
-
-                                    i = i + 1
-                        #print 'time to linearize array: ', time.time()-start2
-                        start3=time.time()
-                        # convert the counts in the fourth column into frequencies
-                        all_pts[:,3] = all_pts[:,3] / len(tmp.results)
-                        colorParams = parameters.copy()
-                        colorParams['OutputFilenamePrefix'] = colorParams.get('OutputFilenamePrefix','')+color+'_'
-                        dx_freq(all_pts, colorParams) # save the dx file
-                        if parameters['SaveVolumetricDensityNpy'] == True:
-                            numpy.save(colorParams['OutputFilenamePrefix'], all_pts)
-                        #print 'time to save map for %s: %s' %(color, str(time.time()-start3))
-                print '---------------------------------'
-                print 'CALCULATED COLOR MAPS'#,hp.heap()
-                print '---------------------------------'
 
 
 if __name__ == "__main__": dorun = runit(sys.argv)

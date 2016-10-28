@@ -657,7 +657,8 @@ proc ::povme2::povme2_addshape {color {mode inclusion} {shape_str ""} } {
     set ::povme2::shape_x [format {%0.3f} [lindex $coords 0]] ;# find the center of the entire molecule
     set ::povme2::shape_y [format {%0.3f} [lindex $coords 1]]
     set ::povme2::shape_z [format {%0.3f} [lindex $coords 2]]
-    set ::povme2::shape_r [format {%0.3f} [veclength $size]]
+    #set ::povme2::shape_r [format {%0.3f} [veclength $size]]
+    set ::povme2::shape_r [format {%0.3f} 10 ]
     set ::povme2::shape_width [format {%0.3f} [veclength $size]]
     set ::povme2::shape_height [format {%0.3f} [veclength $size]]
     set ::povme2::shape_depth [format {%0.3f} [veclength $size]]
@@ -1161,7 +1162,7 @@ proc ::povme2::make_input_file {{filename "povme_input.ini"}} {
     set shape_z [lindex $shape_str 4]
     if { $shape == "sphere" } {
       set shape_r [lindex $shape_str 6]
-      puts $infile "PointsInclusionSphere\t$shape_x $shape_y $shape_z $shape_r"
+      puts $infile "InclusionSphere\t$shape_x $shape_y $shape_z $shape_r"
     } elseif { $shape == "prism" } {
       set shape_width [lindex $shape_str 6]
       set shape_height [lindex $shape_str 7]
@@ -1170,7 +1171,7 @@ proc ::povme2::make_input_file {{filename "povme_input.ini"}} {
       if {$shape_height < 0} {set shape_height [expr "-1.0 * $shape_height"]} ;# can't have negative widths, etc.
       if {$shape_depth < 0} {set shape_depth [expr "-1.0 * $shape_depth"]} ;# can't have negative widths, etc.
       #puts $infile "PointsInclusionBox\t[expr "$shape_x - $shape_width"] [expr "$shape_y - $shape_height"] [expr "$shape_z - $shape_depth"] [expr 2.0 * $shape_width] [expr 2.0 * $shape_height] [expr 2.0 * $shape_depth]"
-      puts $infile "PointsInclusionBox\t$shape_x $shape_y $shape_z [expr 2.0 * $shape_width] [expr 2.0 * $shape_height] [expr 2.0 * $shape_depth]"
+      puts $infile "InclusionBox\t$shape_x $shape_y $shape_z [expr 2.0 * $shape_width] [expr 2.0 * $shape_height] [expr 2.0 * $shape_depth]"
     } elseif { $shape == "cylinder" } {
       set shape_width [lindex $shape_str 6]
       set shape_height [lindex $shape_str 7]
@@ -1178,7 +1179,7 @@ proc ::povme2::make_input_file {{filename "povme_input.ini"}} {
       set shape_r [lindex $shape_str 10]
       set point1x [expr "$shape_x - $shape_width"]; set point1y [expr "$shape_y - $shape_height"]; set point1z [expr "$shape_z - $shape_depth"]
       set point2x [expr "$shape_x + $shape_width"]; set point2y [expr "$shape_y + $shape_height"]; set point2z [expr "$shape_z + $shape_depth"]
-      puts $infile "PointsInclusionCylinder\t$point1x $point1y $point1z $point2x $point2y $point2z $shape_r"
+      puts $infile "InclusionCylinder\t$point1x $point1y $point1z $point2x $point2y $point2z $shape_r"
     }
   }
   foreach shape_str $::povme2::exclusion_list {
@@ -1188,7 +1189,7 @@ proc ::povme2::make_input_file {{filename "povme_input.ini"}} {
     set shape_z [lindex $shape_str 4]
     if { $shape == "sphere" } {
       set shape_r [lindex $shape_str 6]
-      puts $infile "PointsExclusionSphere\t$shape_x $shape_y $shape_z $shape_r"
+      puts $infile "ExclusionSphere\t$shape_x $shape_y $shape_z $shape_r"
     } elseif { $shape == "prism" } {
       set shape_width [lindex $shape_str 6]
       set shape_height [lindex $shape_str 7]
@@ -1197,7 +1198,7 @@ proc ::povme2::make_input_file {{filename "povme_input.ini"}} {
       if {$shape_height < 0} {set shape_height [expr "-1.0 * $shape_height"]} ;# can't have negative widths, etc.
       if {$shape_depth < 0} {set shape_depth [expr "-1.0 * $shape_depth"]} ;# can't have negative widths, etc.
       #puts $infile "PointsExclusionBox\t[expr "$shape_x - $shape_width"] [expr "$shape_y - $shape_height"] [expr "$shape_z - $shape_depth"] [expr 2.0 * $shape_width] [expr 2.0 * $shape_height] [expr 2.0 * $shape_depth]"
-      puts $infile "PointsExclusionBox\t$shape_x $shape_y $shape_z [expr 2.0 * $shape_width] [expr 2.0 * $shape_height] [expr 2.0 * $shape_depth]"
+      puts $infile "ExclusionBox\t$shape_x $shape_y $shape_z [expr 2.0 * $shape_width] [expr 2.0 * $shape_height] [expr 2.0 * $shape_depth]"
     } elseif { $shape == "cylinder" } {
       set shape_width [lindex $shape_str 6]
       set shape_height [lindex $shape_str 7]
@@ -1205,7 +1206,7 @@ proc ::povme2::make_input_file {{filename "povme_input.ini"}} {
       set shape_r [lindex $shape_str 10]
       set point1x [expr "$shape_x - $shape_width"]; set point1y [expr "$shape_y - $shape_height"]; set point1z [expr "$shape_z - $shape_depth"]
       set point2x [expr "$shape_x + $shape_width"]; set point2y [expr "$shape_y + $shape_height"]; set point2z [expr "$shape_z + $shape_depth"]
-      puts $infile "PointsExclusionCylinder\t$point1x $point1y $point1z $point2x $point2y $point2z $shape_r"
+      puts $infile "ExclusionCylinder\t$point1x $point1y $point1z $point2x $point2y $point2z $shape_r"
     }
   }
   foreach shape_str $::povme2::contig_list {
@@ -1215,7 +1216,7 @@ proc ::povme2::make_input_file {{filename "povme_input.ini"}} {
     set shape_z [lindex $shape_str 4]
     if { $shape == "sphere" } {
       set shape_r [lindex $shape_str 6]
-      puts $infile "ContiguousPocketSeedSphere\t$shape_x $shape_y $shape_z $shape_r"
+      puts $infile "SeedSphere\t$shape_x $shape_y $shape_z $shape_r"
     } elseif { $shape == "prism" } {
       set shape_width [lindex $shape_str 6]
       set shape_height [lindex $shape_str 7]
@@ -1224,7 +1225,7 @@ proc ::povme2::make_input_file {{filename "povme_input.ini"}} {
       if {$shape_height < 0} {set shape_height [expr "-1.0 * $shape_height"]} ;# can't have negative widths, etc.
       if {$shape_depth < 0} {set shape_depth [expr "-1.0 * $shape_depth"]} ;# can't have negative widths, etc.
       #puts $infile "ContinuousPocketSeedBox\t[expr "$shape_x - $shape_width"] [expr "$shape_y - $shape_height"] [expr "$shape_z - $shape_depth"] [expr 2.0 * $shape_width] [expr 2.0 * $shape_height] [expr 2.0 * $shape_depth]"
-      puts $infile "ContinuousPocketSeedBox\t$shape_x $shape_y $shape_z [expr 2.0 * $shape_width] [expr 2.0 * $shape_height] [expr 2.0 * $shape_depth]"
+      puts $infile "SeedBox\t$shape_x $shape_y $shape_z [expr 2.0 * $shape_width] [expr 2.0 * $shape_height] [expr 2.0 * $shape_depth]"
     } elseif { $shape == "cylinder" } {
       set shape_width [lindex $shape_str 6]
       set shape_height [lindex $shape_str 7]
@@ -1232,11 +1233,11 @@ proc ::povme2::make_input_file {{filename "povme_input.ini"}} {
       set shape_r [lindex $shape_str 10]
       set point1x [expr "$shape_x - $shape_width"]; set point1y [expr "$shape_y - $shape_height"]; set point1z [expr "$shape_z - $shape_depth"]
       set point2x [expr "$shape_x + $shape_width"]; set point2y [expr "$shape_y + $shape_height"]; set point2z [expr "$shape_z + $shape_depth"]
-      puts $infile "ContinuousPocketSeedCylinder\t$point1x $point1y $point1z $point2x $point2y $point2z $shape_r"
+      puts $infile "SeedCylinder\t$point1x $point1y $point1z $point2x $point2y $point2z $shape_r"
     }
   }
   puts $infile "DistanceCutoff\t$::povme2::distance_cutoff"
-  puts $infile "SavePoints\t[::povme2::num_to_bool $::povme2::make_point_field_pdb]"
+  #puts $infile "SavePoints\t[::povme2::num_to_bool $::povme2::make_point_field_pdb]"
   puts $infile "ConvexHullExclusion\t[::povme2::num_to_bool $::povme2::exclude_points_outside_convex_hull]"
   if {$::povme2::use_contiguous_points == "True"} { ;# handle contiguous points
     # seed sphere
@@ -1245,14 +1246,14 @@ proc ::povme2::make_input_file {{filename "povme_input.ini"}} {
   }
   puts $infile "OutputFilenamePrefix\t$::povme2::output_filename_prefix"
   puts $infile "CompressOutput\t[::povme2::num_to_bool $::povme2::compress_output]"
-  puts $infile "SaveIndividualPocketVolumes\t[::povme2::num_to_bool $::povme2::separate_volume_pdbs]"
-  puts $infile "SavePocketVolumesTrajectory\t[::povme2::num_to_bool $::povme2::volume_trajectory]"
-  puts $infile "OutputEqualNumPointsPerFrame\t[::povme2::num_to_bool $::povme2::equal_num_points_per_frame]"
-  puts $infile "SaveTabbedVolumeFile\t[::povme2::num_to_bool $::povme2::tabbed_volume_file]"
-  puts $infile "SaveVolumetricDensityDX\t[::povme2::num_to_bool $::povme2::volumetric_density_file]"
-  puts $infile "SaveColoredMap\t[::povme2::num_to_bool $::povme2::colored_density_files]"
+  #puts $infile "SaveIndividualPocketVolumes\t[::povme2::num_to_bool $::povme2::separate_volume_pdbs]"
+  #puts $infile "SavePocketVolumesTrajectory\t[::povme2::num_to_bool $::povme2::volume_trajectory]"
+  #puts $infile "OutputEqualNumPointsPerFrame\t[::povme2::num_to_bool $::povme2::equal_num_points_per_frame]"
+  #puts $infile "SaveTabbedVolumeFile\t[::povme2::num_to_bool $::povme2::tabbed_volume_file]"
+  #puts $infile "SaveVolumetricDensityDX\t[::povme2::num_to_bool $::povme2::volumetric_density_file]"
+  #puts $infile "SaveColoredMap\t[::povme2::num_to_bool $::povme2::colored_density_files]"
   puts $infile "NumProcessors\t$::povme2::num_processors"
-  puts $infile "UseDiskNotMemory\t[::povme2::num_to_bool $::povme2::disk_instead_of_memory]"
+  #puts $infile "UseDiskNotMemory\t[::povme2::num_to_bool $::povme2::disk_instead_of_memory]"
   close $infile  
   #cd $olddir
   return $filename

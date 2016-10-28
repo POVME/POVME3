@@ -1,0 +1,153 @@
+---------------------------------
+START
+---------------------------------
+[['GRIDSPACING', '1.0'], ['LOADINCLUSIONPOINTSFILENAME', 'inclusion.npy'], ['PDBFILENAME', '2fsz_noLig_short.pdb'], ['DISTANCECUTOFF', '1.09'], ['CONVEXHULLEXCLUSION', 'false'], ['CONTIGUOUSPOINTSCRITERIA', '3'], ['NUMPROCESSORS', '8'], ['OUTPUTFILENAMEPREFIX', './load_inclusion_'], ['COMPRESSOUTPUT', 'false']]
+
+If you use POVME in your research, please cite the following reference:
+  Durrant, J. D., C. A. de Oliveira, et al. (2011). "POVME: An algorithm
+  for measuring binding-pocket volumes." J Mol Graph Model 29(5): 773-776.
+
+Parameters:
+	OutputFilenamePrefix: ./load_inclusion_
+	OutputFrameFilenamePrefix: ./load_inclusion_frameInfo/
+	MaxGrowIterations: 10000000000.0
+	GridSpacing: 1.0
+	NumProcessors: 8
+	DistanceCutoff: 1.09
+	CompressOutput: False
+	PDBFileName: 2fsz_noLig_short.pdb
+	LoadInclusionPointsFilename: inclusion.npy
+	ConvexHullExclusion: false
+	SaveRegions: False
+	ContiguousPointsCriteria: 3
+---------------------------------
+PARAMETERS DEFINED
+---------------------------------
+---------------------------------
+ABOUT TO LOAD RECEPTORS
+---------------------------------
+
+Reading frames from 2fsz_noLig_short.pdb
+	Further processing frame 8
+	Further processing frame 4
+	Further processing frame 5
+	Further processing frame 7
+	Further processing frame 6
+	Further processing frame 3
+	Further processing frame 1
+	Further processing frame 9
+	Further processing frame 2
+	Further processing frame 10
+---------------------------------
+RECEPTORS LOADED
+---------------------------------
+
+
+Loading the inclusion point-field NPY file...
+
+Saving the point field as a PDB and NPY file
+	Point field saved to ./load_inclusion_frameInfo/inclusion.pdb to permit visualization
+	Point field saved to ./load_inclusion_frameInfo/inclusion.npy to optionally load for the volume calculation
+
+Calculating the pocket volume of each frame
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 9:  Volume 3219.0 A^3  Surf. A. 1630.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 1:  Volume 3267.0 A^3  Surf. A. 1690.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 7:  Volume 3313.0 A^3  Surf. A. 1802.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 3:  Volume 3379.0 A^3  Surf. A. 1577.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 5:  Volume 2949.0 A^3  Surf. A. 1677.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 6:  Volume 3178.0 A^3  Surf. A. 1665.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 4:  Volume 3177.0 A^3  Surf. A. 1724.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 10:  Volume 2997.0 A^3  Surf. A. 1709.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 8:  Volume 3462.0 A^3  Surf. A. 1667.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 2:  Volume 3529.0 A^3  Surf. A. 1698.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+VOLUMES CALCULATED
+---------------------------------
+
+FRAME        | VOLUME (A^3) | SURF. A. (A^2)
+-------------+--------------+----------------
+1            |   3267.0     |   1690.0
+2            |   3529.0     |   1698.0
+3            |   3379.0     |   1577.0
+4            |   3177.0     |   1724.0
+5            |   2949.0     |   1677.0
+6            |   3178.0     |   1665.0
+7            |   3313.0     |   1802.0
+8            |   3462.0     |   1667.0
+9            |   3219.0     |   1630.0
+10           |   2997.0     |   1709.0
+
+Execution time = 65.3817448616 sec
+
+---------------------------------
+ABOUT TO CALCULATE OCCUPANCY AVERAGE
+---------------------------------
+---------------------------------
+CALCULATED OCCUPANCY AVERAGE
+---------------------------------
+---------------------------------
+ABOUT TO CALCULATE COLOR MAPS
+---------------------------------
+---------------------------------
+CALCULATED COLOR MAPS
+---------------------------------

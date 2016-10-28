@@ -1,0 +1,39 @@
+
+If you use POVME in your research, please cite the following reference:
+  Durrant, J. D., C. A. de Oliveira, et al. (2011). "POVME: An algorithm
+  for measuring binding-pocket volumes." J Mol Graph Model 29(5): 773-776.
+
+Parameters:
+	OutputFilenamePrefix: ./average_
+	PointsIncludeRegions: sphere at (65.0, 98.0, 50.0), radius = 16.0
+	OutputFrameFilenamePrefix: ./average_frameInfo/
+	MaxGrowIterations: 10000000000.0
+	GridSpacing: 1.0
+	NumProcessors: 1
+	ContiguousPocketSeedRegions: sphere at (67.0, 102.0, 57.0), radius = 4.0
+	DistanceCutoff: 1.09
+	CompressOutput: False
+	PDBFileName: 4NSS.pdb
+	ConvexHullExclusion: average
+	SaveRegions: False
+	ContiguousPointsCriteria: 3
+
+Reading frames from 4NSS.pdb
+	Further processing frame 1
+	Further processing frame 2
+	Further processing frame 3
+	Further processing frame 4
+	Further processing frame 5
+
+
+Generating the pocket-encompassing point field
+
+Saving the point field as a PDB and NPY file
+	Point field saved to ./average_frameInfo/inclusion.pdb to permit visualization
+	Point field saved to ./average_frameInfo/inclusion.npy to optionally load for the volume calculation
+
+
+Saving the contiguous-pocket seed points as a PDB and NPY file
+	Contiguous-pocket seed points saved to ./average_frameInfo/seed.pdb to permit visualization
+	Point field saved to ./average_frameInfo/seed.npy to optionally load for the volume calculation
+

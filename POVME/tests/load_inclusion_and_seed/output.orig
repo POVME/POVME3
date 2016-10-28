@@ -1,0 +1,161 @@
+---------------------------------
+START
+---------------------------------
+[['GRIDSPACING', '1.0'], ['LOADINCLUSIONPOINTSFILENAME', 'inclusion.npy'], ['LOADSEEDPOINTSFILENAME', 'seed.npy'], ['PDBFILENAME', '2fsz_noLig_short.pdb'], ['DISTANCECUTOFF', '1.09'], ['CONVEXHULLEXCLUSION', 'false'], ['CONTIGUOUSPOINTSCRITERIA', '3'], ['NUMPROCESSORS', '8'], ['OUTPUTFILENAMEPREFIX', './load_inclusion_and_seed_'], ['COMPRESSOUTPUT', 'false']]
+
+If you use POVME in your research, please cite the following reference:
+  Durrant, J. D., C. A. de Oliveira, et al. (2011). "POVME: An algorithm
+  for measuring binding-pocket volumes." J Mol Graph Model 29(5): 773-776.
+
+Parameters:
+	OutputFilenamePrefix: ./load_inclusion_and_seed_
+	LoadSeedPointsFilename: seed.npy
+	OutputFrameFilenamePrefix: ./load_inclusion_and_seed_frameInfo/
+	MaxGrowIterations: 10000000000.0
+	GridSpacing: 1.0
+	NumProcessors: 8
+	DistanceCutoff: 1.09
+	CompressOutput: False
+	PDBFileName: 2fsz_noLig_short.pdb
+	LoadInclusionPointsFilename: inclusion.npy
+	ConvexHullExclusion: false
+	SaveRegions: False
+	ContiguousPointsCriteria: 3
+---------------------------------
+PARAMETERS DEFINED
+---------------------------------
+---------------------------------
+ABOUT TO LOAD RECEPTORS
+---------------------------------
+
+Reading frames from 2fsz_noLig_short.pdb
+	Further processing frame 4
+	Further processing frame 6
+	Further processing frame 3
+	Further processing frame 8
+	Further processing frame 7
+	Further processing frame 5
+	Further processing frame 1
+	Further processing frame 9
+	Further processing frame 2
+	Further processing frame 10
+---------------------------------
+RECEPTORS LOADED
+---------------------------------
+
+
+Loading the inclusion point-field NPY file...
+
+Loading the seed point-field NPY file...
+
+Saving the point field as a PDB and NPY file
+	Point field saved to ./load_inclusion_and_seed_frameInfo/inclusion.pdb to permit visualization
+	Point field saved to ./load_inclusion_and_seed_frameInfo/inclusion.npy to optionally load for the volume calculation
+
+
+Saving the contiguous-pocket seed points as a PDB and NPY file
+	Contiguous-pocket seed points saved to ./load_inclusion_and_seed_frameInfo/seed.pdb to permit visualization
+	Point field saved to ./load_inclusion_and_seed_frameInfo/seed.npy to optionally load for the volume calculation
+
+Calculating the pocket volume of each frame
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 5:  Volume 2873.0 A^3  Surf. A. 1483.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 9:  Volume 3148.0 A^3  Surf. A. 1424.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 1:  Volume 3167.0 A^3  Surf. A. 1431.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 8:  Volume 3348.0 A^3  Surf. A. 1464.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 3:  Volume 3263.0 A^3  Surf. A. 1296.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 7:  Volume 3208.0 A^3  Surf. A. 1580.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 6:  Volume 3124.0 A^3  Surf. A. 1493.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 10:  Volume 2959.0 A^3  Surf. A. 1571.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 4:  Volume 3098.0 A^3  Surf. A. 1495.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 2:  Volume 3443.0 A^3  Surf. A. 1443.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+VOLUMES CALCULATED
+---------------------------------
+
+FRAME        | VOLUME (A^3) | SURF. A. (A^2)
+-------------+--------------+----------------
+1            |   3167.0     |   1431.0
+2            |   3443.0     |   1443.0
+3            |   3263.0     |   1296.0
+4            |   3098.0     |   1495.0
+5            |   2873.0     |   1483.0
+6            |   3124.0     |   1493.0
+7            |   3208.0     |   1580.0
+8            |   3348.0     |   1464.0
+9            |   3148.0     |   1424.0
+10           |   2959.0     |   1571.0
+
+Execution time = 67.4853639603 sec
+
+---------------------------------
+ABOUT TO CALCULATE OCCUPANCY AVERAGE
+---------------------------------
+---------------------------------
+CALCULATED OCCUPANCY AVERAGE
+---------------------------------
+---------------------------------
+ABOUT TO CALCULATE COLOR MAPS
+---------------------------------
+---------------------------------
+CALCULATED COLOR MAPS
+---------------------------------

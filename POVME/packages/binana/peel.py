@@ -20,6 +20,10 @@ import time
 #import scipy.ndimage.interpolation as sni
 import scipy.spatial.distance as ssd
 import itertools
+import numpy
+import numpy as np
+from collections import OrderedDict
+import glob
 
 defaultParams={}
 #defaultParams['close_contacts_dist1_cutoff'] = 2.5
@@ -65,7 +69,7 @@ def create_pdb_line(numpy_array, index, resname, letter):
 
     """
 
-    if len(numpy_array) == 2: numpy_array = numpy.array([numpy_array[0], numpy_array[1], 0.0])
+    if len(numpy_array) == 2: numpy_array = np.array([numpy_array[0], numpy_array[1], 0.0])
     if numpy_array.shape == (1, 3): numpy_array = numpy_array[0]
 
     output = "ATOM "
@@ -1680,7 +1684,7 @@ class MathFunctions:
     def normalize(self, v, tolerance=0.00001):
         mag2 = sum(n * n for n in v)
         if abs(mag2 - 1.0) > tolerance:
-            mag = numpy.power(mag2, 0.5)
+            mag = np.power(mag2, 0.5)
             v = tuple(n / mag for n in v)
         return v
 
@@ -1708,15 +1712,15 @@ class MathFunctions:
         v = self.normalize(v)
         x, y, z = v
         theta /= 2
-        w =     numpy.cos(theta)
-        x = x * numpy.sin(theta)
-        y = y * numpy.sin(theta)
-        z =     z * numpy.sin(theta)
+        w =     np.cos(theta)
+        x = x * np.sin(theta)
+        y = y * np.sin(theta)
+        z =     z * np.sin(theta)
         return w, x, y, z
 
     def q_to_axisangle(self, q):
         w, v = q[0], q[1:]
-        theta = numpy.arccos(w) * 2.0
+        theta = np.arccos(w) * 2.0
         return self.normalize(v), theta
 
 
@@ -1732,9 +1736,9 @@ class featureMap:
                              float(borders[4])])
         #self.borders = borders
         self.reso = reso
-        #self.shape = (int(numpy.round(float(math.fabs(borders[1]-borders[0]))/reso))+1,
-        #              int(numpy.round(float(math.fabs(borders[3]-borders[2]))/reso))+1,
-        #              int(numpy.round(float(math.fabs(borders[5]-borders[4]))/reso))+1)
+        #self.shape = (int(np.round(float(math.fabs(borders[1]-borders[0]))/reso))+1,
+        #              int(np.round(float(math.fabs(borders[3]-borders[2]))/reso))+1,
+        #              int(np.round(float(math.fabs(borders[5]-borders[4]))/reso))+1)
         # Replacing numpy.round because it's super slow
         self.shape = (int(0.5+(float(math.fabs(borders[1]-borders[0]))/reso))+1,
                       int(0.5+(float(math.fabs(borders[3]-borders[2]))/reso))+1,
@@ -1749,9 +1753,9 @@ class featureMap:
 
         self.boolean = boolean
         if boolean:
-            self.data = numpy.zeros(self.shape, dtype = numpy.bool)
+            self.data = np.zeros(self.shape, dtype = np.bool)
         else:
-            self.data = numpy.zeros(self.shape, dtype = numpy.float)
+            self.data = np.zeros(self.shape, dtype = np.float)
 
         self.mf = MathFunctions()
         # This is generated when the program wants to add spherical gaussians, but must be initialized here
@@ -1768,10 +1772,21 @@ class featureMap:
                    (origin[2]+shape[2]*gridReso)]
 
         thisItem = cls(borders, gridReso)
-        thisItem.data = numpy.copy(myArray)
+        thisItem.data = np.copy(myArray)
         thisItem.shape = thisItem.data.shape
         return thisItem
 
+    @classmethod
+    def fromNpyFile(cls, npyFilename, gridReso, origin = [0.,0.,0.]):
+        matrix = np.load(open(npyFilename))
+        if matrix.shape[1] == 3:
+            justCoords = True
+        elif matrix.shape[1] == 4:
+            justCoords = False
+        else:
+            raise Exception('Invalid number of columns (%r) in file %s to load as featureMap' %(matrix.shape[1], npyFilename))
+        thisItem = featureMap.fromOffGridPts(matrix, gridReso, justCoords=justCoords)
+        return thisItem
 
     @classmethod
     def fromDxFile(cls, dxFilename):
@@ -1803,7 +1818,7 @@ class featureMap:
                             raise Exception("In featureMap.fromDxFile: Two origins read from file %s" %(dxFilename))
                         origin = [float(i) for i in linesp[1:]]
                         readOrigin = True
-                        
+
                     ## If this header line is telling us about the spacing
                     elif linesp[0] == 'delta':
                         readDeltas += 1
@@ -1848,42 +1863,42 @@ class featureMap:
                     
     @classmethod
     def fromOffGridPts(cls,offGridPts, gridReso, skinDistance = 1., justCoords = False):
-        ''' Generates a featureMap from an arbitrary cloud of points while preserving the 
-        total number of points.  This function is 
-        envisioned as being most useful for mapping rotated shapes back onto the grid of the original'''   
-        minX = numpy.min(offGridPts[:,0]) - skinDistance
-        maxX = numpy.max(offGridPts[:,0]) + skinDistance # + 1e-5
-        minY = numpy.min(offGridPts[:,1]) - skinDistance
-        maxY = numpy.max(offGridPts[:,1]) + skinDistance # + 1e-5
-        minZ = numpy.min(offGridPts[:,2]) - skinDistance
-        maxZ = numpy.max(offGridPts[:,2]) + skinDistance# + 1e-5
+        ''' Generates a featureMap from an arbitrary cloud of points while preserving the
+        total number of points.  This function is
+        envisioned as being most useful for mapping rotated shapes back onto the grid of the original'''
+        minX = np.min(offGridPts[:,0]) - skinDistance
+        maxX = np.max(offGridPts[:,0]) + skinDistance # + 1e-5
+        minY = np.min(offGridPts[:,1]) - skinDistance
+        maxY = np.max(offGridPts[:,1]) + skinDistance # + 1e-5
+        minZ = np.min(offGridPts[:,2]) - skinDistance
+        maxZ = np.max(offGridPts[:,2]) + skinDistance# + 1e-5
 
         # Ensure that this grid passes through 0,0,0
-        minX = gridReso * numpy.round((minX/gridReso)-1)
-        maxX = gridReso * numpy.round((maxX/gridReso)+1)
-        minY = gridReso * numpy.round((minY/gridReso)-1)
-        maxY = gridReso * numpy.round((maxY/gridReso)+1)
-        minZ = gridReso * numpy.round((minZ/gridReso)-1)
-        maxZ = gridReso * numpy.round((maxZ/gridReso)+1)
-        
-        
+        minX = gridReso * np.round((minX/gridReso)-1)
+        maxX = gridReso * np.round((maxX/gridReso)+1)
+        minY = gridReso * np.round((minY/gridReso)-1)
+        maxY = gridReso * np.round((maxY/gridReso)+1)
+        minZ = gridReso * np.round((minZ/gridReso)-1)
+        maxZ = gridReso * np.round((maxZ/gridReso)+1)
+
+
         thisMap = cls([minX, maxX, minY, maxY, minZ, maxZ], gridReso)
-        
-        
+
+
         # Begin 2015_05_18 hack
 
         newWay = True
         if newWay:
             coord2GridIndex = thisMap.generate_coord_to_grid_index_dict()
-            gridPts = numpy.array(coord2GridIndex.keys())
-            allDists = ssd.cdist(offGridPts,gridPts[:,:3])
-            globalMaxDist = numpy.amax(allDists)
+            gridPts = np.array(coord2GridIndex.keys())
+            allDists = ssd.cdist(offGridPts[:,:3],gridPts[:,:3])
+            globalMaxDist = np.amax(allDists)
             for index, offGridPt in enumerate(offGridPts):
                 placed = False
-                #sorted_by_dist = gridPts[numpy.argsort(allDists[index,:])]
+                #sorted_by_dist = gridPts[np.argsort(allDists[index,:])]
                 #for gridPt in sorted_by_dist:
                 while placed == False:
-                    closestInd = numpy.argmin(allDists[index,:])
+                    closestInd = np.argmin(allDists[index,:])
                     gridPt = gridPts[closestInd]
                     destinationIndex = coord2GridIndex[tuple(gridPt[0:3])]
                     #print destinationIndex, thisMap.data[destinationIndex]
@@ -1898,10 +1913,10 @@ class featureMap:
                         allDists[index,closestInd] = globalMaxDist + 1
                 if placed == True:
                     continue
-                raise Exception("In fromOffGridPts - Unable to place a point on the grid") 
-                
-                            
-                
+                raise Exception("In fromOffGridPts - Unable to place a point on the grid")
+
+
+
             return thisMap
         # End 2015_05_18 hack
         else:
@@ -1914,9 +1929,9 @@ class featureMap:
                 
     def addPointToNearestUnoccupiedSpot(self, this_point, value=1, search_cutoff=1.):
         candidates = self.points_near(this_point[:3], cutoff = search_cutoff, returnDistance=True)
-        candidates = numpy.array(candidates)
+        candidates = np.array(candidates)
         #Sort by distance to this point
-        rankedCandidates = candidates[numpy.argsort(candidates[:,3])]
+        rankedCandidates = candidates[np.argsort(candidates[:,3])]
         #Strip off the distance column and convert indices to ints s
         rankedCandidates = rankedCandidates[:,:3].astype(int)
         unoccupiedSpots = self.data[rankedCandidates[:,0],
@@ -1936,21 +1951,21 @@ class featureMap:
     @classmethod
     def fromPovmeList(cls, povmeList, gridReso=None, skinDistance = 0., justCoords = None):
         ''' Generates a featureMap from a POVME-style list. Can include a skin distance to expand the boundaries of the featureMap in all directions.'''
-        minX = numpy.min(povmeList[:,0]) - skinDistance
-        maxX = numpy.max(povmeList[:,0]) + skinDistance # + 1e-5
-        minY = numpy.min(povmeList[:,1]) - skinDistance
-        maxY = numpy.max(povmeList[:,1]) + skinDistance # + 1e-5
-        minZ = numpy.min(povmeList[:,2]) - skinDistance
-        maxZ = numpy.max(povmeList[:,2]) + skinDistance# + 1e-5
+        minX = np.min(povmeList[:,0]) - skinDistance
+        maxX = np.max(povmeList[:,0]) + skinDistance # + 1e-5
+        minY = np.min(povmeList[:,1]) - skinDistance
+        maxY = np.max(povmeList[:,1]) + skinDistance # + 1e-5
+        minZ = np.min(povmeList[:,2]) - skinDistance
+        maxZ = np.max(povmeList[:,2]) + skinDistance# + 1e-5
         #print [minX, maxX, minY, maxY, minZ, maxZ]
         if gridReso == None:
-            gridReso = numpy.min(ssd.pdist(povmeList[:,:3]))
+            gridReso = np.min(ssd.pdist(povmeList[:,:3]))
         thisMap = cls([minX, maxX, minY, maxY, minZ, maxZ], gridReso)
-        # To be efficient, this function figures out where one point from the 
-        # POVME list falls into the featureMap (as in, the index of the point 
-        # in the array), then uses all of the other points' relative spacing 
-        # to that one to figure out where they fall in the featureMap 
-        
+        # To be efficient, this function figures out where one point from the
+        # POVME list falls into the featureMap (as in, the index of the point
+        # in the array), then uses all of the other points' relative spacing
+        # to that one to figure out where they fall in the featureMap
+
         # First we pick an arbitrary point
         referencePt = povmeList[0,:3]
         
@@ -1985,9 +2000,9 @@ class featureMap:
 
 
     def toPovmeList(self):
-        nonZeroPts = numpy.transpose(self.data.nonzero())
+        nonZeroPts = np.transpose(self.data.nonzero())
         #print nonZeroPts.shape
-        pointList = numpy.zeros((len(nonZeroPts), 4))
+        pointList = np.zeros((len(nonZeroPts), 4))
         for index, nonZeroPt in enumerate(nonZeroPts):
             coords = self.index_to_coord(nonZeroPt[0],nonZeroPt[1],nonZeroPt[2])
             pointList[index,0] = coords[0]
@@ -2010,7 +2025,7 @@ class featureMap:
         return self.data
 
     def setData(self, newMatrix):
-        self.data = numpy.copy(newMatrix)
+        self.data = np.copy(newMatrix)
 
     def getBoolean(self):
         return self.boolean
@@ -2025,16 +2040,16 @@ class featureMap:
         #User should input size of cubes, not number of cubes
         ligandDim = ligandMap.getShape()
         receptorDim = self.getShape()
-        receptorSize = numpy.ndarray.size(self.getData())
+        receptorSize = np.ndarray.size(self.getData())
         cubeLength = (receptorSize / number) ** .33333333
         x = []
         y = []
         z = []
-        for n in numpy.arange(0,receptorDim[0]-ligandDim[0],cubeLength):
+        for n in np.arange(0,receptorDim[0]-ligandDim[0],cubeLength):
             x.append(n)
-        for n in numpy.arange(0,receptorDim[1]-ligandDim[1],cubeLength):
+        for n in np.arange(0,receptorDim[1]-ligandDim[1],cubeLength):
             y.append(n)
-        for n in numpy.arange(0,receptorDim[2]-ligandDim[2],cubeLength):
+        for n in np.arange(0,receptorDim[2]-ligandDim[2],cubeLength):
             z.append(n)
 
         translation_list = list(itertools.product(x, y, z))
@@ -2051,7 +2066,7 @@ class featureMap:
             nsteps = str(nsteps)
             outputFile = number + "_" + nsteps
             os.system('./4d_points_on_sphere.o ' + number + " " + nsteps + " > " + outputFile + '.out')
-            spherePoints = numpy.genfromtxt(outputFile + '.out',skip_header=3, skip_footer=0, usecols=(4,5,6,7), comments='}')
+            spherePoints = np.genfromtxt(outputFile + '.out',skip_header=3, skip_footer=0, usecols=(4,5,6,7), comments='}')
             self.pointDict[number] = spherePoints
 
         return spherePoints
@@ -2073,7 +2088,7 @@ class featureMap:
                     z = float(self.origin[2] + (self.reso * k))
                     coordToGridIndex[(x,y,z)] = (i,j,k)
         return coordToGridIndex
-                    
+
     def generate_grid_index_to_coord_dict(self):
         '''Returns a dictionary that maps matrix indices to real cartesian coordinates'''
         gridIndexToCoord = {}
@@ -2083,7 +2098,7 @@ class featureMap:
                     x = float(self.origin[0] + (self.reso * i))
                     y = float(self.origin[1] + (self.reso * j))
                     z = float(self.origin[2] + (self.reso * k))
-                    gridIndexToCoord[(i,j,k)] = (x,y,z) 
+                    gridIndexToCoord[(i,j,k)] = (x,y,z)
         return gridIndexToCoord
         
 
@@ -2133,9 +2148,9 @@ class featureMap:
 
     def interpolation_rotate_inplace(self, quaternion):
         [w,x,y,z] = quaternion
-        zphi = 57.29578 * numpy.arctan2((w*y + x*z),-(x*y - w*z))
-        xtheta = 57.29578 * numpy.arccos(-w**2 - x**2 + y**2 + z**2)
-        zpsi = 57.29578 * numpy.arctan2((w*y - x*z),(x*y + w*z))
+        zphi = 57.29578 * np.arctan2((w*y + x*z),-(x*y - w*z))
+        xtheta = 57.29578 * np.arccos(-w**2 - x**2 + y**2 + z**2)
+        zpsi = 57.29578 * np.arctan2((w*y - x*z),(x*y + w*z))
         #rotatedArrays = copy.deepcopy(ligandMaps)
 
         for feature in rotatedArrays.keys():
@@ -2144,8 +2159,8 @@ class featureMap:
             self.data = sni.rotate(self.data,zpsi,axes=(0,1), reshape=False)
 
     def to_pdb_string(self, isovalue = 0.):
-        relPoints = numpy.transpose(numpy.nonzero(self.data > isovalue))
-        absPoints = numpy.array([[(self.reso*x)+self.origin[0],
+        relPoints = np.transpose(np.nonzero(self.data > isovalue))
+        absPoints = np.array([[(self.reso*x)+self.origin[0],
                                   (self.reso*y)+self.origin[1],
                                   (self.reso*z)+self.origin[2]] for x,y,z in relPoints])
 
@@ -2218,13 +2233,13 @@ component "data" value 3"""
         ##widthy = maxy - miny
         ##widthz = maxz - minz
 
-        ##xs = numpy.arange(minx, maxx, self.reso)
-        ##ys = numpy.arange(miny, maxy, self.reso)
-        ##zs = numpy.arange(minz, maxz, self.reso)
+        ##xs = np.arange(minx, maxx, self.reso)
+        ##ys = np.arange(miny, maxy, self.reso)
+        ##zs = np.arange(minz, maxz, self.reso)
 
-        #xs = numpy.unique(freq_mat[:,0])
-        #ys = numpy.unique(freq_mat[:,1])
-        #zs = numpy.unique(freq_mat[:,2])
+        #xs = np.unique(freq_mat[:,0])
+        #ys = np.unique(freq_mat[:,1])
+        #zs = np.unique(freq_mat[:,2])
 
         resx = self.reso
         resy = self.reso
@@ -2240,9 +2255,9 @@ component "data" value 3"""
         nx = self.shape[0]
         ny = self.shape[1]
         nz = self.shape[2]
-        #nx = int(numpy.round((widthx) / resx + 1)) # number of grid points in each dimension
-        #ny = int(numpy.round((widthy) / resy + 1)) # need to add one because the subtraction leaves out an entire row
-        #nz = int(numpy.round((widthz) / resz + 1))
+        #nx = int(np.round((widthx) / resx + 1)) # number of grid points in each dimension
+        #ny = int(np.round((widthy) / resy + 1)) # need to add one because the subtraction leaves out an entire row
+        #nz = int(np.round((widthz) / resz + 1))
 
         N = int(nx * ny * nz)
         # test to make sure all is well with the size of the grid and its dimensions
@@ -2280,10 +2295,10 @@ component "data" value 3"""
 
     def point_to_nearest_index(self, thisPoint):
         relCoord = self.origin.vector_to_new(thisPoint)
-        #closestX = int(numpy.round(relCoord[0]/self.reso))
-        #closestY = int(numpy.round(relCoord[1]/self.reso))
-        #closestZ = int(numpy.round(relCoord[2]/self.reso))
-        #Avoiding use of numpy.round because it's super slow
+        #closestX = int(np.round(relCoord[0]/self.reso))
+        #closestY = int(np.round(relCoord[1]/self.reso))
+        #closestZ = int(np.round(relCoord[2]/self.reso))
+        #Avoiding use of np.round because it's super slow
         closestX = int(0.5+(relCoord[0]/self.reso))
         closestY = int(0.5+(relCoord[1]/self.reso))
         closestZ = int(0.5+(relCoord[2]/self.reso))
@@ -2298,52 +2313,52 @@ component "data" value 3"""
         cutoffSq_index = (cutoff/self.reso)*(cutoff/self.reso)
         centerIndex = self.point_to_nearest_index(target)
         #print 'ZZZZA', centerIndex
-        indexSearchDist = int(numpy.round(float(cutoff) / self.reso) + 1)
+        indexSearchDist = int(np.round(float(cutoff) / self.reso) + 1)
         #indexSearchDist = (cutoff / self.reso) + 1
 
-        #minXInd = int(max(0,numpy.round(centerIndex[0] - indexSearchDist)))
-        #maxXInd = int(min(self.shape[0],numpy.round(centerIndex[0] + indexSearchDist)))
-        #minYInd = int(max(0,numpy.round(centerIndex[1] - indexSearchDist)))
-        #maxYInd = int(min(self.shape[1],numpy.round(centerIndex[1] + indexSearchDist)))
-        #minZInd = int(max(0,numpy.round(centerIndex[2] - indexSearchDist)))
-        #maxZInd = int(min(self.shape[2],numpy.round(centerIndex[2] + indexSearchDist)))
+        #minXInd = int(max(0,np.round(centerIndex[0] - indexSearchDist)))
+        #maxXInd = int(min(self.shape[0],np.round(centerIndex[0] + indexSearchDist)))
+        #minYInd = int(max(0,np.round(centerIndex[1] - indexSearchDist)))
+        #maxYInd = int(min(self.shape[1],np.round(centerIndex[1] + indexSearchDist)))
+        #minZInd = int(max(0,np.round(centerIndex[2] - indexSearchDist)))
+        #maxZInd = int(min(self.shape[2],np.round(centerIndex[2] + indexSearchDist)))
 
         target_index = self.origin.vector_to_new(target)
-        target_index.scalar_mult_inplace(1/self.reso) 
+        target_index.scalar_mult_inplace(1/self.reso)
 
-        minXInd = int(max(0,numpy.round(target_index[0] - indexSearchDist)))
-        maxXInd = int(min(self.shape[0],numpy.round(target_index[0] + indexSearchDist)+1))
-        minYInd = int(max(0,numpy.round(target_index[1] - indexSearchDist)))
-        maxYInd = int(min(self.shape[1],numpy.round(target_index[1] + indexSearchDist)+1))
-        minZInd = int(max(0,numpy.round(target_index[2] - indexSearchDist)))
-        maxZInd = int(min(self.shape[2],numpy.round(target_index[2] + indexSearchDist)+1))
+        minXInd = int(max(0,np.round(target_index[0] - indexSearchDist)))
+        maxXInd = int(min(self.shape[0],np.round(target_index[0] + indexSearchDist)+1))
+        minYInd = int(max(0,np.round(target_index[1] - indexSearchDist)))
+        maxYInd = int(min(self.shape[1],np.round(target_index[1] + indexSearchDist)+1))
+        minZInd = int(max(0,np.round(target_index[2] - indexSearchDist)))
+        maxZInd = int(min(self.shape[2],np.round(target_index[2] + indexSearchDist)+1))
 
         #print target_index
-        candidatePoints = itertools.product(*[numpy.arange(minXInd, maxXInd),
-                                              numpy.arange(minYInd, maxYInd),
-                                              numpy.arange(minZInd, maxZInd)])
-        candidatePoints = numpy.array(list(candidatePoints))
+        candidatePoints = itertools.product(*[np.arange(minXInd, maxXInd),
+                                              np.arange(minYInd, maxYInd),
+                                              np.arange(minZInd, maxZInd)])
+        candidatePoints = np.array(list(candidatePoints))
         if len(candidatePoints) == 0:
             return candidatePoints
         #print candidatePoints
-        candidatePointsOffs = candidatePoints.astype(float) - numpy.array([target_index.x,
+        candidatePointsOffs = candidatePoints.astype(float) - np.array([target_index.x,
                                                                            target_index.y,
                                                                            target_index.z])
-        candidatePointsOffSq = numpy.multiply(candidatePointsOffs,candidatePointsOffs)
-        #print numpy.sum(candidatePoints, axis=1)
-        distanceSq = numpy.sum(candidatePointsOffSq, axis=1)
+        candidatePointsOffSq = np.multiply(candidatePointsOffs,candidatePointsOffs)
+        #print np.sum(candidatePoints, axis=1)
+        distanceSq = np.sum(candidatePointsOffSq, axis=1)
         withinCutoff = distanceSq <= cutoffSq_index
         #print sum(withinCutoff)
         returnPoints = candidatePoints[withinCutoff]
         if returnDistance == True:
-            returnDistances = numpy.sqrt(distanceSq[withinCutoff]) * self.reso
-            returnDistances = numpy.array([returnDistances]).T
-            returnPoints = numpy.hstack([returnPoints, returnDistances])
+            returnDistances = np.sqrt(distanceSq[withinCutoff]) * self.reso
+            returnDistances = np.array([returnDistances]).T
+            returnPoints = np.hstack([returnPoints, returnDistances])
         if returnVector == True:
             returnVectors = candidatePointsOffs[withinCutoff] * self.reso
-            returnPoints = numpy.hstack([returnPoints, returnVectors])
+            returnPoints = np.hstack([returnPoints, returnVectors])
         return returnPoints
-            
+
         '''
         for xInd in range(minXInd, maxXInd):
             for yInd in range(minYInd, maxYInd):
@@ -2364,15 +2379,15 @@ component "data" value 3"""
 
     def grow_region(self, ways = 6, growValue = 1, returnPointsAdded = False):
         '''Grows a boolean map out in +- x, y, and z from each point'''
-        origPoints = numpy.transpose(numpy.nonzero(self.data))
+        origPoints = np.transpose(np.nonzero(self.data))
         if ways == 6:
-            moves = numpy.array([[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]])
+            moves = np.array([[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]])
         elif ways == 18:
-             moves = numpy.array([[ 1, 0, 0],[ 1, 1, 0],[ 0, 1, 0],[-1, 1, 0],[-1, 0, 0],[-1,-1, 0],[ 0,-1, 0],[ 1,-1, 0],
+             moves = np.array([[ 1, 0, 0],[ 1, 1, 0],[ 0, 1, 0],[-1, 1, 0],[-1, 0, 0],[-1,-1, 0],[ 0,-1, 0],[ 1,-1, 0],
                                   [ 0, 1,-1],[ 0, 0,-1],[ 0,-1,-1],[ 0,-1, 1],[ 0, 0, 1],[ 0, 1, 1],
                                   [ 1, 0,-1],[-1, 0,-1],[ 1, 0, 1],[-1, 0,-1]])
         elif ways == 26:
-             moves = numpy.array([[ 1, 0, 0],[ 1, 1, 0],[ 0, 1, 0],[-1, 1, 0],[-1, 0, 0],[-1,-1, 0],[ 0,-1, 0],[ 1,-1, 0],
+             moves = np.array([[ 1, 0, 0],[ 1, 1, 0],[ 0, 1, 0],[-1, 1, 0],[-1, 0, 0],[-1,-1, 0],[ 0,-1, 0],[ 1,-1, 0],
                                   [ 0, 1,-1],[ 0, 0,-1],[ 0,-1,-1],[ 0,-1, 1],[ 0, 0, 1],[ 0, 1, 1],
                                   [ 1, 0,-1],[-1, 0,-1],[ 1, 0, 1],[-1, 0,-1],
                                   [ 1, 1, 1],[ 1, 1,-1],[ 1, 1, 1],[ 1, 1,-1],[-1,-1, 1],[-1,-1,-1],[-1,-1, 1],[-1,-1,-1]])
@@ -2387,8 +2402,8 @@ component "data" value 3"""
             toConsider = moves + origPoint
             toConsiderSet = set([tuple(i) for i in toConsider])
             for considerPoint in toConsider:
-                if ((considerPoint[0] >= 0) and (considerPoint[0] < self.data.shape[0]) and 
-                    (considerPoint[1] >= 0) and (considerPoint[1] < self.data.shape[1]) and 
+                if ((considerPoint[0] >= 0) and (considerPoint[0] < self.data.shape[0]) and
+                    (considerPoint[1] >= 0) and (considerPoint[1] < self.data.shape[1]) and
                     (considerPoint[2] >= 0) and (considerPoint[2] < self.data.shape[2])):
                     #print 'considerPoint:',considerPoint
                     #print 'self.data.shape', self.data.shape
@@ -2402,53 +2417,53 @@ component "data" value 3"""
             #return [self.index_to_coord(i[0],i[1],i[2]) for i in pointsAdded]
         else:
             return
-            #toCheck = numpy.vstack((toCheck, moves + origPoint))
+            #toCheck = np.vstack((toCheck, moves + origPoint))
             # If this point isn't surrounded by neighboring points, keep it
             #if numNeighbors < moves:
             #    toKeep.append(origPoint)
-        #toKeep = numpy.array(toKeep)
+        #toKeep = np.array(toKeep)
         #prunedPoints = origPoints[toKeep]
         #neighborVals = self.data[toCheck]
-        
-            
+
+
 
     def add_sphere(self, sphereOrigin, sphereRadius, weight = 1.0):
         #print sphereOrigin
         pointList = self.points_near(sphereOrigin, sphereRadius)
         for x, y, z in pointList:
             self.data[x, y, z] = self.data[x, y, z] + weight
-        #print 'AS',numpy.nonzero(self.data)
+        #print 'AS',np.nonzero(self.data)
 
     def add_sphere_dist_function(self, sphereOrigin, sphereRadius, weightFunction,normalize = True):
         #print sphereOrigin
         pointList = self.points_near(sphereOrigin, sphereRadius, returnDistance=True)
-        pointList = numpy.array(pointList)
+        pointList = np.array(pointList)
         #print pointList
         #print weightFunction,
         #print pointList
         #print pointList[:,3]
         if len(pointList) > 0:
-            weights = numpy.vectorize(weightFunction)(pointList[:,3])
+            weights = np.vectorize(weightFunction)(pointList[:,3])
             if normalize:
-                weights = numpy.array(weights) / sum(weights)
+                weights = np.array(weights) / sum(weights)
         else:
             weights = []
         for i, (x, y, z, d) in enumerate(pointList):
             self.data[x, y, z] = self.data[x, y, z] + weights[i]
             #self.data[x, y, z] = self.data[x, y, z] + weightFunction(d)
-        #print 'AS',numpy.nonzero(self.data)
+        #print 'AS',np.nonzero(self.data)
 
 
     def prepareGaussianLookupTable(self, n=301):
         if self.gaussianLookupTable == None:
             self.gaussianLookupTable = []
             for i in range(n):
-                self.gaussianLookupTable.append(numpy.exp(-((float(i)/100)**2)))
+                self.gaussianLookupTable.append(np.exp(-((float(i)/100)**2)))
 
     def add_spherical_gaussian(self, origin, sigmaSq, mu = 0., weight = 1.0,normalize = True):
         #print sphereOrigin
         pointList = self.points_near(origin, sigmaSq, returnDistance=True)
-        pointList = numpy.array(pointList)
+        pointList = np.array(pointList)
         self.prepareGaussianLookupTable()
 
 
@@ -2456,23 +2471,23 @@ component "data" value 3"""
 
             weights = [weight * self.gaussianLookupTable[int(100*(i-mu)/(2*sigmaSq))] for i in pointList[:,3]]
             if normalize:
-                weights = numpy.array(weights) / sum(weights)
+                weights = np.array(weights) / sum(weights)
         else:
             weights = []
         for i, (x, y, z, d) in enumerate(pointList):
             self.data[x, y, z] = self.data[x, y, z] + weights[i]
             #self.data[x, y, z] = self.data[x, y, z] + weightFunction(d)
-        #print 'AS',numpy.nonzero(self.data)
+        #print 'AS',np.nonzero(self.data)
 
 
     def add_cone(self, coneOrigin, coneHalfAngle, coneVector, coneHeight, weight = 1.0):
         #Cone half angle should be in degrees - Here we convert to radians
-        coneHalfAngle = numpy.deg2rad(coneHalfAngle)
-        coneRadius = coneHeight * numpy.arctan(coneHalfAngle)
+        coneHalfAngle = np.deg2rad(coneHalfAngle)
+        coneRadius = coneHeight * np.arctan(coneHalfAngle)
         coneVectorNorm = coneVector.scalar_mult_new(1./coneVector.magnitude())
 
 
-        nearbyPointList = self.points_near(coneOrigin, coneHeight/numpy.cos(coneHalfAngle))
+        nearbyPointList = self.points_near(coneOrigin, coneHeight/np.cos(coneHalfAngle))
         for x, y, z in nearbyPointList:
             thisCoordAbs = point(self.index_to_coord(x, y, z))
             thisCoordRel = coneOrigin.vector_to_new(thisCoordAbs)
@@ -2490,11 +2505,11 @@ component "data" value 3"""
 
     def add_cone_dist_function(self, coneOrigin, coneHalfAngle, coneVector, coneHeight, weightFunction, normalize = True):
         #Cone half angle should be in degrees - Here we convert to radians
-        coneHalfAngle = numpy.deg2rad(coneHalfAngle)
-        coneRadius = coneHeight * numpy.arctan(coneHalfAngle)
+        coneHalfAngle = np.deg2rad(coneHalfAngle)
+        coneRadius = coneHeight * np.arctan(coneHalfAngle)
         coneVectorNorm = coneVector.scalar_mult_new(1./coneVector.magnitude())
 
-        nearbyPointList = self.points_near(coneOrigin, coneHeight/numpy.cos(coneHalfAngle))
+        nearbyPointList = self.points_near(coneOrigin, coneHeight/np.cos(coneHalfAngle))
         weights = []
         pointsToColor = []
         for x, y, z in nearbyPointList:
@@ -2512,7 +2527,7 @@ component "data" value 3"""
                 weights.append(weightFunction(thisCoordRel.magnitude()))
                 pointsToColor.append([x,y,z])
         if normalize:
-            weights = numpy.array(weights) / sum(weights)
+            weights = np.array(weights) / sum(weights)
         for (x, y, z), weight in zip(pointsToColor,weights):
             self.data[x,y,z] += weight
 
@@ -2574,12 +2589,170 @@ component "data" value 3"""
                 pointsToColor.append([x,y,z])
                 weights.append(weightFunction(pointDepth))
 
-        weights = numpy.array(weights) / sum(weights)
+        weights = np.array(weights) / sum(weights)
         for (x,y,z), weight in zip(pointsToColor,weights):
             self.data[x,y,z] += weight
 
+class featureMapEnsemble():
 
+    def __init__(self):
+        self.num_feature_maps = 0
+        self.num_vec_pos = 0
+        #self.num_fmaps_ensembles = 0
+        self.bit_vectors = np.array([])
+        self.coord2vectPos = OrderedDict()
+        self.filenames = []
 
+    def __getitem__(self, index):
+        return self.getFeatureMap(index)
+
+    def __setitem__(self, key, value):
+        self.addFeatureMap(key, value)
+
+    def __iadd__(self, other):
+        #print "Hiiiii"
+
+        #print "hii again", other.getNumFeatureMaps()
+        #print self.getnVecPos()
+        allPointsSet = self.allPointsSetfromCoord2BVP()
+        otherPointsSet = other.allPointsSetfromCoord2BVP()
+        for coord in otherPointsSet - allPointsSet:
+            self.addFeature(coord)
+
+        tempOtherBitVector = np.zeros((other.getNumFeatureMaps(),self.getnVecPos()),dtype=np.bool)
+
+        for frame in xrange(other.getNumFeatureMaps()):
+            for coord in self.getCoord2BitVecPos():
+                if coord not in other.getCoord2BitVecPos():
+                    continue
+                elif other.getBitVector()[frame,other.getCoord2BitVecPos()[coord]]:
+                    tempOtherBitVector[frame,self.getCoord2BitVecPos()[coord]] = 1
+            self.setBitVector(np.vstack((self.getBitVector(), tempOtherBitVector)))
+        self.setNumFeatureMaps(self.getNumFeatureMaps() + other.getNumFeatureMaps())
+        return self
+
+    def setNumFeatureMaps( self, num ):
+        self.num_feature_maps = num
+
+    def getNumFeatureMaps(self):
+        return self.num_feature_maps
+
+    def setnVecPos( self, num ):
+        self.num_vec_pos = num
+
+    def getnVecPos( self ):
+        return self.num_vec_pos
+
+    def setBitVector(self, bit_vectors):
+        self.bit_vectors = bit_vectors
+        #print self.bit_vectors
+        
+    def getBitVector(self):
+        return self.bit_vectors
+
+    def makeBitVector(self,num_feature_maps, nVectPos):
+        print "Starting BitVector construction"
+        this_vec_pos_matrix = np.zeros((num_feature_maps, nVectPos), dtype=np.bool)
+        for f1 in range(num_feature_maps):
+            for coord in np.load(self.filenames[f1]):
+                this_vec_pos_matrix[f1,self.getCoord2BitVecPos()[tuple(coord)]] = 1
+        self.setBitVector(this_vec_pos_matrix)
+        print "Finished that too."
+
+    def setCoord2BitVecPos(self, coord2BitVecPos):
+        self.coord2vectPos = coord2BitVecPos
+
+    def getCoord2BitVecPos(self):
+        return self.coord2vectPos
+
+    def makeCoord2BitVecPos(self, filenames=[], num_frames=0):
+        print "Beginning Coord2BitVecPos"
+        allPointsSet = set()
+        for f1 in range(num_frames):
+            for coord in np.load(filenames[f1]):
+                allPointsSet.add(tuple(map(int,coord)))
+            self.setCoord2BitVecPos(OrderedDict((coord, i) for i, coord in enumerate(allPointsSet)))
+        self.setnVecPos(len(allPointsSet))
+        print "Finished Coord2BitVecPos"
+
+    def allPointsSetfromCoord2BVP(self):
+        allPointsSet = set()
+        for coord in self.getCoord2BitVecPos().iterkeys():
+            allPointsSet.add( coord )
+        return allPointsSet
+
+    def addFeatureMap(self, new_feature_map):
+        allPointsSet = set()
+
+        for coord in new_feature_map.toPovmeList()[:,:3]:
+            allPointsSet.add(tuple(map(int,coord)))
+
+        for coord in allPointsSet - self.allPointsSetfromCoord2BVP():
+            self.addFeature(coord)    
+            
+        tempBitVector = np.zeros((1,self.getnVecPos()),dtype=np.bool)
+        for coord in self.getCoord2BitVecPos():
+            if coord not in allPointsSet:
+                continue
+            elif coord in allPointsSet:
+                tempBitVector[0,self.getCoord2BitVecPos()[coord]] = 1
+        if self.getNumFeatureMaps() == 0:
+            self.setBitVector(np.array(tempBitVector))
+        else:
+            self.setBitVector(np.vstack((self.getBitVector(),tempBitVector)))
+
+        self.setNumFeatureMaps(self.getNumFeatureMaps()+1)
+
+    def addFeature(self, coord):
+
+        self.getCoord2BitVecPos()[coord] = self.getnVecPos()
+        self.setnVecPos(len(self.getCoord2BitVecPos()))
+        if self.getNumFeatureMaps() == 0:
+            return
+        self.setBitVector(np.hstack((self.getBitVector(),np.zeros((self.getNumFeatureMaps(),1),dtype=np.bool))))
+
+    def getFeatureMap(self, index):
+        tempBitVector = self.getBitVector()[index]
+        print tempBitVector
+        myArray = np.array([coord for coord in self.getCoord2BitVecPos().keys() if tempBitVector[self.getCoord2BitVecPos()[coord]]])
+        return featureMap.fromPovmeList(myArray, 1)
+    
+    @classmethod
+    def fromNumpyCoordFiles(self, fileList):
+        #print sourceDir
+        #print glob.glob(sourceDir+"/RAIaB*frame_1.npy")
+        #files = []
+        #for i in xrange(len(glob.glob(sourceDir + "/RAIaB*frame_*.npy"))):
+        #    print i
+        #    files.append(glob.glob(sourceDir + "/RAIaB*frame_%i.npy" %(i+1))[0])
+        
+        #print fileList
+        if not type(fileList) is list:
+            raise Exception('addNumpyCoordFiles expected list of file names. Got %r (type %r) instead' %(fileList, type(fileList)))
+        thisFME = featureMapEnsemble()
+        thisFME.filenames = fileList
+        thisFME.setNumFeatureMaps(len(fileList))
+                               
+        thisFME.makeCoord2BitVecPos(fileList, thisFME.getNumFeatureMaps())
+        thisFME.makeBitVector(thisFME.getNumFeatureMaps(),thisFME.getnVecPos())
+        return thisFME
+
+    def saveToNPZ(self,outfile):
+        print "Saving file to %s" %outfile
+        np.savez(outfile, self.getBitVector(), self.getCoord2BitVecPos())
+        print "Finished saving to file"
+
+    def loadFromNPZ(self, infile):
+        print "Loading NPZ file"
+        tempfile = np.load(infile)
+        print tempfile
+
+        self.setBitVector(tempfile['arr_0'])
+        self.setCoord2BitVecPos(tempfile['arr_1'].item())
+        self.setNumFeatureMaps(len(self.getBitVector()))
+        self.setnVecPos(len(self.getCoord2BitVecPos()))
+        print len(self.getCoord2BitVecPos())
+        print "Finished loading NPZ file"
 
 
 class algebra:
@@ -2623,22 +2796,22 @@ class algebra:
                 standardizedStringScoreFunc = standardizedStringScoreFunc.replace('_'.join(variable),standardMatName)
                 c+=1
 
-            # If it's just two matrices being multiplied then we can use numpy.multiply, which will be very fast
+            # If it's just two matrices being multiplied then we can use np.multiply, which will be very fast
             operators = stringScoreFunc.replace(variables[0][0],'').replace(variables[1][0],'').replace(variables[0][1],'').replace(variables[1][1],'').replace('_','').strip()
             #print operators
             if len(variables) == 2 and operators=='*':
-                self.scoreFuncs.append([features, numpy.multiply])
-                #self.vecScoreFuncs.append([[standardMatName, variable[0], variable[1]],numpy.multiply])
-                self.vecScoreFuncs.append([features,numpy.multiply])
+                self.scoreFuncs.append([features, np.multiply])
+                #self.vecScoreFuncs.append([[standardMatName, variable[0], variable[1]],np.multiply])
+                self.vecScoreFuncs.append([features,np.multiply])
 
                 #print 'SIMPLIFIED SCORE FUNCTION WILL BE USED FOR:', stringScoreFunc
             else:
                 scoreFunc =  eval('lambda %s: %s' %(','.join(standardMatNames), standardizedStringScoreFunc))
                 #print 'lambda %s: %s' %(','.join(standardMatNames), standardizedStringScoreFunc)
                 self.scoreFuncs.append([features, scoreFunc])
-                #self.vecScoreFuncs.append([[standardMatName, variable[0], variable[1]],numpy.vectorize(scoreFunc)])
-                self.vecScoreFuncs.append([features,numpy.vectorize(scoreFunc)])
-        #self.vecScoreFuncs = [[feature, numpy.vectorize(func)] for feature, func in self.scoreFuncs]
+                #self.vecScoreFuncs.append([[standardMatName, variable[0], variable[1]],np.vectorize(scoreFunc)])
+                self.vecScoreFuncs.append([features,np.vectorize(scoreFunc)])
+        #self.vecScoreFuncs = [[feature, np.vectorize(func)] for feature, func in self.scoreFuncs]
 
     def scoreAll(self,A, B):
         scores = []
@@ -2656,7 +2829,7 @@ class algebra:
             #scoreMap = self.scoreOne(A[features[0]], B[features[1]], vecScoreFunc)
             scoreMaps.append(scoreMap)
             volumeNormFactor = pow(A[feature[1]].getReso(), 3)
-            termScore = volumeNormFactor * numpy.sum(scoreMap.getData().flat)
+            termScore = volumeNormFactor * np.sum(scoreMap.getData().flat)
             scores.append(termScore)
         self.lastScoreMaps = scoreMaps
         self.lastScores = scores
@@ -2755,10 +2928,10 @@ class algebra:
             #print 'i, fMaps[i].getShape, BLShifts[i], TRShifts[i]'
             #print i, fMaps[i].getShape(), BLShifts[i], TRShifts[i]
 
-            #newData = fMaps[i].getData()[numpy.round(BLShiftsReso[i][0]):numpy.round(fMaps[i].getShape()[0]+TRShiftsReso[i][0]),
-            #                             numpy.round(BLShiftsReso[i][1]):numpy.round(fMaps[i].getShape()[1]+TRShiftsReso[i][1]),
-            #                             numpy.round(BLShiftsReso[i][2]):numpy.round(fMaps[i].getShape()[2]+TRShiftsReso[i][2])]
-            # Not using numpy.round because it's incredibly slow
+            #newData = fMaps[i].getData()[np.round(BLShiftsReso[i][0]):np.round(fMaps[i].getShape()[0]+TRShiftsReso[i][0]),
+            #                             np.round(BLShiftsReso[i][1]):np.round(fMaps[i].getShape()[1]+TRShiftsReso[i][1]),
+            #                             np.round(BLShiftsReso[i][2]):np.round(fMaps[i].getShape()[2]+TRShiftsReso[i][2])]
+            # Not using np.round because it's incredibly slow
             newData = fMaps[i].getData()[int(BLShiftsReso[i][0]+0.5):int(fMaps[i].getShape()[0]+TRShiftsReso[i][0]+0.5),
                                          int(BLShiftsReso[i][1]+0.5):int(fMaps[i].getShape()[1]+TRShiftsReso[i][1]+0.5),
                                          int(BLShiftsReso[i][2]+0.5):int(fMaps[i].getShape()[2]+TRShiftsReso[i][2]+0.5)]
@@ -2768,9 +2941,9 @@ class algebra:
             #print 'in commonizeVolumes newData.shape:', newData.shape, 'newFMaps[i].getShape()', newFMaps[i].getShape()
             #print newFMaps[i].getData().shape
         #newData2 = newFMap2.getData()
-        #newData2= fMap2.getData()[numpy.round(fMap2BLShift[0]):numpy.round(fMap2.getShape()[0]+fMap2TRShift[0]),
-        #                          numpy.round(fMap2BLShift[1]):numpy.round(fMap2.getShape()[1]+fMap2TRShift[1]),
-        #                          numpy.round(fMap2BLShift[2]):numpy.round(fMap2.getShape()[2]+fMap2TRShift[2])]
+        #newData2= fMap2.getData()[np.round(fMap2BLShift[0]):np.round(fMap2.getShape()[0]+fMap2TRShift[0]),
+        #                          np.round(fMap2BLShift[1]):np.round(fMap2.getShape()[1]+fMap2TRShift[1]),
+        #                          np.round(fMap2BLShift[2]):np.round(fMap2.getShape()[2]+fMap2TRShift[2])]
         #newFMap2.setData(newData2)
         # newData1 = newFMap1.getData()
         # newData1[fMap1Shift[0]:fMap1Shift[0]+fMap1.getShape()[0],
@@ -2790,7 +2963,7 @@ class algebra:
 
     def dockOne(self,receptorMaps, ligandMaps,translation_list,spherePoints):
 
-        #successfulDockings = numpy.array(['Translation Steps','Rotation Quaternion','Score'],dtype='string_')
+        #successfulDockings = np.array(['Translation Steps','Rotation Quaternion','Score'],dtype='string_')
         successfulDockings=[]
         c=0
         for [w,x,y,z] in spherePoints:
@@ -2798,9 +2971,9 @@ class algebra:
             print "Processing rotation %i of %i" %(c, len(spherePoints))
             #Quaternions to Euler angles:
             #180/3.1415926
-            #zphi = 57.29578 * numpy.arctan2((w*y + x*z),-(x*y - w*z))
-            #xtheta = 57.29578 * numpy.arccos(-w**2 - x**2 + y**2 + z**2)
-            #zpsi = 57.29578 * numpy.arctan2((w*y - x*z),(x*y + w*z))
+            #zphi = 57.29578 * np.arctan2((w*y + x*z),-(x*y - w*z))
+            #xtheta = 57.29578 * np.arccos(-w**2 - x**2 + y**2 + z**2)
+            #zpsi = 57.29578 * np.arctan2((w*y - x*z),(x*y + w*z))
             rotatedArrays = copy.deepcopy(ligandMaps)
             for feature in rotatedArrays.keys():
                 rotatedArrays[feature].interpolation_rotate_inplace([w,x,y,z])
@@ -2850,7 +3023,7 @@ class algebra:
 
         resolution = receptorMaps[receptorMaps.keys()[0]].getReso()
 
-        #successfulDockings = numpy.array(['Translation Steps','Rotation Quaternion','Score'],dtype='string_')
+        #successfulDockings = np.array(['Translation Steps','Rotation Quaternion','Score'],dtype='string_')
         successfulDockings=[]
         c=0
         for [w,x,y,z] in spherePoints:
@@ -2858,13 +3031,13 @@ class algebra:
             print "Processing rotation %i of %i: %s" %(c, len(spherePoints), str([w,x,y,z]))
             #Quaternions to Euler angles:
             #180/3.1415926
-            #zphi = 57.29578 * numpy.arctan2((w*y + x*z),-(x*y - w*z))
-            #xtheta = 57.29578 * numpy.arccos(-w**2 - x**2 + y**2 + z**2)
-            #zpsi = 57.29578 * numpy.arctan2((w*y - x*z),(x*y + w*z))
+            #zphi = 57.29578 * np.arctan2((w*y + x*z),-(x*y - w*z))
+            #xtheta = 57.29578 * np.arccos(-w**2 - x**2 + y**2 + z**2)
+            #zpsi = 57.29578 * np.arctan2((w*y - x*z),(x*y + w*z))
             rotatedPeel = copy.deepcopy(ligandPeel)
 
             rotatedPeel.rotate([w,x,y,z])
-            #borders = numpy.array([99999.,-99999.,99999.,-99999.,99999.,-99999.])
+            #borders = np.array([99999.,-99999.,99999.,-99999.,99999.,-99999.])
 
             #for feature in rotatedPeel.features.keys():
             #    for index in rotatedPeel.features[feature].keys():
@@ -2892,7 +3065,7 @@ class algebra:
                     #    borders[5] = newCoordsList[2]
 
 
-            #borders += numpy.array([-8., 8., -8., 8., -8., 8.])\
+            #borders += np.array([-8., 8., -8., 8., -8., 8.])\
             borders = rotatedPeel.suggest_borders(padding = 6.0)
 
             rotatedMaps = rotatedPeel.create_feature_maps(borders, resolution)
@@ -2907,7 +3080,7 @@ class algebra:
                     #for index in shiftedPeel.features[feature].keys():
                         #coords = shiftedPeel.features[feature][index]['coordinates'].coords()
 
-                        #shiftedPeel.features[feature][index]['coordinates'] = point(coords + numpy.array([X,Y,Z]))
+                        #shiftedPeel.features[feature][index]['coordinates'] = point(coords + np.array([X,Y,Z]))
                 dXReso = absXReso - lastTranslationReso[0]
                 dYReso = absYReso - lastTranslationReso[1]
                 dZReso = absZReso - lastTranslationReso[2]
@@ -3028,8 +3201,8 @@ class peel:
                                                     self.features['ar_rings'][ar_ring]['norm_vector'],
                                                     0.0,
                                                     self.features['ar_rings'][ar_ring]['radius'],
-                                                    lambda x: numpy.exp(-numpy.power(x-self.parameters['aromatic_gaussian_mean']/self.parameters['aromatic_gaussian_variance'],2)/2.0))
-        #print 'CMBAromatic', numpy.nonzero(this_feature_map.data)
+                                                    lambda x: np.exp(-np.power(x-self.parameters['aromatic_gaussian_mean']/self.parameters['aromatic_gaussian_variance'],2)/2.0))
+        #print 'CMBAromatic', np.nonzero(this_feature_map.data)
 
 
     def color_map_by_hbondDonor(self, this_feature_map):
@@ -3049,8 +3222,8 @@ class peel:
                                                     self.parameters['hydrogen_bond_angle_cutoff'],
                                                     self.features['hb_donors'][hbondDonor]['hbd_vector'],
                                                     self.parameters['hydrogen_bond_dist_cutoff'],
-                                                    lambda x: numpy.exp(-numpy.power((x-self.parameters['hydrogen_bond_donor_gaussian_mean'])/self.parameters['hydrogen_bond_donor_gaussian_variance'],2)/2))
-        #print 'CMBHBD', numpy.nonzero(this_feature_map.data)
+                                                    lambda x: np.exp(-np.power((x-self.parameters['hydrogen_bond_donor_gaussian_mean'])/self.parameters['hydrogen_bond_donor_gaussian_variance'],2)/2))
+        #print 'CMBHBD', np.nonzero(this_feature_map.data)
 
     def color_map_by_hbondAcceptor(self, this_feature_map):
         if not(self.hbondAcceptorsBinned):
@@ -3065,8 +3238,8 @@ class peel:
             #                      1)
             this_feature_map.add_sphere_dist_function(self.features['hb_acceptors'][hbondAcceptor]['coordinates'],
                                                       self.parameters['hydrogen_bond_acceptor_radius'],
-                                                      lambda x: numpy.exp(-numpy.power(x/self.parameters['hydrogen_bond_acceptor_gaussian_variance'],2)/2))
-        #print 'CMBHBA', numpy.nonzero(this_feature_map.data)
+                                                      lambda x: np.exp(-np.power(x/self.parameters['hydrogen_bond_acceptor_gaussian_variance'],2)/2))
+        #print 'CMBHBA', np.nonzero(this_feature_map.data)
 
 
     def color_map_by_hydrophobic(self, this_feature_map):
@@ -3082,10 +3255,10 @@ class peel:
             #                      1)
             #this_feature_map.add_sphere_dist_function(self.features['hydrophobics'][hydrophobic]['coordinates'],
             #                                          self.parameters['hydroph_gaussian_cutoff'],
-            #                                          lambda x: numpy.exp(-numpy.power(x/self.parameters['hydroph_gaussian_variance'],2)/2))
+            #                                          lambda x: np.exp(-np.power(x/self.parameters['hydroph_gaussian_variance'],2)/2))
             this_feature_map.add_spherical_gaussian(self.features['hydrophobics'][hydrophobic]['coordinates'],
                                           self.parameters['hydroph_gaussian_variance'])
-        #print 'CMBHydrophobic', numpy.nonzero(this_feature_map.data)
+        #print 'CMBHydrophobic', np.nonzero(this_feature_map.data)
 
     def color_map_by_hydrophilic(self, this_feature_map):
         if not(self.hydrophilicsBinned):
@@ -3100,10 +3273,10 @@ class peel:
             #                      1)
             #this_feature_map.add_sphere_dist_function(self.features['hydrophilics'][hydrophilic]['coordinates'],
             #                                          self.parameters['hydroph_gaussian_cutoff'],
-            #                                          lambda x: numpy.exp(-numpy.power(x/self.parameters['hydroph_gaussian_variance'],2)/2))
+            #                                          lambda x: np.exp(-np.power(x/self.parameters['hydroph_gaussian_variance'],2)/2))
             this_feature_map.add_spherical_gaussian(self.features['hydrophilics'][hydrophilic]['coordinates'],
                                           self.parameters['hydroph_gaussian_variance'])
-        #print 'CMBHydrophilic', numpy.nonzero(this_feature_map.data)
+        #print 'CMBHydrophilic', np.nonzero(this_feature_map.data)
 
 
     def color_map_by_hydrophobicity(self, this_feature_map):
@@ -3112,7 +3285,7 @@ class peel:
             self.bin_hydrophobics()
             self.hydrophobicsBinned = True
 
-        vectorizedWeightFunc = numpy.vectorize(lambda x: numpy.exp(-x/3), otypes=[numpy.float])
+        vectorizedWeightFunc = np.vectorize(lambda x: np.exp(-x/3), otypes=[np.float])
 
         for hydrophobic in self.features['hydrophobics']:
 
@@ -3124,7 +3297,7 @@ class peel:
             self.bin_hydrophilics()
             self.hydrophilicsBinned = True
 
-        vectorizedWeightFunc = numpy.vectorize(lambda x: -numpy.exp(-x/3), otypes=[numpy.float])
+        vectorizedWeightFunc = np.vectorize(lambda x: -np.exp(-x/3), otypes=[np.float])
 
 
         for hydrophilic in self.features['hydrophilics']:
@@ -3133,7 +3306,7 @@ class peel:
                                                       6,
                                                       vectorizedWeightFunc)
 
-        #print 'CMBHydrophobicity', numpy.nonzero(this_feature_map.data)
+        #print 'CMBHydrophobicity', np.nonzero(this_feature_map.data)
 
 
     def color_map_by_occupancy(self, this_feature_map):
@@ -3213,7 +3386,7 @@ class peel:
                 self.color_map_by_hydrophobicity(featureMaps[feature])
                 end = time.time()
                 #print 'time to create hydrophobicity map:', end-start
-        #print 'CFM', numpy.nonzero(featureMaps[0].data)
+        #print 'CFM', np.nonzero(featureMaps[0].data)
         return featureMaps
 
     def color_povme_map(self, povmeMatrix, gridReso, features = ['hbondAcceptor','hbondDonor','aromatic','hydrophobic', 'hydrophilic', 'occupancy', 'adjacency'], skin = 0):
@@ -3222,12 +3395,12 @@ class peel:
         NOTE that the order of points in input and output maps are not necessarily the same'''
         #First, get dimensions of the POVME map (remember that it's a list of points)
 
-        minX = numpy.min(povmeMatrix[:,0])
-        maxX = numpy.max(povmeMatrix[:,0]) + 1e-5
-        minY = numpy.min(povmeMatrix[:,1])
-        maxY = numpy.max(povmeMatrix[:,1]) + 1e-5
-        minZ = numpy.min(povmeMatrix[:,2])
-        maxZ = numpy.max(povmeMatrix[:,2]) + 1e-5
+        minX = np.min(povmeMatrix[:,0])
+        maxX = np.max(povmeMatrix[:,0]) + 1e-5
+        minY = np.min(povmeMatrix[:,1])
+        maxY = np.max(povmeMatrix[:,1]) + 1e-5
+        minZ = np.min(povmeMatrix[:,2])
+        maxZ = np.max(povmeMatrix[:,2]) + 1e-5
         colorMaps = self.create_feature_maps([minX, maxX, minY, maxY, minZ, maxZ], gridReso, features = features)
 
         colorPointLists = {}
@@ -3242,10 +3415,10 @@ class peel:
             moves = []
             skinsq = skin**2
             dx = 0.
-            # (x^2 + 0^2 + 0^2 < skinsq?) is the same as (x < skin?)  
+            # (x^2 + 0^2 + 0^2 < skinsq?) is the same as (x < skin?)
             while dx * gridReso <= skin:
                 dy = 0.
-                # 
+                #
                 while (dx**2 + dy**2) * gridReso**2 <= skinsq:
                     dz = 0.
                     while (dx**2 + dy**2 + dz**2)  * gridReso**2 <= skinsq:
@@ -3280,12 +3453,12 @@ class peel:
             completePointList = colorMaps[feature].toPovmeList()
             #Only return points that were available in the POVME list beforehand
             #THIS COULD BE IMPROVED
-            colorPointLists[feature] = numpy.array([row for row in completePointList.tolist() if tuple(row[:3]) in povmeSet])
-            #colorPointLists[feature] = numpy.array([row for row in completePointList.tolist() if row[:3] in povmeList.tolist()])
+            colorPointLists[feature] = np.array([row for row in completePointList.tolist() if tuple(row[:3]) in povmeSet])
+            #colorPointLists[feature] = np.array([row for row in completePointList.tolist() if row[:3] in povmeList.tolist()])
 
             #thisMap = colorMaps[feature].getData()
-            #nonZeroPts = numpy.transpose(thisMap.nonzero())
-            #colorPointLists[feature] = numpy.array((len(nonZeroPts), 4))
+            #nonZeroPts = np.transpose(thisMap.nonzero())
+            #colorPointLists[feature] = np.array((len(nonZeroPts), 4))
             #for index, nonZeroPt in enumerate(nonZeroPts):
             #    coords = colorMaps[feature].index_to_coord(nonZeroPt)
             #    colorPointLists[feature][index][0] = thisMap[coords[0]]
@@ -3490,7 +3663,7 @@ class peel:
         for phe_atom in phe_atoms:
             this_chain = self.receptor.information.get_atom_information()[phe_atom][4]
             this_resnum = self.receptor.information.get_atom_information()[phe_atom][5]
-            
+
             phe_residues.add((this_chain, this_resnum))
             #print 'atom_information', self.receptor.information.get_atom_information()[phe_atom]
         #print "phe_residues",phe_residues
@@ -3519,7 +3692,7 @@ class peel:
                 center_z = sum([float(i[2])/len(coords) for i in coords])
                 center = [center_x, center_y, center_z]
                 center_pt = point(center)
-                norm_vector = numpy.cross(coords_CG-center, coords_CE1-center)
+                norm_vector = np.cross(coords_CG-center, coords_CE1-center)
                 norm_vector_pt = point(norm_vector)
                 radius = 3 # for now
                 this_ID = '%s:%i' %(phe_res_chain, phe_res_num)
@@ -3563,7 +3736,7 @@ class peel:
                 center_z = sum([float(i[2])/len(coords) for i in coords])
                 center = [center_x, center_y, center_z]
                 center_pt = point(center)
-                norm_vector = numpy.cross(coords_CG-center, coords_CE1-center)
+                norm_vector = np.cross(coords_CG-center, coords_CE1-center)
                 norm_vector_pt = point(norm_vector)
                 radius = 3 # for now
                 this_ID = '%s:%i' %(tyr_res_chain, tyr_res_num)
@@ -3578,7 +3751,7 @@ class peel:
         for his_atom in his_atoms:
             this_chain = self.receptor.information.get_atom_information()[his_atom][4]
             this_resnum = self.receptor.information.get_atom_information()[his_atom][5]
-            
+
             his_residues.add((this_chain, this_resnum))
         #print "his_residues",his_residues
         for his_res_chain, his_res_num in his_residues:
@@ -3604,7 +3777,7 @@ class peel:
                 center_z = sum([float(i[2])/len(coords) for i in coords])
                 center = [center_x, center_y, center_z]
                 center_pt = point(center)
-                norm_vector = numpy.cross(coords_CG-center, coords_CE1-center)
+                norm_vector = np.cross(coords_CG-center, coords_CE1-center)
                 norm_vector_pt = point(norm_vector)
                 radius = 3 # for now
                 this_ID = '%s:%i' %(his_res_chain, his_res_num)
@@ -3658,7 +3831,7 @@ class peel:
                 center = [center_x, center_y, center_z]
                 center_pt = point(center)
 
-                norm_vector = numpy.cross(ring1_coords[0]-center, ring1_coords[2]-center)
+                norm_vector = np.cross(ring1_coords[0]-center, ring1_coords[2]-center)
                 norm_vector_pt = point(norm_vector)
                 radius = 3 # for now
                 #print this_trp_CG, ring1_coords[0], ring1_coords[1], norm_vector
@@ -3673,7 +3846,7 @@ class peel:
                 center_z = sum([float(i[2])/len(ring2_coords) for i in ring2_coords])
                 center = [center_x, center_y, center_z]
                 center_pt = point(center)
-                norm_vector = numpy.cross(ring2_coords[0]-center, ring2_coords[2]-center)
+                norm_vector = np.cross(ring2_coords[0]-center, ring2_coords[2]-center)
                 norm_vector_pt = point(norm_vector)
                 radius = 3 # for now
                 this_ID = '%s:%iR2' %(trp_res_chain, trp_res_num)
@@ -3767,18 +3940,18 @@ class peel:
         if use_spheres:
             for ar_ring in self.features['ar_rings']:
                 center = self.features['ar_rings'][ar_ring]['coordinates']
-                norm_vector = self.features['ar_rings'][ar_ring]['norm_vector'].coords() / numpy.linalg.norm(self.features['ar_rings'][ar_ring]['norm_vector'].coords())
+                norm_vector = self.features['ar_rings'][ar_ring]['norm_vector'].coords() / np.linalg.norm(self.features['ar_rings'][ar_ring]['norm_vector'].coords())
                 #print 'norm_vector:', norm_vector
                 #The ring is initially oriented with the Z axis running through the opening
-                rot_axis = numpy.cross([0, 0, 1], norm_vector)
+                rot_axis = np.cross([0, 0, 1], norm_vector)
                 #print 'rot_axis', rot_axis
-                angle = numpy.arccos(numpy.dot(norm_vector, [0, 0, 1]) / numpy.linalg.norm(norm_vector)) # Using formula cos(theta) = a * b / (|a| |b|)
+                angle = np.arccos(np.dot(norm_vector, [0, 0, 1]) / np.linalg.norm(norm_vector)) # Using formula cos(theta) = a * b / (|a| |b|)
                 r = self.functions.axisangle_to_q(rot_axis, angle)
                 n = 20
                 #print angle, r
-                for i in numpy.arange(0, 2 * numpy.pi, numpy.pi / n):
-                    sphere_x = numpy.sin(i)
-                    sphere_y = numpy.cos(i)
+                for i in np.arange(0, 2 * np.pi, np.pi / n):
+                    sphere_x = np.sin(i)
+                    sphere_y = np.cos(i)
                     sphere_z = 0
                     sphere_vector = sphere_x, sphere_y, sphere_z
                     sphere_vector = self.functions.qv_mult(r, sphere_vector) #print r, sphere_vector
@@ -3816,8 +3989,8 @@ class peel:
             for feature in self.features.keys():
                     for key in self.features[feature].keys():
                         coords.append(self.features[feature][key]['coordinates'].coords())
-            coords = numpy.array(coords)
-            center = numpy.array([numpy.mean(coords[:,0]), numpy.mean(coords[:,1]), numpy.mean(coords[:,2])])
+            coords = np.array(coords)
+            center = np.array([np.mean(coords[:,0]), np.mean(coords[:,1]), np.mean(coords[:,2])])
 
         #Move whole thing to be vcentered around 0,0,0
         self.translate(-1.0*center)
@@ -3825,9 +3998,9 @@ class peel:
                 for index in self.features[feature].keys():
                     oldCoordsList = self.features[feature][index]['coordinates'].coords()
                     oldMagnitude = self.features[feature][index]['coordinates'].magnitude()
-                    #rotation = self.functions.axisangle_to_q(quaternion[1:], numpy.arcsin(quaternion[0])*2)
-                    rotation = self.functions.axisangle_to_q(quaternion[1:], numpy.arccos(quaternion[0])*2)
-                    newCoordsList = numpy.array(self.functions.qv_mult(rotation, oldCoordsList)) * oldMagnitude
+                    #rotation = self.functions.axisangle_to_q(quaternion[1:], np.arcsin(quaternion[0])*2)
+                    rotation = self.functions.axisangle_to_q(quaternion[1:], np.arccos(quaternion[0])*2)
+                    newCoordsList = np.array(self.functions.qv_mult(rotation, oldCoordsList)) * oldMagnitude
                     #coordsList = [coords.x, coords.y, coords.z]
                     self.features[feature][index]['coordinates'] = point(newCoordsList)
                     for key in self.features[feature][index]:
@@ -3843,13 +4016,13 @@ class peel:
         for feature in self.features.keys():
             for key in self.features[feature].keys():
                 oldCoords = self.features[feature][key]['coordinates'].coords()
-                newCoords = oldCoords + numpy.array(vector)
+                newCoords = oldCoords + np.array(vector)
                 self.features[feature][key]['coordinates'] = point(newCoords)
 
     def suggest_borders(self, padding = 6.0):
         '''Finds the maximum extent of all the features in x, y, and z, and then adds a padding constant onto it.'''
         coords = []
-        borders = numpy.array([99999.,-99999.,99999.,-99999.,99999.,-99999.])
+        borders = np.array([99999.,-99999.,99999.,-99999.,99999.,-99999.])
 
         for feature in self.features:
             for index in self.features[feature]:
@@ -3868,7 +4041,7 @@ class peel:
                 if coordsList[2] > borders[5]:
                     borders[5] = coordsList[2]
 
-        return borders + numpy.array([-padding, padding, -padding, padding, -padding, padding])
+        return borders + np.array([-padding, padding, -padding, padding, -padding, padding])
 
     def __init__(self, receptor, parameters, isLigand=False):
 
@@ -3952,9 +4125,9 @@ def intro():
     print "          ..I7II++.                                         "
     print "            .=I$$$.                                         "
     print "               ....                                         "
-    print 
+    print
     print "Thanks for using peel.py. We are phasing out the command-line functionality for this program. Please see the examples for how peel.py can be imported and used in a variety of workflows."
-    
+
 
 if __name__=='__main__':
     intro()

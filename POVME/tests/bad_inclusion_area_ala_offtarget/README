@@ -1,0 +1,3 @@
+These tests establish that POVME w/color is stable even if one color is completely missing from a frame (as in the case of the aromatic field being absent for alanine, but present for tryptophan).
+
+This test also shows the behavior for if there is no protein in the inclusion region.
