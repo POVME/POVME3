@@ -4,7 +4,7 @@ from setuptools import setup
 setup(
   name = 'POVME',
   packages = ['POVME'],
-  version = '3.0.2',
+  version = '3.0.3',
   description = 'POVME (Pocket VOlume MEasurer) is a Python package for extracting actionable information from ensembles of protein structures for use in drug design.',
   author = 'Jeff Wagner',
   author_email = 'jwagnerjpl@gmail.com',
