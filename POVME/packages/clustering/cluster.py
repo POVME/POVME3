@@ -14,7 +14,7 @@ import itertools
 import collections
 #import fnmatch
 import pylab
-import packages.binana.peel as peel
+import POVME.packages.binana.peel as peel
 #import matplotlib.pyplot
 
 class InputReader():
