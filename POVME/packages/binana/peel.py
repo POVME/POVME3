@@ -12,7 +12,7 @@ import sys
 import re
 import textwrap
 #import toroidPoints
-import packages.pymolecule.pymolecule as pymolecule
+import POVME.packages.pymolecule.pymolecule as pymolecule
 import numpy
 import gzip
 import copy
@@ -1991,9 +1991,9 @@ class featureMap:
         # Finally, we go through for each point and put it's magnitude (4th column) into the featureMap at the appropriate spot
         for pointListIndex, shiftedIndex in enumerate(shiftedIndexList):
             if justCoords == True:
-                thisMap.data[tuple(shiftedIndex[:3])] = 1
+                thisMap.data[tuple(shiftedIndex[:3].astype(np.int))] = 1
             else:
-                thisMap.data[tuple(shiftedIndex[:3])] = povmeList[pointListIndex][3]
+                thisMap.data[tuple(shiftedIndex[:3].astype(np.int))] = povmeList[pointListIndex][3]
         
         return thisMap
 
@@ -2431,7 +2431,8 @@ component "data" value 3"""
         #print sphereOrigin
         pointList = self.points_near(sphereOrigin, sphereRadius)
         for x, y, z in pointList:
-            self.data[x, y, z] = self.data[x, y, z] + weight
+            inds3 = (int(x), int(y), int(z))
+            self.data[inds3] = self.data[inds3] + weight
         #print 'AS',np.nonzero(self.data)
 
     def add_sphere_dist_function(self, sphereOrigin, sphereRadius, weightFunction,normalize = True):
@@ -2449,7 +2450,8 @@ component "data" value 3"""
         else:
             weights = []
         for i, (x, y, z, d) in enumerate(pointList):
-            self.data[x, y, z] = self.data[x, y, z] + weights[i]
+            inds3 = (int(x), int(y), int(z))
+            self.data[inds3] = self.data[inds3] + weights[i]
             #self.data[x, y, z] = self.data[x, y, z] + weightFunction(d)
         #print 'AS',np.nonzero(self.data)
 
@@ -2475,7 +2477,8 @@ component "data" value 3"""
         else:
             weights = []
         for i, (x, y, z, d) in enumerate(pointList):
-            self.data[x, y, z] = self.data[x, y, z] + weights[i]
+            inds3 = (int(x), int(y), int(z))
+            self.data[inds3] = self.data[inds3] + weights[i]
             #self.data[x, y, z] = self.data[x, y, z] + weightFunction(d)
         #print 'AS',np.nonzero(self.data)
 
@@ -2500,7 +2503,7 @@ component "data" value 3"""
             radialDistance = pointShadowRel.dist_to(thisCoordRel)
             localConeRadius = coneRadius * (pointDepth/coneHeight)
             if radialDistance <= localConeRadius:
-                self.data[x,y,z] += weight
+                self.data[int(x),int(y),int(z)] += weight
 
 
     def add_cone_dist_function(self, coneOrigin, coneHalfAngle, coneVector, coneHeight, weightFunction, normalize = True):
@@ -2529,7 +2532,7 @@ component "data" value 3"""
         if normalize:
             weights = np.array(weights) / sum(weights)
         for (x, y, z), weight in zip(pointsToColor,weights):
-            self.data[x,y,z] += weight
+            self.data[int(x),int(y),int(z)] += weight
 
 
     def add_disc(self, discOrigin, discHeight, discNormal, discInnerRadius, discOuterRadius, bidirectional=True, weight = 1):
@@ -2557,7 +2560,7 @@ component "data" value 3"""
             #ensure that it's between inner and outer radius
             radialDistance = pointShadowRel.dist_to(thisCoordRel)
             if radialDistance < discOuterRadius and radialDistance > discInnerRadius:
-                self.data[x,y,z] += weight
+                self.data[int(x),int(y),int(z)] += weight
 
     def add_disc_dist_function(self, discOrigin, discHeight, discNormal, discInnerRadius, discOuterRadius, weightFunction, bidirectional=True):
         nearbyPointList = self.points_near(discOrigin, point([discOuterRadius,discHeight,0.]).magnitude())
@@ -2591,7 +2594,7 @@ component "data" value 3"""
 
         weights = np.array(weights) / sum(weights)
         for (x,y,z), weight in zip(pointsToColor,weights):
-            self.data[x,y,z] += weight
+            self.data[int(x),int(y),int(z)] += weight
 
 class featureMapEnsemble():
 
@@ -2610,10 +2613,6 @@ class featureMapEnsemble():
         self.addFeatureMap(key, value)
 
     def __iadd__(self, other):
-        #print "Hiiiii"
-
-        #print "hii again", other.getNumFeatureMaps()
-        #print self.getnVecPos()
         allPointsSet = self.allPointsSetfromCoord2BVP()
         otherPointsSet = other.allPointsSetfromCoord2BVP()
         for coord in otherPointsSet - allPointsSet:
