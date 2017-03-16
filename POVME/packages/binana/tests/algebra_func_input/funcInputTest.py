@@ -1,5 +1,5 @@
-import packages.binana.peel as peel
-import packages.pymolecule.pymolecule as pymolecule
+import POVME.packages.binana.peel as peel
+import POVME.packages.pymolecule.pymolecule as pymolecule
 
 
 # The purpose of this test case is to show the versatility of the string-input scoring functions.

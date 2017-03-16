@@ -1,4 +1,6 @@
-# POVME 2.0 is released under the GNU General Public License (see http://www.gnu.org/licenses/gpl.html).
+#!python
+
+# POVME 3.0 is released under the GNU General Public License (see http://www.gnu.org/licenses/gpl.html).
 # If you have any questions, comments, or suggestions, please don't hesitate to contact me,
 # Jacob Durrant, at jdurrant [at] ucsd [dot] edu.
 #
@@ -31,7 +33,7 @@ from scipy.spatial.distance import cdist
 from scipy.spatial.distance import pdist
 from scipy.spatial.distance import squareform
 
-version = "2.0.0"
+version = "3.0.0"
 
 def log(astr, parameters):
     '''Output POVME statements, either to the screen or to a file
@@ -1725,11 +1727,12 @@ class runit():
             output_dirname = os.path.dirname(parameters['OutputFilenamePrefix'])
             
             #if os.path.exists(output_dirname): shutil.rmtree(output_dirname) # So delete the directory if it already exists.
-            try: os.mkdir(output_dirname)
+            try:
+                os.mkdir(output_dirname)
             except: pass
-            
+        parameters['OutputBasename'] = os.path.basename(parameters['OutputFilenamePrefix'])
         output_frame_dirname = parameters['OutputFilenamePrefix'] + 'frameInfo/'
-        parameters['OutputFrameFilenamePrefix'] = output_frame_dirname
+        parameters['OutputFrameFilenamePrefix'] = output_frame_dirname + parameters['OutputBasename']
                     
         try: os.mkdir(output_frame_dirname)
         except: pass

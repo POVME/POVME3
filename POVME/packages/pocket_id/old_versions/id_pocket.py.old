@@ -1,4 +1,4 @@
-import packages.pymolecule.pymolecule as pymolecule
+import POVME.packages.pymolecule.pymolecule as pymolecule
 import sys
 import numpy
 import convexhull

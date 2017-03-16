@@ -1,5 +1,5 @@
 import numpy
-import packages.binana.peel as peel
+import POVME.packages.binana.peel as peel
 
 def normalize(v, tolerance=0.00001):
     mag2 = sum(n * n for n in v)

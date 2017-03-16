@@ -10,7 +10,7 @@ If you use POVME in your research, please cite the following reference:
 Parameters:
 	OutputFilenamePrefix: ./defined_region_inclusion_
 	PointsIncludeRegions: sphere at (27.0, 51.0, 28.0), radius = 15.0
-	OutputFrameFilenamePrefix: ./defined_region_inclusion_frameInfo/
+	OutputFrameFilenamePrefix: ./defined_region_inclusion_frameInfo/defined_region_inclusion_
 	MaxGrowIterations: 10000000000.0
 	GridSpacing: 1.0
 	NumProcessors: 2
@@ -20,6 +20,7 @@ Parameters:
 	ConvexHullExclusion: none
 	SaveRegions: False
 	ContiguousPointsCriteria: 3
+	OutputBasename: defined_region_inclusion_
 ---------------------------------
 PARAMETERS DEFINED
 ---------------------------------
@@ -46,8 +47,8 @@ RECEPTORS LOADED
 Generating the pocket-encompassing point field
 
 Saving the point field as a PDB and NPY file
-	Point field saved to ./defined_region_inclusion_frameInfo/inclusion.pdb to permit visualization
-	Point field saved to ./defined_region_inclusion_frameInfo/inclusion.npy to optionally load for the volume calculation
+	Point field saved to ./defined_region_inclusion_frameInfo/defined_region_inclusion_inclusion.pdb to permit visualization
+	Point field saved to ./defined_region_inclusion_frameInfo/defined_region_inclusion_inclusion.npy to optionally load for the volume calculation
 
 Calculating the pocket volume of each frame
 ---------------------------------
@@ -137,7 +138,7 @@ FRAME        | VOLUME (A^3) | SURF. A. (A^2)
 9            |   3219.0     |   1630.0
 10           |   2997.0     |   1709.0
 
-Execution time = 127.429523945 sec
+Execution time = 129.443114996 sec
 
 ---------------------------------
 ABOUT TO CALCULATE OCCUPANCY AVERAGE

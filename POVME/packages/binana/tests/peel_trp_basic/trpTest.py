@@ -1,5 +1,5 @@
-import packages.binana.peel as peel
-import packages.pymolecule.pymolecule as pymolecule
+import POVME.packages.binana.peel as peel
+import POVME.packages.pymolecule.pymolecule as pymolecule
 my_params = peel.defaultParams
 trp = pymolecule.Molecule()
 trp.fileio.load_pdb_into( 'trp.pdb', bonds_by_distance=True, serial_reindex = True, resseq_reindex=False)

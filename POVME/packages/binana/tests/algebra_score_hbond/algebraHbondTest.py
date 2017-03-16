@@ -1,5 +1,5 @@
-import packages.binana.peel as peel
-import packages.pymolecule.pymolecule as pymolecule
+import POVME.packages.binana.peel as peel
+import POVME.packages.pymolecule.pymolecule as pymolecule
 
 part_1 = pymolecule.Molecule()
 part_1.fileio.load_pdb_into('helixPt1.pdb')

@@ -1,4 +1,4 @@
-import packages.binana.peel as peel
+import POVME.packages.binana.peel as peel
 import numpy as np
 import pylab
 import sys

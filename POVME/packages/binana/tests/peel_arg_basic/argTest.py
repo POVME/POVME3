@@ -1,6 +1,6 @@
 #import numpy
-import packages.pymolecule.pymolecule as pymolecule
-import packages.binana.peel as peel
+import POVME.packages.pymolecule.pymolecule as pymolecule
+import POVME.packages.binana.peel as peel
 import sys
 #print sys.modules
 

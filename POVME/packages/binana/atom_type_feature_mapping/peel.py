@@ -10,7 +10,7 @@ import sys
 import re
 import textwrap
 #import toroidPoints
-import packages.pymolecule.pymolecule as pymolecule
+import POVME.packages.pymolecule.pymolecule as pymolecule
 import numpy
 import gzip
 import copy

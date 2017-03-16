@@ -1,3 +1,4 @@
+#!python
 # Implementation of Clustering Algorithms in POVME
 # By Celia Wong
 # Advised by Jeff Wagner

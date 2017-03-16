@@ -1,3 +1,5 @@
+#!python
+
 # Calculates the binding site overlap between sets of POVME outputs.
 # Started July 9th, 2014
 # Celia Wong

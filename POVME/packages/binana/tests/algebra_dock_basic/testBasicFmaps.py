@@ -1,5 +1,5 @@
-import packages.binana.peel as peel
-import packages.pymolecule.pymolecule as pymolecule
+import POVME.packages.binana.peel as peel
+import POVME.packages.pymolecule.pymolecule as pymolecule
 import numpy
 features = ['aromatic','hbondDonor','hbondAcceptor','hydrophobic','hydrophilic','hydrophobicity','occupancy']
 

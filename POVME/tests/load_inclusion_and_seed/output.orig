@@ -10,7 +10,7 @@ If you use POVME in your research, please cite the following reference:
 Parameters:
 	OutputFilenamePrefix: ./load_inclusion_and_seed_
 	LoadSeedPointsFilename: seed.npy
-	OutputFrameFilenamePrefix: ./load_inclusion_and_seed_frameInfo/
+	OutputFrameFilenamePrefix: ./load_inclusion_and_seed_frameInfo/load_inclusion_and_seed_
 	MaxGrowIterations: 10000000000.0
 	GridSpacing: 1.0
 	NumProcessors: 2
@@ -21,6 +21,7 @@ Parameters:
 	ConvexHullExclusion: none
 	SaveRegions: False
 	ContiguousPointsCriteria: 3
+	OutputBasename: load_inclusion_and_seed_
 ---------------------------------
 PARAMETERS DEFINED
 ---------------------------------
@@ -49,13 +50,13 @@ Loading the inclusion point-field NPY file...
 Loading the seed point-field NPY file...
 
 Saving the point field as a PDB and NPY file
-	Point field saved to ./load_inclusion_and_seed_frameInfo/inclusion.pdb to permit visualization
-	Point field saved to ./load_inclusion_and_seed_frameInfo/inclusion.npy to optionally load for the volume calculation
+	Point field saved to ./load_inclusion_and_seed_frameInfo/load_inclusion_and_seed_inclusion.pdb to permit visualization
+	Point field saved to ./load_inclusion_and_seed_frameInfo/load_inclusion_and_seed_inclusion.npy to optionally load for the volume calculation
 
 
 Saving the contiguous-pocket seed points as a PDB and NPY file
-	Contiguous-pocket seed points saved to ./load_inclusion_and_seed_frameInfo/seed.pdb to permit visualization
-	Point field saved to ./load_inclusion_and_seed_frameInfo/seed.npy to optionally load for the volume calculation
+	Contiguous-pocket seed points saved to ./load_inclusion_and_seed_frameInfo/load_inclusion_and_seed_seed.pdb to permit visualization
+	Point field saved to ./load_inclusion_and_seed_frameInfo/load_inclusion_and_seed_seed.npy to optionally load for the volume calculation
 
 Calculating the pocket volume of each frame
 ---------------------------------
@@ -145,7 +146,7 @@ FRAME        | VOLUME (A^3) | SURF. A. (A^2)
 9            |   3148.0     |   1424.0
 10           |   2959.0     |   1571.0
 
-Execution time = 133.446624994 sec
+Execution time = 133.485586882 sec
 
 ---------------------------------
 ABOUT TO CALCULATE OCCUPANCY AVERAGE

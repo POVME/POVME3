@@ -1,6 +1,6 @@
 
 import itertools
-import packages.binana.peel as peel
+import POVME.packages.binana.peel as peel
 import numpy
 import sys
 import os

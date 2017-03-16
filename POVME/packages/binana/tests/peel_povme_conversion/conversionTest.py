@@ -1,6 +1,6 @@
 import numpy
-import packages.binana.peel as peel
-import POVME2
+import POVME.packages.binana.peel as peel
+import POVME3
 
 ### Loads a numpy map from POVME output, converts it to a featureMap,
 ### then converts it back and sees if the data is the same
@@ -36,7 +36,7 @@ for x in numpy.arange(minX, maxX):
 
 # Have POVME's output function write it
 povmeOutputName = 'POVME_generated.dx'
-POVME2.dx_freq(data, {'OutputFilenamePrefix':'test_',
+POVME3.dx_freq(data, {'OutputFilenamePrefix':'test_',
                       'SaveVolumetricDensityDX':True,
                       'CompressOutput':False})
 
@@ -46,7 +46,7 @@ featureMap.write_dx_file('peel_generated.dx')
 
 # Convert it back to a POVME list and write it
 data_2 = featureMap.toPovmeList()
-POVME2.dx_freq(data, {'OutputFilenamePrefix':'test2_',
+POVME3.dx_freq(data, {'OutputFilenamePrefix':'test2_',
                       'SaveVolumetricDensityDX':True,
                       'CompressOutput':False})
 

@@ -17,9 +17,9 @@ import gzip
 import itertools
 import numpy
 import parameterTestHelpers
-import packages.binana.peel as peel
+import POVME.packages.binana.peel as peel
 import pylab
-import packages.pymolecule.pymolecule as pymolecule
+import POVME.packages.pymolecule.pymolecule as pymolecule
 import scipy.optimize
 import sys
 

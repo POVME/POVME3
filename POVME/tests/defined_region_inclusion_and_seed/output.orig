@@ -10,7 +10,7 @@ If you use POVME in your research, please cite the following reference:
 Parameters:
 	OutputFilenamePrefix: ./defined_region_inclusion_and_seed_
 	PointsIncludeRegions: sphere at (27.0, 51.0, 28.0), radius = 15.0
-	OutputFrameFilenamePrefix: ./defined_region_inclusion_and_seed_frameInfo/
+	OutputFrameFilenamePrefix: ./defined_region_inclusion_and_seed_frameInfo/defined_region_inclusion_and_seed_
 	MaxGrowIterations: 10000000000.0
 	GridSpacing: 1.0
 	NumProcessors: 2
@@ -21,6 +21,7 @@ Parameters:
 	ConvexHullExclusion: none
 	SaveRegions: False
 	ContiguousPointsCriteria: 3
+	OutputBasename: defined_region_inclusion_and_seed_
 ---------------------------------
 PARAMETERS DEFINED
 ---------------------------------
@@ -47,13 +48,13 @@ RECEPTORS LOADED
 Generating the pocket-encompassing point field
 
 Saving the point field as a PDB and NPY file
-	Point field saved to ./defined_region_inclusion_and_seed_frameInfo/inclusion.pdb to permit visualization
-	Point field saved to ./defined_region_inclusion_and_seed_frameInfo/inclusion.npy to optionally load for the volume calculation
+	Point field saved to ./defined_region_inclusion_and_seed_frameInfo/defined_region_inclusion_and_seed_inclusion.pdb to permit visualization
+	Point field saved to ./defined_region_inclusion_and_seed_frameInfo/defined_region_inclusion_and_seed_inclusion.npy to optionally load for the volume calculation
 
 
 Saving the contiguous-pocket seed points as a PDB and NPY file
-	Contiguous-pocket seed points saved to ./defined_region_inclusion_and_seed_frameInfo/seed.pdb to permit visualization
-	Point field saved to ./defined_region_inclusion_and_seed_frameInfo/seed.npy to optionally load for the volume calculation
+	Contiguous-pocket seed points saved to ./defined_region_inclusion_and_seed_frameInfo/defined_region_inclusion_and_seed_seed.pdb to permit visualization
+	Point field saved to ./defined_region_inclusion_and_seed_frameInfo/defined_region_inclusion_and_seed_seed.npy to optionally load for the volume calculation
 
 Calculating the pocket volume of each frame
 ---------------------------------
@@ -143,7 +144,7 @@ FRAME        | VOLUME (A^3) | SURF. A. (A^2)
 9            |   3148.0     |   1424.0
 10           |   2959.0     |   1571.0
 
-Execution time = 134.470149994 sec
+Execution time = 134.465809107 sec
 
 ---------------------------------
 ABOUT TO CALCULATE OCCUPANCY AVERAGE

@@ -10,7 +10,7 @@ If you use POVME in your research, please cite the following reference:
 Parameters:
 	OutputFilenamePrefix: ./first_
 	PointsIncludeRegions: sphere at (65.0, 98.0, 50.0), radius = 16.0
-	OutputFrameFilenamePrefix: ./first_frameInfo/
+	OutputFrameFilenamePrefix: ./first_frameInfo/first_
 	MaxGrowIterations: 10000000000.0
 	GridSpacing: 1.0
 	NumProcessors: 1
@@ -21,6 +21,7 @@ Parameters:
 	ConvexHullExclusion: first
 	SaveRegions: False
 	ContiguousPointsCriteria: 3
+	OutputBasename: first_
 ---------------------------------
 PARAMETERS DEFINED
 ---------------------------------
@@ -42,13 +43,13 @@ RECEPTORS LOADED
 Generating the pocket-encompassing point field
 
 Saving the point field as a PDB and NPY file
-	Point field saved to ./first_frameInfo/inclusion.pdb to permit visualization
-	Point field saved to ./first_frameInfo/inclusion.npy to optionally load for the volume calculation
+	Point field saved to ./first_frameInfo/first_inclusion.pdb to permit visualization
+	Point field saved to ./first_frameInfo/first_inclusion.npy to optionally load for the volume calculation
 
 
 Saving the contiguous-pocket seed points as a PDB and NPY file
-	Contiguous-pocket seed points saved to ./first_frameInfo/seed.pdb to permit visualization
-	Point field saved to ./first_frameInfo/seed.npy to optionally load for the volume calculation
+	Contiguous-pocket seed points saved to ./first_frameInfo/first_seed.pdb to permit visualization
+	Point field saved to ./first_frameInfo/first_seed.npy to optionally load for the volume calculation
 
 Calculating the pocket volume of each frame
 ---------------------------------
@@ -98,7 +99,7 @@ FRAME        | VOLUME (A^3) | SURF. A. (A^2)
 4            |   1900.0     |   1085.0
 5            |   2102.0     |   1034.0
 
-Execution time = 187.285861015 sec
+Execution time = 184.170476913 sec
 
 ---------------------------------
 ABOUT TO CALCULATE OCCUPANCY AVERAGE
