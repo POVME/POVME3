@@ -16,7 +16,7 @@ DistanceCutoff	1.09
 ConvexHullExclusion	none
 OutputFilenamePrefix	./!!!SYSTEM NAME!!!/!!!SYSTEM NAME!!!_
 CompressOutput	false
-NumProcessors	5
+NumProcessors	1
 
 
 '''
