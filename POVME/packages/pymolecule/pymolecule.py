@@ -705,7 +705,7 @@ class FileIO():
             if return_text == False: afile.close()
             else: return return_string
             
-        else: print "ERROR: Cannot save a Molecule with no atoms (file name \"" + filename + "\")"
+        else: print "WARNING: Cannot save a Molecule with no atoms (file name \"" + filename + "\")"
 
 class AtomsAndBonds():
     '''A class for adding and deleting atoms and bonds'''
@@ -748,7 +748,7 @@ class AtomsAndBonds():
                 
                 try: bond_dist = self.__parent_molecule.get_constants()['bond_length_dict'][key]
                 except:
-                    print "ERROR: Unknown bond distance between elements " + self.__parent_molecule.get_atom_information()['element_stripped'][index1] + ' and ' + self.__parent_molecule.get_atom_information()['element_stripped'][index2] + '. Assuming ' + str(max_bond_length) + '.'
+                    print "WARNING: Unknown bond distance between elements " + self.__parent_molecule.get_atom_information()['element_stripped'][index1] + ' and ' + self.__parent_molecule.get_atom_information()['element_stripped'][index2] + '. Assuming ' + str(max_bond_length) + '.'
                     bond_dist = max_bond_length
                     
                 if distances[index1][index2] < bond_dist * 1.2 and distances[index1][index2] > bond_dist * 0.5: # so they should be bonded
