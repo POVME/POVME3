@@ -18,17 +18,17 @@ Note that this method will create a separate python build. You will need to run 
 
 ## Example
 
-```bash
-cd examples
-cd basic_example
-python ../../POVME2.py sample_input.ini
+The POVME Git repository comes with examples and test cases which are not included in the pip install.
+
+```git clone https://github.com/POVME/POVME.git
+cd POVME/POVME/examples/ligand_example/
+POVME3.py sample_POVME_input.ini
 ```
 
-<!-- TODO explain what is happening in the example -->
 
-Once this runs, you will have an output directory named `basic_example_output`.
+Once this runs, you will have an output directory named `POVME_test_run`.
 
-Within this directory, unzip `basic_example_volume_trajectory.pdb.gz` and open with [VMD](http://www.ks.uiuc.edu/Development/Download/download.cgi?PackageName=VMD).
+We recommend that you visualize the results using [VMD](http://www.ks.uiuc.edu/Development/Download/download.cgi?PackageName=VMD). Open the POVME output using VMD with the following command: ```vmd -m POVME_test_run/POVME_volume_trajectory.pdb 1BYQ_every250.pdb```. Under the Graphics-->Representations menu in VMD, show the ```0: POVME_volume_trajectory.pdb``` molecule using the Drawing Method "VDW". Now press the play button in the bottom right corner of the VMD Main window to watch the pocket trajectory.
 
 This file is a volumetric trajectory, which is a series of `.pdb` frames representing the shape of the binding pocket in each snapshot. If you load this along with the original snapshots, you will be able to visualize the binding pocket trajectory.
 
