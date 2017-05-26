@@ -12,7 +12,7 @@ source miniconda2/bin/activate
 pip install povme
 ```
 
-Note that this method will create a separate python build. You will need to run "source miniconda2/bin/activate" each time you want to use POVME3.
+Note that this method will create a separate python build. You will need to run ```source miniconda2/bin/activate``` each time you want to use POVME3.
 
 
 
