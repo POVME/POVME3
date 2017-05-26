@@ -10,7 +10,7 @@ If you use POVME in your research, please cite the following reference:
 Parameters:
 	OutputFilenamePrefix: ./ala_offtarget_
 	PointsIncludeRegions: sphere at (-22.0, 20.0, 22.0), radius = 5.0
-	OutputFrameFilenamePrefix: ./ala_offtarget_frameInfo/
+	OutputFrameFilenamePrefix: ./ala_offtarget_frameInfo/ala_offtarget_
 	MaxGrowIterations: 10000000000.0
 	GridSpacing: 1.0
 	NumProcessors: 5
@@ -21,6 +21,7 @@ Parameters:
 	ConvexHullExclusion: none
 	SaveRegions: False
 	ContiguousPointsCriteria: 3
+	OutputBasename: ala_offtarget_
 ---------------------------------
 PARAMETERS DEFINED
 ---------------------------------
@@ -39,13 +40,13 @@ RECEPTORS LOADED
 Generating the pocket-encompassing point field
 
 Saving the point field as a PDB and NPY file
-	Point field saved to ./ala_offtarget_frameInfo/inclusion.pdb to permit visualization
-	Point field saved to ./ala_offtarget_frameInfo/inclusion.npy to optionally load for the volume calculation
+	Point field saved to ./ala_offtarget_frameInfo/ala_offtarget_inclusion.pdb to permit visualization
+	Point field saved to ./ala_offtarget_frameInfo/ala_offtarget_inclusion.npy to optionally load for the volume calculation
 
 
 Saving the contiguous-pocket seed points as a PDB and NPY file
-	Contiguous-pocket seed points saved to ./ala_offtarget_frameInfo/seed.pdb to permit visualization
-	Point field saved to ./ala_offtarget_frameInfo/seed.npy to optionally load for the volume calculation
+	Contiguous-pocket seed points saved to ./ala_offtarget_frameInfo/ala_offtarget_seed.pdb to permit visualization
+	Point field saved to ./ala_offtarget_frameInfo/ala_offtarget_seed.npy to optionally load for the volume calculation
 
 Calculating the pocket volume of each frame
 Too many processors requested (5 requested, vs 1 frames to analyze). Lowering number requested.
