@@ -29,9 +29,12 @@ POVME3.py sample_POVME_input.ini
 
 Once this runs, you will have an output directory named `POVME_test_run`.
 
-We recommend that you visualize the results using [VMD](http://www.ks.uiuc.edu/Development/Download/download.cgi?PackageName=VMD). Open the POVME output using VMD with the following command: ```vmd -m POVME_test_run/POVME_volume_trajectory.pdb 1BYQ_every250.pdb```. Under the Graphics-->Representations menu in VMD, show the ```0: POVME_volume_trajectory.pdb``` molecule using the Drawing Method "VDW". Now press the play button in the bottom right corner of the VMD Main window to watch the pocket trajectory.
+We recommend that you visualize the results using [VMD](http://www.ks.uiuc.edu/Development/Download/download.cgi?PackageName=VMD). Open the POVME output using VMD with the following command: 
 
-This file is a volumetric trajectory, which is a series of `.pdb` frames representing the shape of the binding pocket in each snapshot. If you load this along with the original snapshots, you will be able to visualize the binding pocket trajectory.
+```vmd -m POVME_test_run/POVME_volume_trajectory.pdb 1BYQ_every250.pdb```
+
+Under the Graphics-->Representations menu in VMD, show the ```0: POVME_volume_trajectory.pdb``` molecule using the Drawing Method "VDW". Now press the play button in the bottom right corner of the VMD Main window to watch the pocket trajectory.
+
 
 ## Dependencies
 
