@@ -1,25 +1,20 @@
 # POVME
 
-POVME (Pocket VOlume MEasurer) is a Python package for extracting actionable information from ensembles of protein structures for use in drug design.
+We present a substantial update to the open-source POVME binding pocket analysis software. New capabilities of POVME 3.0 include a flexible chemical coloring scheme for feature identification, post-analysis tools for comparing large ensembles of pockets (e.g., from molecular dynamics simulations), and the introduction of scripts and methods that facilitate binding pocket comparison and analysis. We envision the use of this software for visualization of binding pocket dynamics, selection of representative structures for ensemble docking, and incorporation of molecular dynamics results into ligand design efforts.
 
-Medicinal chemists might use this to find representative confirmations of a binding pocket that encompass the diversity found in a simulation or ensemble of structures.
+## Install
 
-POVME is a way to compress a large amount of protein confirmations into clusters or families
+If POVME2 is installed on your system, we recommend making a separate python environment. POVME3 has been tested on builds using miniconda. For our testing, we use:
 
-POVME is a tool to map and navigate a confirmational space of protein binding pockets.
-
-Is a free, open source binding pocket analysis tool intended for use in trajectory analysis.
-
-**[This is a very, very early version of POVME3.0. Target date for actual release is September 2016. Until then there is no expectation of support or correctness of results, and I recommend that only developers try to use this.]**
-
-## Download
-
-```bash
-git clone
-cd POVME
+```wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
+bash Miniconda2-latest-Linux-x86_64.sh -b -p miniconda2
+source miniconda2/bin/activate
+pip install povme
 ```
 
-You will also need [VMD](http://www.ks.uiuc.edu/Development/Download/download.cgi?PackageName=VMD) and [pip](link)
+Note that this method will create a separate python build. You will need to run "source miniconda2/bin/activate" each time you want to use POVME3.
+
+
 
 ## Example
 
@@ -36,44 +31,6 @@ Once this runs, you will have an output directory named `basic_example_output`.
 Within this directory, unzip `basic_example_volume_trajectory.pdb.gz` and open with [VMD](http://www.ks.uiuc.edu/Development/Download/download.cgi?PackageName=VMD).
 
 This file is a volumetric trajectory, which is a series of `.pdb` frames representing the shape of the binding pocket in each snapshot. If you load this along with the original snapshots, you will be able to visualize the binding pocket trajectory.
-
-## Using VMD
-
-Open VMD
-
-File, new molecule
-
-Browse, basic_example, output, volumetric_trajectory.pdb
-
-load
-
-load files for new molecule
-
-browse, basic_example, `4NSS.pdb`
-
-(`4NSS.pdb` is protein input file, but pocket volumes dont make sense unless you see them overlayed on the protein.)
-
-load
-
-Press play on bottom right to see it go.
-
-### Additional
-
-You probably want to turn the speed down
-
-Show the protein as a "NewCartoon"
-
-- graphics > representations > Drawing Method > NewCartoon
-- Apply
-
-Show binding pocket as spheres
-
-- graphics > representations
-- select `basic_example_volume_trajectory.pdb` from selected molecule
-- drawing method > vdw
-- apply  
-
-
 
 ## Dependencies
 
