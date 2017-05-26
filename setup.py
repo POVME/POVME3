@@ -86,7 +86,7 @@ setup(
   package_dir={'POVME': 'POVME'},
   package_data={'POVME': ['examples/*/*.*','examples/*/*/*.*'#,'POVME/examples/*/*/*/*'
                           ]},        
-  version = '3.0.25',
+  version = '3.0.26',
   description = 'POVME (Pocket VOlume MEasurer) is a Python package for extracting actionable information from ensembles of protein structures for use in drug design.',
   author = 'Jeff Wagner',
   author_email = 'jwagnerjpl@gmail.com',
