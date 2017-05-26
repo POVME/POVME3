@@ -86,7 +86,7 @@ setup(
   package_dir={'POVME': 'POVME'},
   package_data={'POVME': ['examples/*/*.*','examples/*/*/*.*'#,'POVME/examples/*/*/*/*'
                           ]},        
-  version = '3.0.30',
+  version = '3.0.31',
   description = 'POVME (Pocket VOlume MEasurer) is a Python package for extracting actionable information from ensembles of protein structures for use in drug design.',
   author = 'Jeff Wagner',
   author_email = 'jwagnerjpl@gmail.com',
@@ -94,7 +94,7 @@ setup(
   download_url = 'https://github.com/POVME/POVME/tarball/2.0',
   #setup_requires=['scipy','numpy'],
   #build_requires=['scipy','numpy'],
-  install_requires=['scipy','numpy'],
+  install_requires=['scipy','numpy','matplotlib','networkx'],
   keywords = ['protein folding', 'protein', 'pocket volume measurer', 'computational protein folding', 'protein structures', 'drug design'],
   classifiers = [
     "Development Status :: 4 - Beta",
