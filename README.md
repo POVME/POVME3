@@ -20,7 +20,8 @@ Note that this method will create a separate python build. You will need to run 
 
 The POVME Git repository comes with examples and test cases which are not included in the pip install.
 
-```git clone https://github.com/POVME/POVME.git
+```
+git clone https://github.com/POVME/POVME.git
 cd POVME/POVME/examples/ligand_example/
 POVME3.py sample_POVME_input.ini
 ```
