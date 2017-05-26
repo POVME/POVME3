@@ -9,7 +9,7 @@ cd 3-post_analysis
 python makeRunAll.py
 cd ALL
 . bsubRunScript.sh
-python ../analyzeClusterMembershipInGroups_HSP90.py
+python ../analyzeClusterMembershipInGroups.py
 cd ../
 cd ../
 
