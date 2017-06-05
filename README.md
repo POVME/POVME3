@@ -47,12 +47,3 @@ Under the Graphics-->Representations menu in VMD, show the ```0: POVME_volume_tr
 
 [`PyMolecule`](jacob durant) (soon to be replaced with something more reasonable, probably MDTraj or Prody) is a class to read `.pdb` files, which is the standard format for protein structures.
 
-## Usage
-
-## Examples
-
-## Contribute
-
-## Todo
-
-- [ ]
