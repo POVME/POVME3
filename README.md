@@ -2,9 +2,11 @@
 
 We present a substantial update to the open-source POVME binding pocket analysis software. New capabilities of POVME 3.0 include a flexible chemical coloring scheme for feature identification, post-analysis tools for comparing large ensembles of pockets (e.g., from molecular dynamics simulations), and the introduction of scripts and methods that facilitate binding pocket comparison and analysis. We envision the use of this software for visualization of binding pocket dynamics, selection of representative structures for ensemble docking, and incorporation of molecular dynamics results into ligand design efforts.
 
+This document is specific to POVME 3.0. Users interested in POVME 2.0 will find resources [here](http://rocce-vm0.ucsd.edu/data/sw/hosted/POVME/)
+
 ## Install
 
-If POVME2 is installed on your system, we recommend making a separate python environment. We recommend installing via miniconda:
+If POVME2 is installed on your system, we recommend making a separate python environment. We normally install POVME3.0 using [miniconda](https://conda.io/docs/install/quick.html):
 
 ```
 wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
