@@ -4,7 +4,7 @@ We present a substantial update to the open-source POVME binding pocket analysis
 
 ## Install
 
-If POVME2 is installed on your system, we recommend making a separate python environment. POVME3 has been tested on builds using miniconda. For our testing, we use:
+If POVME2 is installed on your system, we recommend making a separate python environment. We recommend installing via miniconda:
 
 ```
 wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
