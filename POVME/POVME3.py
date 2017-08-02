@@ -1576,82 +1576,44 @@ class ConfigFile:
             # no longer horrible 
 
             # Regions are handled separately for each parameter...
-            if entity[0].upper() == "INCLUSIONSPHERE":
-                Include = Region()
+
+            AllowableRegions = set(["INCLUSIONSPHERE", "INCLUSIONBOX", "INCLUSIONCYLINDER","SEEDSPHERE","SEEDBOX","EXCLUSIONSPHERE","EXCLUSIONBOX"]);
+            BoxRegions = set(["INCLUSIONBOX","SEEDBOX","EXCLUSIONBOX"])         
+            SphereRegions = set(["INCLUSIONSPHERE","SEEDSPHERE","EXCLUSIONSPHERE"])
+            CylinderRegions = set(["INCLUSIONCYLINDER"])
+            IncludeRegions = set(["INCLUSIONSPHERE", "INCLUSIONBOX", "INCLUSIONCYLINDER"])
+            ExcludeRegions = set(["EXCLUSIONSPHERE","EXCLUSIONBOX"])
+            SeedRegions = set(["SEEDSPHERE","SEEDBOX"])
+
+            if entity[0] in AllowableRegions:
+                thisRegion = Region()
                 items = entity[1].split(' ')
-                Include.center[0] = float(items[0])
-                Include.center[1] = float(items[1])
-                Include.center[2] = float(items[2])
-                Include.radius = float(items[3])
-                Include.region_type = "SPHERE"
-                self.parameters['PointsIncludeRegions'].append(Include)
-            elif entity[0].upper() == "INCLUSIONBOX":
-                Include = Region()
-                items = entity[1].split(' ')
-                Include.center[0] = float(items[0])
-                Include.center[1] = float(items[1])
-                Include.center[2] = float(items[2])
-                Include.box_dimen[0] = float(items[3])
-                Include.box_dimen[1] = float(items[4])
-                Include.box_dimen[2] = float(items[5])
-                Include.region_type = "BOX"
-                self.parameters['PointsIncludeRegions'].append(Include)
-            elif entity[0].upper() == "INCLUSIONCYLINDER":
-                Include = Region()
-                items = entity[1].split(' ')
-                Include.center[0] = float(items[0])
-                Include.center[1] = float(items[1])
-                Include.center[2] = float(items[2])
-                Include.axis[0] = float(items[3])
-                Include.axis[1] = float(items[4])
-                Include.axis[2] = float(items[5])
-                Include.radius = float(items[6])
-                Include.height = float(items[7])
-                Include.region_type = "CYLINDER"
-                self.parameters['PointsIncludeRegions'].append(Include)
-            if entity[0].upper() == "SEEDSPHERE":
-                Contig = Region()
-                items = entity[1].split(' ')
-                Contig.center[0] = float(items[0])
-                Contig.center[1] = float(items[1])
-                Contig.center[2] = float(items[2])
-                Contig.radius = float(items[3])
-                Contig.region_type = "SPHERE"
-                self.parameters['ContiguousPocketSeedRegions'].append(Contig)
-            elif entity[0].upper() == "SEEDBOX":
-                Contig = Region()
-                items = entity[1].split(' ')
-                Contig.center[0] = float(items[0])
-                Contig.center[1] = float(items[1])
-                Contig.center[2] = float(items[2])
-                Contig.box_dimen[0] = float(items[3])
-                Contig.box_dimen[1] = float(items[4])
-                Contig.box_dimen[2] = float(items[5])
-                Contig.region_type = "BOX"
-                self.parameters['ContiguousPocketSeedRegions'].append(Contig)
-            elif entity[0].upper() == "EXCLUSIONSPHERE":
-                Exclude = Region()
-                items = entity[1].split(' ')
-                Exclude.center[0] = float(items[0])
-                Exclude.center[1] = float(items[1])
-                Exclude.center[2] = float(items[2])
-                Exclude.radius = float(items[3])
-                Exclude.region_type = "SPHERE"
-                self.parameters['PointsExcludeRegions'].append(Exclude)
-            elif entity[0].upper() == "EXCLUSIONBOX":
-                Exclude = Region()
-                items = entity[1].split(' ')
-                Exclude.center[0] = float(items[0])
-                Exclude.center[1] = float(items[1])
-                Exclude.center[2] = float(items[2])
-                Exclude.box_dimen[0] = float(items[3])
-                Exclude.box_dimen[1] = float(items[4])
-                Exclude.box_dimen[2] = float(items[5])
-                Exclude.region_type = "BOX"
-                self.parameters['PointsExcludeRegions'].append(Exclude)
-        #all above code up to config file load can be put into config file parser at ConfigFile 
-        
-            
+                thisRegion.center[0] = float(items[0])
+                thisRegion.center[1] = float(items[1])
+                thisRegion.center[2] = float(items[2])
+                
+                if entity[0] in BoxRegions:
+                    thisRegion.region_type = "BOX"
+                    thisRegion.box_dimen[0] = float(items[3])
+                    thisRegion.box_dimen[1] = float(items[4])
+                    thisRegion.box_dimen[2] = float(items[5])
+                elif entity[0] in SphereRegions:
+                    thisRegion.region_type = "SPHERE"
+                    thisRegion.radius = float(items[3])
+                elif entity[0] in CylinderRegions:
+                    thisRegion.region_type = "CYLINDER"
+                    thisRegion.axis[0] = float(items[3])
+                    thisRegion.axis[1] = float(items[4])
+                    thisRegion.axis[2] = float(items[5])
+                    thisRegion.radius = float(items[6])
+                    thisRegion.height = float(items[7])
+                
+                if entity[0] in IncludeRegions:
+                    self.parameters['PointsIncludeRegions'].append(thisRegion)
+                elif entity[0] in SeedRegions:
+                    self.parameters['ContiguousPocketSeedRegions'].append(thisRegion)
+                elif entity[0] in ExcludeRegions:
+                    self.parameters['PointsExcludeRegions'].append(thisRegion)    
 
 class runit():
     '''The main class to run POVME.'''
@@ -1948,6 +1910,7 @@ class runit():
             log("", parameters)
 
 
+        # the below statement duplicates an if-statement above. 
         if parameters['PDBFileName'] != '': # so there's a PDB point specified for calculating the volume.
 
             
