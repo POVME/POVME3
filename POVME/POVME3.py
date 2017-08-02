@@ -56,7 +56,6 @@ def log(astr, parameters):
         f.close()
     except: pass
 
-
 def clearLog(parameters):
     '''Remove the log file that may be left over from previous run
 
@@ -1610,6 +1609,11 @@ class runit():
         other_parameters = ["InclusionSphere","InclusionBox","InclusionCylinder",
                             "ExclusionSphere","ExclusionBox","ExclusionCylinder",
                             "SeedSphere","SeedBox","SeedCylinder"]
+        
+        #possible improvement: implement dictionary to match data types with config file parameter names 
+        #keyword_type_dict = {}
+        #for keyword in float_parameters:
+        #    keyword_type_dict[keyword] = 'float'
 
         ## Make a list of all the possible input parameters for config file validation
         all_parameters = []
@@ -1620,9 +1624,12 @@ class runit():
         all_parameters += other_parameters
         all_parameters_lower = [i.lower() for i in all_parameters]
 
-        print config.entities
-
+        # Error checking ? refactor 
+        #this is horrible 
+        #this should be done in config file parser 
         for entity in config.entities:
+            print entity
+            #if unexpected config keyword in config file, throw this exception
             if not(entity[0].lower() in all_parameters_lower):
                 raise Exception('%s is not a valid parameter. Valid parameters are: %r' %(entity[0],all_parameters))
             try:
@@ -1645,6 +1652,7 @@ class runit():
                 index = [p.upper() for p in string_parameters].index(entity[0])
                 parameters[string_parameters[index]] = entity[1].strip()
             except: pass
+            # no longer horrible 
 
             # Regions are handled separately for each parameter...
             if entity[0].upper() == "INCLUSIONSPHERE":
@@ -1720,7 +1728,7 @@ class runit():
                 Exclude.box_dimen[2] = float(items[5])
                 Exclude.region_type = "BOX"
                 parameters['PointsExcludeRegions'].append(Exclude)
-
+        #all above code up to config file load can be put into config file parser at ConfigFile 
 
         # If the output prefix includes a directory, create that directory if necessary
         if os.sep in parameters['OutputFilenamePrefix']:
@@ -1730,6 +1738,8 @@ class runit():
             try:
                 os.mkdir(output_dirname)
             except: pass
+        # error when output folder can't be created. (maybe needs elevated permissions in windows?) need to actually write code in the except block. 
+
         parameters['OutputBasename'] = os.path.basename(parameters['OutputFilenamePrefix'])
         output_frame_dirname = parameters['OutputFilenamePrefix'] + 'frameInfo/'
         parameters['OutputFrameFilenamePrefix'] = output_frame_dirname + parameters['OutputBasename']
@@ -1738,6 +1748,7 @@ class runit():
         except: pass
 
  
+
 
         #Clear the log to remove data from previous runs
         clearLog(parameters)
@@ -1751,6 +1762,7 @@ class runit():
         os.mkdir('.' + os.sep + '.povme_tmp')
 
         # print out parameters
+#consider this section for deletion 
         log("Parameters:", parameters)
         for i in parameters.keys():
 
@@ -1761,12 +1773,13 @@ class runit():
                     if i2 != "": log("\t" + str(i) + ": " + str(i2), parameters)
             else:
                 if parameters[i] != "": log("\t" + str(i) + ": " + str(parameters[i]), parameters)
-
-        pts = None
+#this section ^ total garbage
+        
         print '---------------------------------'
         print 'PARAMETERS DEFINED'#,hp.heap()
         print '---------------------------------'
-
+        
+        pts = None
 
         if parameters['PDBFileName'] != '': # so there's a PDB point specified for calculating the volume.
 
