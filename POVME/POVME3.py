@@ -1443,9 +1443,10 @@ class ConfigFile:
     '''A class for processing the user-provided configuration file.'''
 
     entities = []
+    parameters = {}    
 
     def __init__ (self, FileName):
-        """Generates a point field by filling the region with equally spaced points.
+        """Initializes and processes the input config file. 
 
         Arguments:
         FileName -- A string, the filename of the configuration file.
@@ -1487,6 +1488,170 @@ class ConfigFile:
                 if line[0] in ['QUIT','EXIT','STOP']: break
 
                 self.entities.append(line)
+
+        # Process the config file
+        
+
+        self.parameters['GridSpacing'] = 1.0 # default
+        self.parameters['PointsIncludeRegions'] = []
+        self.parameters['PointsExcludeRegions'] = []
+        self.parameters['SaveRegions'] = False # default
+        self.parameters['LoadInclusionPointsFilename'] = '' # default
+        self.parameters['LoadSeedPointsFilename'] = '' # default
+        self.parameters['PDBFileName'] = "" # default
+        self.parameters['DistanceCutoff'] = 1.09 # default is VDW radius of hydrogen
+        self.parameters['DefinePocketByLigand'] = ''
+        self.parameters['ConvexHullExclusion'] = 'none'
+        self.parameters['ContiguousPocketSeedRegions'] = []
+        self.parameters['ContiguousPointsCriteria'] = 4
+        self.parameters['NumProcessors'] = 4
+        self.parameters['MaxGrowIterations'] = 1e10
+        #self.parameters['UseDiskNotMemory'] = False
+        #self.parameters['UsePyhull'] = False
+        #self.parameters['UseScipyConvexHull'] = False
+        self.parameters['OutputFilenamePrefix'] = "POVME_output." + time.strftime("%m-%d-%y") + "." + time.strftime("%H-%M-%S") + os.sep
+        #self.parameters['SaveIndividualPocketVolumes'] = False
+        #self.parameters['SavePocketVolumesTrajectory'] = False
+        #self.parameters['SavePocketVolumesNumpy'] = False
+        #self.parameters['OutputEqualNumPointsPerFrame'] = False
+        #self.parameters['SaveTabbedVolumeFile'] = False
+        #self.parameters['SaveVolumetricDensityDX'] = False
+        #self.parameters['SaveVolumetricDensityNpy'] = False
+        #self.parameters['SaveColoredMap'] = False
+        #self.parameters['CalculateSurfaceArea'] = False
+        self.parameters['CompressOutput'] = False
+        self.parameters['NumFrames'] = -1 # This is a parameter for debugging purposes only.
+
+        float_parameters = ["GridSpacing", "DistanceCutoff"]
+        boolean_parameters = ["CompressOutput"]
+        int_parameters = ["NumFrames", "ContiguousPointsCriteria", "NumProcessors", "MaxGrowIterations"]
+        string_parameters = ["OutputFilenamePrefix", "PDBFileName", "LoadInclusionPointsFilename", "LoadSeedPointsFilename", 
+                             "ConvexHullExclusion", "DefinePocketByLigand"]
+        other_parameters = ["InclusionSphere","InclusionBox","InclusionCylinder",
+                            "ExclusionSphere","ExclusionBox","ExclusionCylinder",
+                            "SeedSphere","SeedBox","SeedCylinder"]
+        
+        #possible improvement: implement dictionary to match data types with config file parameter names 
+        #keyword_type_dict = {}
+        #for keyword in float_parameters:
+        #    keyword_type_dict[keyword] = 'float'
+
+        ## Make a list of all the possible input parameters for config file validation
+        all_parameters = []
+        all_parameters += float_parameters
+        all_parameters += boolean_parameters
+        all_parameters += int_parameters
+        all_parameters += string_parameters
+        all_parameters += other_parameters
+        all_parameters_lower = [i.lower() for i in all_parameters]
+
+        # Error checking ? refactor 
+        #this is horrible 
+        #this should be done in config file parser 
+        for entity in self.entities:
+            print entity
+            #if unexpected config keyword in config file, throw this exception
+            if not(entity[0].lower() in all_parameters_lower):
+                raise Exception('%s is not a valid parameter. Valid parameters are: %r' %(entity[0],all_parameters))
+            try:
+                index = [p.upper() for p in float_parameters].index(entity[0])
+                self.parameters[float_parameters[index]] = float(entity[1])
+            except: pass
+
+            try:
+                index = [p.upper() for p in boolean_parameters].index(entity[0])
+                if entity[1].upper() in ["YES", "TRUE"]: self.parameters[boolean_parameters[index]] = True
+                else: self.parameters[boolean_parameters[index]] = False
+            except: pass
+
+            try:
+                index = [p.upper() for p in int_parameters].index(entity[0])
+                self.parameters[int_parameters[index]] = int(entity[1])
+            except: pass
+
+            try:
+                index = [p.upper() for p in string_parameters].index(entity[0])
+                self.parameters[string_parameters[index]] = entity[1].strip()
+            except: pass
+            # no longer horrible 
+
+            # Regions are handled separately for each parameter...
+            if entity[0].upper() == "INCLUSIONSPHERE":
+                Include = Region()
+                items = entity[1].split(' ')
+                Include.center[0] = float(items[0])
+                Include.center[1] = float(items[1])
+                Include.center[2] = float(items[2])
+                Include.radius = float(items[3])
+                Include.region_type = "SPHERE"
+                self.parameters['PointsIncludeRegions'].append(Include)
+            elif entity[0].upper() == "INCLUSIONBOX":
+                Include = Region()
+                items = entity[1].split(' ')
+                Include.center[0] = float(items[0])
+                Include.center[1] = float(items[1])
+                Include.center[2] = float(items[2])
+                Include.box_dimen[0] = float(items[3])
+                Include.box_dimen[1] = float(items[4])
+                Include.box_dimen[2] = float(items[5])
+                Include.region_type = "BOX"
+                self.parameters['PointsIncludeRegions'].append(Include)
+            elif entity[0].upper() == "INCLUSIONCYLINDER":
+                Include = Region()
+                items = entity[1].split(' ')
+                Include.center[0] = float(items[0])
+                Include.center[1] = float(items[1])
+                Include.center[2] = float(items[2])
+                Include.axis[0] = float(items[3])
+                Include.axis[1] = float(items[4])
+                Include.axis[2] = float(items[5])
+                Include.radius = float(items[6])
+                Include.height = float(items[7])
+                Include.region_type = "CYLINDER"
+                self.parameters['PointsIncludeRegions'].append(Include)
+            if entity[0].upper() == "SEEDSPHERE":
+                Contig = Region()
+                items = entity[1].split(' ')
+                Contig.center[0] = float(items[0])
+                Contig.center[1] = float(items[1])
+                Contig.center[2] = float(items[2])
+                Contig.radius = float(items[3])
+                Contig.region_type = "SPHERE"
+                self.parameters['ContiguousPocketSeedRegions'].append(Contig)
+            elif entity[0].upper() == "SEEDBOX":
+                Contig = Region()
+                items = entity[1].split(' ')
+                Contig.center[0] = float(items[0])
+                Contig.center[1] = float(items[1])
+                Contig.center[2] = float(items[2])
+                Contig.box_dimen[0] = float(items[3])
+                Contig.box_dimen[1] = float(items[4])
+                Contig.box_dimen[2] = float(items[5])
+                Contig.region_type = "BOX"
+                self.parameters['ContiguousPocketSeedRegions'].append(Contig)
+            elif entity[0].upper() == "EXCLUSIONSPHERE":
+                Exclude = Region()
+                items = entity[1].split(' ')
+                Exclude.center[0] = float(items[0])
+                Exclude.center[1] = float(items[1])
+                Exclude.center[2] = float(items[2])
+                Exclude.radius = float(items[3])
+                Exclude.region_type = "SPHERE"
+                self.parameters['PointsExcludeRegions'].append(Exclude)
+            elif entity[0].upper() == "EXCLUSIONBOX":
+                Exclude = Region()
+                items = entity[1].split(' ')
+                Exclude.center[0] = float(items[0])
+                Exclude.center[1] = float(items[1])
+                Exclude.center[2] = float(items[2])
+                Exclude.box_dimen[0] = float(items[3])
+                Exclude.box_dimen[1] = float(items[4])
+                Exclude.box_dimen[2] = float(items[5])
+                Exclude.region_type = "BOX"
+                self.parameters['PointsExcludeRegions'].append(Exclude)
+        #all above code up to config file load can be put into config file parser at ConfigFile 
+        
+            
 
 class runit():
     '''The main class to run POVME.'''
@@ -1568,167 +1733,7 @@ class runit():
 
         config = ConfigFile(argv[1])
 
-        # Process the config file
-        parameters = {}
-
-        parameters['GridSpacing'] = 1.0 # default
-        parameters['PointsIncludeRegions'] = []
-        parameters['PointsExcludeRegions'] = []
-        parameters['SaveRegions'] = False # default
-        parameters['LoadInclusionPointsFilename'] = '' # default
-        parameters['LoadSeedPointsFilename'] = '' # default
-        parameters['PDBFileName'] = "" # default
-        parameters['DistanceCutoff'] = 1.09 # default is VDW radius of hydrogen
-        parameters['DefinePocketByLigand'] = ''
-        parameters['ConvexHullExclusion'] = 'none'
-        parameters['ContiguousPocketSeedRegions'] = []
-        parameters['ContiguousPointsCriteria'] = 4
-        parameters['NumProcessors'] = 4
-        parameters['MaxGrowIterations'] = 1e10
-        #parameters['UseDiskNotMemory'] = False
-        #parameters['UsePyhull'] = False
-        #parameters['UseScipyConvexHull'] = False
-        parameters['OutputFilenamePrefix'] = "POVME_output." + time.strftime("%m-%d-%y") + "." + time.strftime("%H-%M-%S") + os.sep
-        #parameters['SaveIndividualPocketVolumes'] = False
-        #parameters['SavePocketVolumesTrajectory'] = False
-        #parameters['SavePocketVolumesNumpy'] = False
-        #parameters['OutputEqualNumPointsPerFrame'] = False
-        #parameters['SaveTabbedVolumeFile'] = False
-        #parameters['SaveVolumetricDensityDX'] = False
-        #parameters['SaveVolumetricDensityNpy'] = False
-        #parameters['SaveColoredMap'] = False
-        #parameters['CalculateSurfaceArea'] = False
-        parameters['CompressOutput'] = False
-        parameters['NumFrames'] = -1 # This is a parameter for debugging purposes only.
-
-        float_parameters = ["GridSpacing", "DistanceCutoff"]
-        boolean_parameters = ["CompressOutput"]
-        int_parameters = ["NumFrames", "ContiguousPointsCriteria", "NumProcessors", "MaxGrowIterations"]
-        string_parameters = ["OutputFilenamePrefix", "PDBFileName", "LoadInclusionPointsFilename", "LoadSeedPointsFilename", 
-                             "ConvexHullExclusion", "DefinePocketByLigand"]
-        other_parameters = ["InclusionSphere","InclusionBox","InclusionCylinder",
-                            "ExclusionSphere","ExclusionBox","ExclusionCylinder",
-                            "SeedSphere","SeedBox","SeedCylinder"]
-        
-        #possible improvement: implement dictionary to match data types with config file parameter names 
-        #keyword_type_dict = {}
-        #for keyword in float_parameters:
-        #    keyword_type_dict[keyword] = 'float'
-
-        ## Make a list of all the possible input parameters for config file validation
-        all_parameters = []
-        all_parameters += float_parameters
-        all_parameters += boolean_parameters
-        all_parameters += int_parameters
-        all_parameters += string_parameters
-        all_parameters += other_parameters
-        all_parameters_lower = [i.lower() for i in all_parameters]
-
-        # Error checking ? refactor 
-        #this is horrible 
-        #this should be done in config file parser 
-        for entity in config.entities:
-            print entity
-            #if unexpected config keyword in config file, throw this exception
-            if not(entity[0].lower() in all_parameters_lower):
-                raise Exception('%s is not a valid parameter. Valid parameters are: %r' %(entity[0],all_parameters))
-            try:
-                index = [p.upper() for p in float_parameters].index(entity[0])
-                parameters[float_parameters[index]] = float(entity[1])
-            except: pass
-
-            try:
-                index = [p.upper() for p in boolean_parameters].index(entity[0])
-                if entity[1].upper() in ["YES", "TRUE"]: parameters[boolean_parameters[index]] = True
-                else: parameters[boolean_parameters[index]] = False
-            except: pass
-
-            try:
-                index = [p.upper() for p in int_parameters].index(entity[0])
-                parameters[int_parameters[index]] = int(entity[1])
-            except: pass
-
-            try:
-                index = [p.upper() for p in string_parameters].index(entity[0])
-                parameters[string_parameters[index]] = entity[1].strip()
-            except: pass
-            # no longer horrible 
-
-            # Regions are handled separately for each parameter...
-            if entity[0].upper() == "INCLUSIONSPHERE":
-                Include = Region()
-                items = entity[1].split(' ')
-                Include.center[0] = float(items[0])
-                Include.center[1] = float(items[1])
-                Include.center[2] = float(items[2])
-                Include.radius = float(items[3])
-                Include.region_type = "SPHERE"
-                parameters['PointsIncludeRegions'].append(Include)
-            elif entity[0].upper() == "INCLUSIONBOX":
-                Include = Region()
-                items = entity[1].split(' ')
-                Include.center[0] = float(items[0])
-                Include.center[1] = float(items[1])
-                Include.center[2] = float(items[2])
-                Include.box_dimen[0] = float(items[3])
-                Include.box_dimen[1] = float(items[4])
-                Include.box_dimen[2] = float(items[5])
-                Include.region_type = "BOX"
-                parameters['PointsIncludeRegions'].append(Include)
-            elif entity[0].upper() == "INCLUSIONCYLINDER":
-                Include = Region()
-                items = entity[1].split(' ')
-                Include.center[0] = float(items[0])
-                Include.center[1] = float(items[1])
-                Include.center[2] = float(items[2])
-                Include.axis[0] = float(items[3])
-                Include.axis[1] = float(items[4])
-                Include.axis[2] = float(items[5])
-                Include.radius = float(items[6])
-                Include.height = float(items[7])
-                Include.region_type = "CYLINDER"
-                parameters['PointsIncludeRegions'].append(Include)
-            if entity[0].upper() == "SEEDSPHERE":
-                Contig = Region()
-                items = entity[1].split(' ')
-                Contig.center[0] = float(items[0])
-                Contig.center[1] = float(items[1])
-                Contig.center[2] = float(items[2])
-                Contig.radius = float(items[3])
-                Contig.region_type = "SPHERE"
-                parameters['ContiguousPocketSeedRegions'].append(Contig)
-            elif entity[0].upper() == "SEEDBOX":
-                Contig = Region()
-                items = entity[1].split(' ')
-                Contig.center[0] = float(items[0])
-                Contig.center[1] = float(items[1])
-                Contig.center[2] = float(items[2])
-                Contig.box_dimen[0] = float(items[3])
-                Contig.box_dimen[1] = float(items[4])
-                Contig.box_dimen[2] = float(items[5])
-                Contig.region_type = "BOX"
-                parameters['ContiguousPocketSeedRegions'].append(Contig)
-            elif entity[0].upper() == "EXCLUSIONSPHERE":
-                Exclude = Region()
-                items = entity[1].split(' ')
-                Exclude.center[0] = float(items[0])
-                Exclude.center[1] = float(items[1])
-                Exclude.center[2] = float(items[2])
-                Exclude.radius = float(items[3])
-                Exclude.region_type = "SPHERE"
-                parameters['PointsExcludeRegions'].append(Exclude)
-            elif entity[0].upper() == "EXCLUSIONBOX":
-                Exclude = Region()
-                items = entity[1].split(' ')
-                Exclude.center[0] = float(items[0])
-                Exclude.center[1] = float(items[1])
-                Exclude.center[2] = float(items[2])
-                Exclude.box_dimen[0] = float(items[3])
-                Exclude.box_dimen[1] = float(items[4])
-                Exclude.box_dimen[2] = float(items[5])
-                Exclude.region_type = "BOX"
-                parameters['PointsExcludeRegions'].append(Exclude)
-        #all above code up to config file load can be put into config file parser at ConfigFile 
+        parameters = config.parameters
 
         # If the output prefix includes a directory, create that directory if necessary
         if os.sep in parameters['OutputFilenamePrefix']:
@@ -1738,7 +1743,8 @@ class runit():
             try:
                 os.mkdir(output_dirname)
             except: pass
-        # error when output folder can't be created. (maybe needs elevated permissions in windows?) need to actually write code in the except block. 
+        # error when output folder can't be created. (maybe needs elevated permissions in windows?) 
+        # need to actually write code in the except block. 
 
         parameters['OutputBasename'] = os.path.basename(parameters['OutputFilenamePrefix'])
         output_frame_dirname = parameters['OutputFilenamePrefix'] + 'frameInfo/'
@@ -1746,8 +1752,6 @@ class runit():
                     
         try: os.mkdir(output_frame_dirname)
         except: pass
-
- 
 
 
         #Clear the log to remove data from previous runs
