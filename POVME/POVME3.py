@@ -1522,14 +1522,14 @@ class ConfigFile:
         self.parameters['CompressOutput'] = False
         self.parameters['NumFrames'] = -1 # This is a parameter for debugging purposes only.
 
-        float_parameters = ["GridSpacing", "DistanceCutoff"]
-        boolean_parameters = ["CompressOutput"]
-        int_parameters = ["NumFrames", "ContiguousPointsCriteria", "NumProcessors", "MaxGrowIterations"]
-        string_parameters = ["OutputFilenamePrefix", "PDBFileName", "LoadInclusionPointsFilename", "LoadSeedPointsFilename", 
-                             "ConvexHullExclusion", "DefinePocketByLigand"]
-        other_parameters = ["InclusionSphere","InclusionBox","InclusionCylinder",
+        float_parameters = set(["GridSpacing", "DistanceCutoff"])
+        boolean_parameters = set(["CompressOutput"])
+        int_parameters = set(["NumFrames", "ContiguousPointsCriteria", "NumProcessors", "MaxGrowIterations"])
+        string_parameters = set(["OutputFilenamePrefix", "PDBFileName", "LoadInclusionPointsFilename", "LoadSeedPointsFilename", 
+                             "ConvexHullExclusion", "DefinePocketByLigand"])
+        other_parameters = set(["InclusionSphere","InclusionBox","InclusionCylinder",
                             "ExclusionSphere","ExclusionBox","ExclusionCylinder",
-                            "SeedSphere","SeedBox","SeedCylinder"]
+                            "SeedSphere","SeedBox","SeedCylinder"])
         
         #possible improvement: implement dictionary to match data types with config file parameter names 
         #keyword_type_dict = {}
@@ -1543,64 +1543,67 @@ class ConfigFile:
         all_parameters += int_parameters
         all_parameters += string_parameters
         all_parameters += other_parameters
-        all_parameters_lower = [i.lower() for i in all_parameters]
+        all_parameters_upper = [i.upper() for i in all_parameters]
 
         # Error checking ? refactor 
         #this is horrible 
-        #this should be done in config file parser 
-        for entity in self.entities:
-            print entity
+        
+        AllowableRegions = set(["INCLUSIONSPHERE", "INCLUSIONBOX", "INCLUSIONCYLINDER",
+                                "SEEDSPHERE","SEEDBOX","EXCLUSIONSPHERE","EXCLUSIONBOX"]);
+        BoxRegions = set(["INCLUSIONBOX","SEEDBOX","EXCLUSIONBOX"])         
+        SphereRegions = set(["INCLUSIONSPHERE","SEEDSPHERE","EXCLUSIONSPHERE"])
+        CylinderRegions = set(["INCLUSIONCYLINDER"])
+        IncludeRegions = set(["INCLUSIONSPHERE", "INCLUSIONBOX", "INCLUSIONCYLINDER"])
+        ExcludeRegions = set(["EXCLUSIONSPHERE","EXCLUSIONBOX"])
+        SeedRegions = set(["SEEDSPHERE","SEEDBOX"])
+        
+        #this notation (for parameter, values) is less robust than just using "entity" because if any item in the list
+        #has more than 2 members, python will crash. 
+        for parameter,values in self.entities: 
+            print parameter, values
             #if unexpected config keyword in config file, throw this exception
-            if not(entity[0].lower() in all_parameters_lower):
-                raise Exception('%s is not a valid parameter. Valid parameters are: %r' %(entity[0],all_parameters))
+            if not(parameter in all_parameters_upper):
+                raise Exception('%s is not a valid parameter. Valid parameters are: %r' %(parameter,all_parameters))
             try:
-                index = [p.upper() for p in float_parameters].index(entity[0])
-                self.parameters[float_parameters[index]] = float(entity[1])
+                index = [p.upper() for p in float_parameters].index(parameter)
+                self.parameters[float_parameters[index]] = float(values)
             except: pass
-
+            
             try:
-                index = [p.upper() for p in boolean_parameters].index(entity[0])
-                if entity[1].upper() in ["YES", "TRUE"]: self.parameters[boolean_parameters[index]] = True
+                index = [p.upper() for p in boolean_parameters].index(parameter)
+                if values.upper() in ["YES", "TRUE"]: self.parameters[boolean_parameters[index]] = True
                 else: self.parameters[boolean_parameters[index]] = False
             except: pass
 
             try:
-                index = [p.upper() for p in int_parameters].index(entity[0])
-                self.parameters[int_parameters[index]] = int(entity[1])
+                index = [p.upper() for p in int_parameters].index(parameter)
+                self.parameters[int_parameters[index]] = int(values)
             except: pass
 
             try:
-                index = [p.upper() for p in string_parameters].index(entity[0])
-                self.parameters[string_parameters[index]] = entity[1].strip()
+                index = [p.upper() for p in string_parameters].index(parameter)
+                self.parameters[string_parameters[index]] = values.strip()
             except: pass
             # no longer horrible 
 
-            # Regions are handled separately for each parameter...
+            # Region handling. Updated code only checks if the entity is a Region once, rather than once for each region type. 
 
-            AllowableRegions = set(["INCLUSIONSPHERE", "INCLUSIONBOX", "INCLUSIONCYLINDER","SEEDSPHERE","SEEDBOX","EXCLUSIONSPHERE","EXCLUSIONBOX"]);
-            BoxRegions = set(["INCLUSIONBOX","SEEDBOX","EXCLUSIONBOX"])         
-            SphereRegions = set(["INCLUSIONSPHERE","SEEDSPHERE","EXCLUSIONSPHERE"])
-            CylinderRegions = set(["INCLUSIONCYLINDER"])
-            IncludeRegions = set(["INCLUSIONSPHERE", "INCLUSIONBOX", "INCLUSIONCYLINDER"])
-            ExcludeRegions = set(["EXCLUSIONSPHERE","EXCLUSIONBOX"])
-            SeedRegions = set(["SEEDSPHERE","SEEDBOX"])
-
-            if entity[0] in AllowableRegions:
+            if parameter in AllowableRegions:
                 thisRegion = Region()
-                items = entity[1].split(' ')
+                items = values.split(' ')
                 thisRegion.center[0] = float(items[0])
                 thisRegion.center[1] = float(items[1])
                 thisRegion.center[2] = float(items[2])
                 
-                if entity[0] in BoxRegions:
+                if parameter in BoxRegions:
                     thisRegion.region_type = "BOX"
                     thisRegion.box_dimen[0] = float(items[3])
                     thisRegion.box_dimen[1] = float(items[4])
                     thisRegion.box_dimen[2] = float(items[5])
-                elif entity[0] in SphereRegions:
+                elif parameter in SphereRegions:
                     thisRegion.region_type = "SPHERE"
                     thisRegion.radius = float(items[3])
-                elif entity[0] in CylinderRegions:
+                elif parameter in CylinderRegions:
                     thisRegion.region_type = "CYLINDER"
                     thisRegion.axis[0] = float(items[3])
                     thisRegion.axis[1] = float(items[4])
@@ -1608,11 +1611,11 @@ class ConfigFile:
                     thisRegion.radius = float(items[6])
                     thisRegion.height = float(items[7])
                 
-                if entity[0] in IncludeRegions:
+                if parameter in IncludeRegions:
                     self.parameters['PointsIncludeRegions'].append(thisRegion)
-                elif entity[0] in SeedRegions:
+                elif parameter in SeedRegions:
                     self.parameters['ContiguousPocketSeedRegions'].append(thisRegion)
-                elif entity[0] in ExcludeRegions:
+                elif parameter in ExcludeRegions:
                     self.parameters['PointsExcludeRegions'].append(thisRegion)    
 
 class runit():
