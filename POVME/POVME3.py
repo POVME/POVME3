@@ -66,6 +66,8 @@ CompressOutput	        ='COMPRESSOUTPUT'
 NumFrames	            ='NUMFRAMES'
 OutputBasename          ='OUTPUTBASENAME'
 OutputFrameFilenamePrefix = 'OutputFrameFilenamePrefix'
+ConvexHullTriangles     = 'ConvexHullTriangles'
+ConvexHullCrossProducts = 'ConvexHullCrossProducts'
 
 InclusionSphere     = "INCLUSIONSPHERE"
 InclusionBox        = "INCLUSIONBOX"
