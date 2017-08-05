@@ -1496,46 +1496,8 @@ class ConfigFile:
         FileName -- A string, the filename of the configuration file.
 
         """
-
-        f = open(FileName,'r')
-        lines = f.readlines()
-        f.close()
-
-        for line in lines:
-            # remove comments
-            line = line.split("#",1)[0]
-            # line = line.split("//",1)[0] # We can't have these kinds of comments any more because of Windows filenames.
-
-            line = line.strip()
-
-            if line != "":
-
-                # replace ; and , and : with space
-                # line = line.replace(',',' ')
-                # line = line.replace(';',' ')
-                # line = line.replace(':',' ') # this messes up Windows filenames
-                line = line.replace("\t",' ')
-
-                # now strip string
-                line = line.strip()
-
-                # now, replace double spaces with one space
-                while '  ' in line: line = line.replace('  ',' ')
-
-                # Now split the thing
-                line = line.split(' ',1)
-
-                # now, make it upper case
-                line[0] = line[0].upper()
-
-                # If there's QUIT, EXIT, or STOP, then don't continue.
-                if line[0] in ['QUIT','EXIT','STOP']: break
-
-                self.entities.append(line)
-
         # Process the config file
-        
-
+       
         self.parameters[GridSpacing] = 1.0 # default
         self.parameters[PointsIncludeRegions] = []
         self.parameters[PointsExcludeRegions] = []
@@ -1574,10 +1536,6 @@ class ConfigFile:
         AllowableRegions =      set([InclusionSphere,InclusionBox,InclusionCylinder,
                                     ExclusionSphere,ExclusionBox,
                                     SeedSphere,SeedBox]);
-        #possible improvement: implement dictionary to match data types with config file parameter names 
-        #keyword_type_dict = {}
-        #for keyword in float_parameters:
-        #    keyword_type_dict[keyword] = 'float'
 
         ## Make a list of all the possible input parameters for config file validation
         all_parameters = set()
@@ -1586,10 +1544,6 @@ class ConfigFile:
         all_parameters |= int_parameters
         all_parameters |= string_parameters
         all_parameters |= AllowableRegions
-        #all_parameters = set([i.upper() for i in all_parameters])
-
-        # Error checking ? refactor 
-        #this is horrible 
 
         BoxRegions =        set([InclusionBox,SeedBox,ExclusionBox])         
         SphereRegions =     set([InclusionSphere,SeedSphere, ExclusionSphere])
@@ -1597,9 +1551,51 @@ class ConfigFile:
         IncludeRegions =    set([InclusionSphere, InclusionBox, InclusionCylinder])
         ExcludeRegions =    set([ExclusionSphere,ExclusionBox])
         SeedRegions =       set([SeedSphere,SeedBox])
+
+        f = open(FileName,'r')
+        lines = f.readlines()
+        f.close()
+
+        for line in lines:
+            # remove comments
+            line = line.split("#",1)[0]
+            # line = line.split("//",1)[0] # We can't have these kinds of comments any more because of Windows filenames.
+
+            line = line.strip()
+
+            if line != "":
+    
+                # replace ; and , and : with space
+                # line = line.replace(',',' ')
+                # line = line.replace(';',' ')
+                # line = line.replace(':',' ') # this messes up Windows filenames
+                line = line.replace("\t",' ')
+
+                # now strip string
+                line = line.strip()
+
+                # now, replace double spaces with one space
+                # line.split() is not used for removing all whitespace
+                # because all the parameter values are in list[1] 
+                while '  ' in line: line = line.replace('  ',' ')
+
+                # Now split the thing
+                line = line.split(' ',1)
+
+                # now, make it upper case
+                line[0] = line[0].upper()
+
+                # If there's QUIT, EXIT, or STOP, then don't continue.
+                if line[0] in ['QUIT','EXIT','STOP']: 
+                    break
+
+                self.entities.append(line)
+
+
         
-        #this notation (for parameter, values) is less robust than just using "entity" because if any item in the list
-        #has more than 2 members, python will crash. 
+        # this notation (for parameter, values) is less robust than just using "entity" because if any item in the list
+        # has more than 2 members, python will crash. However, each entity in self.entities should have only 2 members
+        # due to the processing code above. 
         for parameter,values in self.entities: 
             print parameter, values
             #if unexpected config keyword in config file, throw this exception
@@ -1624,7 +1620,6 @@ class ConfigFile:
             if parameter in string_parameters:
                 self.parameters[parameter] = values.strip()
                 continue
-            # no longer horrible 
 
             # Region handling. Updated code only checks if the entity is a Region once, rather than once for each region type. 
 
