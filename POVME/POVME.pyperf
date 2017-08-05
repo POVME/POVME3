@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<ProfilingTarget xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ProjectTarget>
+    <TargetProject>f97aac7a-2c54-4975-ab65-f842f2236308</TargetProject>
+    <FriendlyName>POVME</FriendlyName>
+  </ProjectTarget>
+</ProfilingTarget>

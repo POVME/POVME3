@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{f97aac7a-2c54-4975-ab65-f842f2236308}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile>POVME3.py</StartupFile>
+    <SearchPath />
+    <WorkingDirectory>C:\Users\paulypaul\Desktop\Practice\POVME\POVME\examples\basic_example</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId>{9a7a9026-48c1-4688-9d5d-e5699d47d074}</InterpreterId>
+    <InterpreterVersion>2.7</InterpreterVersion>
+    <IsWindowsApplication>False</IsWindowsApplication>
+    <CommandLineArguments>sample_input.ini</CommandLineArguments>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
+    <InterpreterPath>
+    </InterpreterPath>
+    <Environment>PYTHONPATH=C:\Users\paulypaul\Desktop\Practice\POVME\</Environment>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+    <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="examples\analysis_workflow_example\2-POVME_analysis\makeRunAllScript.py" />
+    <Compile Include="examples\analysis_workflow_example\3-post_analysis\analyzeClusterMembershipInGroups.py" />
+    <Compile Include="examples\analysis_workflow_example\3-post_analysis\analyzeClusterMembershipInGroups_HSP90.py" />
+    <Compile Include="examples\analysis_workflow_example\3-post_analysis\makeRunAll.py" />
+    <Compile Include="packages\binana\atom_type_feature_mapping\peel.py" />
+    <Compile Include="packages\binana\binana.py" />
+    <Compile Include="packages\binana\peel.py" />
+    <Compile Include="packages\binana\tests\algebra_basic\testBasicFmaps.py" />
+    <Compile Include="packages\binana\tests\algebra_dock_basic\testBasicFmaps.py" />
+    <Compile Include="packages\binana\tests\algebra_dock_complex\exampleDock.py" />
+    <Compile Include="packages\binana\tests\algebra_dock_complex\howDifferent.py" />
+    <Compile Include="packages\binana\tests\algebra_func_input\funcInputTest.py" />
+    <Compile Include="packages\binana\tests\algebra_peel_dock\howDifferent.py" />
+    <Compile Include="packages\binana\tests\algebra_peel_dock\peelDock.py" />
+    <Compile Include="packages\binana\tests\algebra_score_hbond\algebraHbondTest.py" />
+    <Compile Include="packages\binana\tests\peel_2gfc_basic\2gfcTest.py" />
+    <Compile Include="packages\binana\tests\peel_arg_basic\argTest.py" />
+    <Compile Include="packages\binana\tests\peel_dock_parameter_optimization\analyzeAll_customDir.py" />
+    <Compile Include="packages\binana\tests\peel_dock_parameter_optimization\parameterTest.py" />
+    <Compile Include="packages\binana\tests\peel_featureMap_fromDx\dxImportTest.py" />
+    <Compile Include="packages\binana\tests\peel_lig_basic\ligTest.py" />
+    <Compile Include="packages\binana\tests\peel_povme_conversion\conversionTest.py" />
+    <Compile Include="packages\binana\tests\peel_receptor_basic\receptorLigandTest.py" />
+    <Compile Include="packages\binana\tests\peel_trp_basic\trpTest.py" />
+    <Compile Include="packages\binana\tests\runRegTests.py" />
+    <Compile Include="packages\binana\tests\test_featureMap_fromOffGridPts\makeRotatedMap.py" />
+    <Compile Include="packages\binana\__init__.py" />
+    <Compile Include="packages\clustering\binding_site_overlap.py" />
+    <Compile Include="packages\clustering\binding_site_overlap_no_color.py" />
+    <Compile Include="packages\clustering\cluster.py" />
+    <Compile Include="packages\clustering\pocketPointsPca.py" />
+    <Compile Include="packages\in_progress\pocket_alignment_and_clustering\easyTestCase\makeTestCase.py" />
+    <Compile Include="packages\in_progress\pocket_alignment_and_clustering\hardTestCase\makeTestCase.py" />
+    <Compile Include="packages\in_progress\pocket_alignment_and_clustering\mediumTestCase\makeTestCase.py" />
+    <Compile Include="packages\in_progress\pocket_alignment_and_clustering\scoreSolution.py" />
+    <Compile Include="packages\in_progress\shelby_PCA\cpp\npy_xyz.py" />
+    <Compile Include="packages\in_progress\shelby_PCA\python\POVME_PCA.py" />
+    <Compile Include="packages\in_progress\surf_area_calculation_comparison\comparePovmeToFpocket.py" />
+    <Compile Include="packages\in_progress\surf_area_calculation_comparison\makeRunScripts.py" />
+    <Compile Include="packages\in_progress\surf_area_calculation_comparison\rotateProteins.py" />
+    <Compile Include="packages\pymolecule\pymolecule.py" />
+    <Compile Include="packages\pymolecule\test.py" />
+    <Compile Include="packages\pymolecule\__init__.py" />
+    <Compile Include="packages\__init__.py" />
+    <Compile Include="POVME2_GUI.py" />
+    <Compile Include="POVME3.py" />
+    <Compile Include="POVME_pocket_id.py" />
+    <Compile Include="tests\runRegTests.py" />
+    <Compile Include="__init__.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="examples\basic_example\sample_input.ini" />
+    <Content Include="examples\basic_example\sample_POVME_input.for_windows.ini" />
+    <Content Include="examples\ligand_example\sample_POVME_input.ini" />
+    <Content Include="images\AngleTransparency1.png" />
+    <Content Include="images\AngleTransparency2.png" />
+    <Content Include="images\hiRes_noSurf.png" />
+    <Content Include="images\hiRes_surf_dots.png" />
+    <Content Include="packages\binana\images\hiRes.png" />
+    <Content Include="packages\in_progress\pocket_alignment_and_clustering\easyTestCase\sample_POVME_input.ini" />
+    <Content Include="packages\in_progress\pocket_alignment_and_clustering\instructions.txt" />
+    <Content Include="packages\in_progress\pocket_id\README.txt" />
+    <Content Include="tests\ala\sample_POVME_input_ala.ini" />
+    <Content Include="tests\bad_inclusion_area_ala_offtarget\sample_POVME_input_ala_offtarget.ini" />
+    <Content Include="tests\consistent_convex_hull_average\sample_POVME_input_average.ini" />
+    <Content Include="tests\consistent_convex_hull_each\sample_POVME_input_each.ini" />
+    <Content Include="tests\consistent_convex_hull_first\sample_POVME_input_first.ini" />
+    <Content Include="tests\consistent_convex_hull_max\sample_POVME_input_max.ini" />
+    <Content Include="tests\defined_region_inclusion\POVME_defined_region_inclusion.ini" />
+    <Content Include="tests\defined_region_inclusion_and_seed\POVME_defined_region_inclusion_and_seed.ini" />
+    <Content Include="tests\load_inclusion\POVME_load_inclusion.ini" />
+    <Content Include="tests\load_inclusion_and_seed\POVME_load_inclusion_and_seed.ini" />
+    <Content Include="tests\trp\sample_POVME_input_trp.ini" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="examples\" />
+    <Folder Include="examples\analysis_workflow_example\" />
+    <Folder Include="examples\analysis_workflow_example\2-POVME_analysis" />
+    <Folder Include="examples\analysis_workflow_example\3-post_analysis" />
+    <Folder Include="examples\basic_example" />
+    <Folder Include="examples\ligand_example" />
+    <Folder Include="images" />
+    <Folder Include="packages" />
+    <Folder Include="packages\binana" />
+    <Folder Include="packages\binana\atom_type_feature_mapping" />
+    <Folder Include="packages\binana\images" />
+    <Folder Include="packages\binana\tests" />
+    <Folder Include="packages\binana\tests\algebra_basic" />
+    <Folder Include="packages\binana\tests\algebra_dock_basic" />
+    <Folder Include="packages\binana\tests\algebra_dock_complex" />
+    <Folder Include="packages\binana\tests\algebra_func_input" />
+    <Folder Include="packages\binana\tests\algebra_peel_dock" />
+    <Folder Include="packages\binana\tests\algebra_score_hbond" />
+    <Folder Include="packages\binana\tests\peel_2gfc_basic" />
+    <Folder Include="packages\binana\tests\peel_arg_basic" />
+    <Folder Include="packages\binana\tests\peel_dock_parameter_optimization" />
+    <Folder Include="packages\binana\tests\peel_featureMap_fromDx" />
+    <Folder Include="packages\binana\tests\peel_lig_basic" />
+    <Folder Include="packages\binana\tests\peel_povme_conversion" />
+    <Folder Include="packages\binana\tests\peel_receptor_basic" />
+    <Folder Include="packages\binana\tests\peel_trp_basic" />
+    <Folder Include="packages\binana\tests\test_featureMap_fromOffGridPts" />
+    <Folder Include="packages\clustering" />
+    <Folder Include="packages\in_progress\" />
+    <Folder Include="packages\in_progress\pocket_alignment_and_clustering" />
+    <Folder Include="packages\in_progress\pocket_alignment_and_clustering\easyTestCase" />
+    <Folder Include="packages\in_progress\pocket_alignment_and_clustering\hardTestCase" />
+    <Folder Include="packages\in_progress\pocket_alignment_and_clustering\mediumTestCase" />
+    <Folder Include="packages\in_progress\pocket_id" />
+    <Folder Include="packages\in_progress\shelby_PCA\" />
+    <Folder Include="packages\in_progress\shelby_PCA\cpp" />
+    <Folder Include="packages\in_progress\shelby_PCA\python" />
+    <Folder Include="packages\in_progress\surf_area_calculation_comparison" />
+    <Folder Include="packages\pymolecule" />
+    <Folder Include="tests" />
+    <Folder Include="tests\ala" />
+    <Folder Include="tests\bad_inclusion_area_ala_offtarget" />
+    <Folder Include="tests\consistent_convex_hull_average" />
+    <Folder Include="tests\consistent_convex_hull_each" />
+    <Folder Include="tests\consistent_convex_hull_first" />
+    <Folder Include="tests\consistent_convex_hull_max" />
+    <Folder Include="tests\defined_region_inclusion" />
+    <Folder Include="tests\defined_region_inclusion_and_seed" />
+    <Folder Include="tests\load_inclusion" />
+    <Folder Include="tests\load_inclusion_and_seed" />
+    <Folder Include="tests\trp" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="{9a7a9026-48c1-4688-9d5d-e5699d47d074}\2.7" />
+  </ItemGroup>
+  <Import Project="$(PtvsTargetsFile)" Condition="Exists($(PtvsTargetsFile))" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="!Exists($(PtvsTargetsFile))" />
+</Project>
