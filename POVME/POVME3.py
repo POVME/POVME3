@@ -1601,7 +1601,7 @@ class ConfigFile:
             #if unexpected config keyword in config file, throw this exception
             if parameter not in all_parameters:
                 raise Exception('%s is not a valid parameter. Valid parameters are: %r' %(parameter,all_parameters))
-            
+                
             if parameter in float_parameters:
                 self.parameters[parameter] = float(values)
                 continue
@@ -1830,9 +1830,6 @@ class runit():
                     inclusion_region_fm.grow_region()
                 pts = inclusion_region_fm.toPovmeList()[:,:3]
                                                                     
-                
-        
-        
         if (len(parameters[PointsIncludeRegions]) > 0): # so create the point file
 
             log("\nGenerating the pocket-encompassing point field", parameters)
@@ -1846,9 +1843,6 @@ class runit():
                 for Included in parameters[PointsIncludeRegions]: pts = numpy.vstack((pts, Included.points_set(parameters[GridSpacing])))
             pts = unique_rows(pts)
 
-
-
-            
         if (parameters[LoadInclusionPointsFilename] != ''):
             log("\nLoading the inclusion point-field NPY file...", parameters)
             loadedPoints = numpy.load(parameters[LoadInclusionPointsFilename])
@@ -1858,8 +1852,6 @@ class runit():
                 pts = numpy.vstack(pts,loadedPoints)
         #else: parameters['pts_orig'] = pts
 
-
-            
         # get all the points of the exclusion regions
         if len(parameters[PointsExcludeRegions]) > 0:
             pts_exclusion = parameters[PointsExcludeRegions][0].points_set(parameters[GridSpacing])
@@ -1871,7 +1863,6 @@ class runit():
             # consider rewriting later
             index_to_remove = numpy.nonzero(cdist(pts, pts_exclusion) < 1e-7)[0]
             pts = numpy.delete(pts, index_to_remove, axis=0)
-
 
         if pts is None: raise Exception('No inclusion region defined')
         
