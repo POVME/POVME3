@@ -1,27 +1,37 @@
 ---------------------------------
 START
 ---------------------------------
-[['GRIDSPACING', '1.0'], ['INCLUSIONSPHERE', '65.0 98.0 50.0 16.0'], ['PDBFILENAME', '4NSS.pdb'], ['DISTANCECUTOFF', '1.09'], ['CONVEXHULLEXCLUSION', 'max'], ['SEEDSPHERE', '67.0 102.0 57.0 4.0'], ['CONTIGUOUSPOINTSCRITERIA', '3'], ['NUMPROCESSORS', '1'], ['OUTPUTFILENAMEPREFIX', './max_'], ['COMPRESSOUTPUT', 'false']]
+GRIDSPACING 1.0
+INCLUSIONSPHERE 65.0 98.0 50.0 16.0
+PDBFILENAME 4NSS.pdb
+DISTANCECUTOFF 1.09
+CONVEXHULLEXCLUSION max
+SEEDSPHERE 67.0 102.0 57.0 4.0
+CONTIGUOUSPOINTSCRITERIA 3
+NUMPROCESSORS 1
+OUTPUTFILENAMEPREFIX ./max_
+COMPRESSOUTPUT false
 
 If you use POVME in your research, please cite the following reference:
   Durrant, J. D., C. A. de Oliveira, et al. (2011). "POVME: An algorithm
   for measuring binding-pocket volumes." J Mol Graph Model 29(5): 773-776.
 
 Parameters:
-	OutputFilenamePrefix: ./max_
-	PointsIncludeRegions: sphere at (65.0, 98.0, 50.0), radius = 16.0
+	OUTPUTFILENAMEPREFIX: ./max_
+	POINTSINCLUDEREGIONS: sphere at (65.0, 98.0, 50.0), radius = 16.0
+	NUMFRAMES: -1
 	OutputFrameFilenamePrefix: ./max_frameInfo/max_
-	MaxGrowIterations: 10000000000.0
-	GridSpacing: 1.0
-	NumProcessors: 1
-	ContiguousPocketSeedRegions: sphere at (67.0, 102.0, 57.0), radius = 4.0
-	DistanceCutoff: 1.09
-	CompressOutput: False
-	PDBFileName: 4NSS.pdb
-	ConvexHullExclusion: max
-	SaveRegions: False
-	ContiguousPointsCriteria: 3
-	OutputBasename: max_
+	MAXGROWITERATIONS: 10000000000.0
+	GRIDSPACING: 1.0
+	NUMPROCESSORS: 1
+	CONTIGUOUSPOCKETSEEDREGIONS: sphere at (67.0, 102.0, 57.0), radius = 4.0
+	DISTANCECUTOFF: 1.09
+	COMPRESSOUTPUT: False
+	PDBFILENAME: 4NSS.pdb
+	CONVEXHULLEXCLUSION: max
+	SAVEREGIONS: False
+	CONTIGUOUSPOINTSCRITERIA: 3
+	OUTPUTBASENAME: max_
 ---------------------------------
 PARAMETERS DEFINED
 ---------------------------------
@@ -99,7 +109,7 @@ FRAME        | VOLUME (A^3) | SURF. A. (A^2)
 4            |   2156.0     |   1113.0
 5            |   2383.0     |   1047.0
 
-Execution time = 204.433460951 sec
+Execution time = 217.058130026 sec
 
 ---------------------------------
 ABOUT TO CALCULATE OCCUPANCY AVERAGE

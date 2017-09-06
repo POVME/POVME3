@@ -1,26 +1,35 @@
 ---------------------------------
 START
 ---------------------------------
-[['GRIDSPACING', '1.0'], ['INCLUSIONSPHERE', '27 51 28 15'], ['PDBFILENAME', '2fsz_noLig_short.pdb'], ['DISTANCECUTOFF', '1.09'], ['CONVEXHULLEXCLUSION', 'none'], ['CONTIGUOUSPOINTSCRITERIA', '3'], ['NUMPROCESSORS', '2'], ['OUTPUTFILENAMEPREFIX', './defined_region_inclusion_'], ['COMPRESSOUTPUT', 'false']]
+GRIDSPACING 1.0
+INCLUSIONSPHERE 27 51 28 15
+PDBFILENAME 2fsz_noLig_short.pdb
+DISTANCECUTOFF 1.09
+CONVEXHULLEXCLUSION none
+CONTIGUOUSPOINTSCRITERIA 3
+NUMPROCESSORS 2
+OUTPUTFILENAMEPREFIX ./defined_region_inclusion_
+COMPRESSOUTPUT false
 
 If you use POVME in your research, please cite the following reference:
   Durrant, J. D., C. A. de Oliveira, et al. (2011). "POVME: An algorithm
   for measuring binding-pocket volumes." J Mol Graph Model 29(5): 773-776.
 
 Parameters:
-	OutputFilenamePrefix: ./defined_region_inclusion_
-	PointsIncludeRegions: sphere at (27.0, 51.0, 28.0), radius = 15.0
+	OUTPUTFILENAMEPREFIX: ./defined_region_inclusion_
+	POINTSINCLUDEREGIONS: sphere at (27.0, 51.0, 28.0), radius = 15.0
+	NUMFRAMES: -1
 	OutputFrameFilenamePrefix: ./defined_region_inclusion_frameInfo/defined_region_inclusion_
-	MaxGrowIterations: 10000000000.0
-	GridSpacing: 1.0
-	NumProcessors: 2
-	DistanceCutoff: 1.09
-	CompressOutput: False
-	PDBFileName: 2fsz_noLig_short.pdb
-	ConvexHullExclusion: none
-	SaveRegions: False
-	ContiguousPointsCriteria: 3
-	OutputBasename: defined_region_inclusion_
+	MAXGROWITERATIONS: 10000000000.0
+	GRIDSPACING: 1.0
+	NUMPROCESSORS: 2
+	DISTANCECUTOFF: 1.09
+	COMPRESSOUTPUT: False
+	PDBFILENAME: 2fsz_noLig_short.pdb
+	CONVEXHULLEXCLUSION: none
+	SAVEREGIONS: False
+	CONTIGUOUSPOINTSCRITERIA: 3
+	OUTPUTBASENAME: defined_region_inclusion_
 ---------------------------------
 PARAMETERS DEFINED
 ---------------------------------
@@ -29,16 +38,16 @@ ABOUT TO LOAD RECEPTORS
 ---------------------------------
 
 Reading frames from 2fsz_noLig_short.pdb
-	Further processing frame 2
-	Further processing frame 4
-	Further processing frame 6
-	Further processing frame 8
-	Further processing frame 10
 	Further processing frame 1
 	Further processing frame 3
 	Further processing frame 5
 	Further processing frame 7
 	Further processing frame 9
+	Further processing frame 2
+	Further processing frame 4
+	Further processing frame 6
+	Further processing frame 8
+	Further processing frame 10
 ---------------------------------
 RECEPTORS LOADED
 ---------------------------------
@@ -51,20 +60,6 @@ Saving the point field as a PDB and NPY file
 	Point field saved to ./defined_region_inclusion_frameInfo/defined_region_inclusion_inclusion.npy to optionally load for the volume calculation
 
 Calculating the pocket volume of each frame
----------------------------------
-STARTING CALC VOLUME
----------------------------------
-	Frame 4:  Volume 3177.0 A^3  Surf. A. 1724.0 A^2
----------------------------------
-FINISHING CALC VOLUME
----------------------------------
----------------------------------
-STARTING CALC VOLUME
----------------------------------
-	Frame 8:  Volume 3462.0 A^3  Surf. A. 1667.0 A^2
----------------------------------
-FINISHING CALC VOLUME
----------------------------------
 ---------------------------------
 STARTING CALC VOLUME
 ---------------------------------
@@ -83,6 +78,34 @@ FINISHING CALC VOLUME
 STARTING CALC VOLUME
 ---------------------------------
 	Frame 9:  Volume 3219.0 A^3  Surf. A. 1630.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 4:  Volume 3177.0 A^3  Surf. A. 1724.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 8:  Volume 3462.0 A^3  Surf. A. 1667.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 3:  Volume 3379.0 A^3  Surf. A. 1577.0 A^2
+---------------------------------
+FINISHING CALC VOLUME
+---------------------------------
+---------------------------------
+STARTING CALC VOLUME
+---------------------------------
+	Frame 7:  Volume 3313.0 A^3  Surf. A. 1802.0 A^2
 ---------------------------------
 FINISHING CALC VOLUME
 ---------------------------------
@@ -108,20 +131,6 @@ STARTING CALC VOLUME
 FINISHING CALC VOLUME
 ---------------------------------
 ---------------------------------
-STARTING CALC VOLUME
----------------------------------
-	Frame 3:  Volume 3379.0 A^3  Surf. A. 1577.0 A^2
----------------------------------
-FINISHING CALC VOLUME
----------------------------------
----------------------------------
-STARTING CALC VOLUME
----------------------------------
-	Frame 7:  Volume 3313.0 A^3  Surf. A. 1802.0 A^2
----------------------------------
-FINISHING CALC VOLUME
----------------------------------
----------------------------------
 VOLUMES CALCULATED
 ---------------------------------
 
@@ -138,7 +147,7 @@ FRAME        | VOLUME (A^3) | SURF. A. (A^2)
 9            |   3219.0     |   1630.0
 10           |   2997.0     |   1709.0
 
-Execution time = 129.443114996 sec
+Execution time = 138.451184034 sec
 
 ---------------------------------
 ABOUT TO CALCULATE OCCUPANCY AVERAGE

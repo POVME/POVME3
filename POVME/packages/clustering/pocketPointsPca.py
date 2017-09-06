@@ -1,10 +1,5 @@
 #!python
 
-########################################
-######## CURRENTLY INCOMPLETE ##########
-########################################
-1/0
-
 
 
 
@@ -13,10 +8,12 @@ import numpy as np
 import cPickle
 import glob
 from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA as sklearnPCA
 import pylab
 #import hsp90Helpers
-import POVME.packages.binana.peel
-import os 
+import POVME.packages.binana.peel as peel
+import os
+import re
 pdb2Lig = {#'1BYQ':'ADP',
            '1UYF_every50ns':'PU1',
            '1UYI_every50ns':'PUZ',
@@ -63,9 +60,13 @@ prefix2frames = {}
 index2prefix = {}
 prefixList = []
 frameList = []
+# Parse indexMapToFrames line, for example
+# 0,../../2-POVME_analysis/1UYF_every50ns/1UYF_every50ns_frameInfo/1UYF_every50ns_frame_1.npy
+#|index|                                                          |    prefix    |   |frame|     
 for line in index2frameData:
     index = int(line.split(',')[0])
-    prefix = line.split('/')[-1].split('_')[0]
+    prefix = line.split('/')[-1].split('_frame')[0]
+    print prefix
     frame = int(line.split('/')[-1].split('_')[-1].replace('.npy',''))
     frameList.append(frame)
     prefix2indices[prefix] = prefix2indices.get(prefix,[]) + [int(index)]
@@ -87,9 +88,10 @@ for prefix in sortedPdbs:
     framesToLoad = range(1,maxFrame,every)
     for frame in framesToLoad:
         frameString = '%s_frame_%i' %(prefix, frame)
-        frameFilename = '%s/%s/%s.npy' %(analysisPath,
-                                         prefix,
-                                         frameString)
+        frameFilename = '%s/%s/%s_frameInfo/%s.npy' %(analysisPath,
+                                                      prefix,
+                                                      prefix,
+                                                      frameString)
         prefixList.append(prefix)
         frameStringList.append(frameString)
         pointsSet = set([tuple(i) for i in np.load(frameFilename)])
@@ -117,19 +119,30 @@ if normalizeFeatures == 'MeanAndStd':
 elif normalizeFeatures == 'Mean':
     X_std = vecPosMatrix - np.mean(vecPosMatrix,0)
 
-from sklearn.decomposition import PCA as sklearnPCA
 print "Making sklearn_pca"
-nComponents = 100
+nComponents = 10
 sklearn_pca = sklearnPCA(n_components=nComponents)
 print "Making Y_sklearn"
+
+# An important note -- we get a hash value for the raw data here
+# as a unique identifier of this dataset. Then we save the initial
+# PCA object to disk to reduce time on subsequent runs.
+
 sklearn_pca_hash = str(hash(tuple(X_std.flatten()[::100])))[-10:]
-pca_result_hash = 'y_sklearn_hash_%s.cpickle' %(sklearn_pca_hash)
+#pca_result_hash = 'y_sklearn_hash_%s.cpickle' %(sklearn_pca_hash)
+pca_result_hash = 'pca_obj_hash_%s.cpickle' %(sklearn_pca_hash)
 if not(os.path.exists(pca_result_hash)):
-    Y_sklearn = sklearn_pca.fit_transform(X_std)
+    #Y_sklearn = sklearn_pca.fit_transform(X_std)
+    sklearn_pca.fit(X_std)
     with open(pca_result_hash,'wb') as of:
-        cPickle.dump(Y_sklearn, of)
+        cPickle.dump(sklearn_pca, of)
+    Y_sklearn = sklearn_pca.transform(X_std)
+    #with open(pca_result_hash,'wb') as of:
+    #    cPickle.dump(Y_sklearn, of)
 else:
-    Y_sklearn = cPickle.load(open(pca_result_hash))
+    #Y_sklearn = cPickle.load(open(pca_result_hash))
+    sklearn_pca = cPickle.load(open(pca_result_hash))
+    Y_sklearn = sklearn_pca.transform(X_std)
 
 print 'Y_sklearn.shape', Y_sklearn.shape
 for col in range(Y_sklearn.shape[1]):
@@ -146,7 +159,7 @@ nCircImgPlaces = 20
 
 
 showMolAtAvgPos = False
-contourNotScatter = True
+contourNotScatter = False
 
 scatters = []
 if contourNotScatter:
@@ -342,6 +355,8 @@ if plotExplainedVariance:
     EVR = sklearn_pca.explained_variance_ratio_
     pylab.bar(np.arange(0.5, 0.5+len(EVR)), EVR)
     pylab.plot([sum(EVR[:i]) for i in range(len(EVR))])
+    pylab.ylabel('Explained variance ratio (individual/cumulative)')
+    pylab.xlabel('Principal Component')
     pylab.show()
 
 

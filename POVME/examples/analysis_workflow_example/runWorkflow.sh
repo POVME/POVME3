@@ -10,6 +10,7 @@ python makeRunAll.py
 cd ALL
 . bsubRunScript.sh
 python ../analyzeClusterMembershipInGroups.py
+pocketPointsPca.py
 cd ../
 cd ../
 

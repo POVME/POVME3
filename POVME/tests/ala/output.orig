@@ -1,27 +1,37 @@
 ---------------------------------
 START
 ---------------------------------
-[['GRIDSPACING', '1.0'], ['INCLUSIONSPHERE', '-2 0 2 5'], ['PDBFILENAME', 'ala.pdb'], ['DISTANCECUTOFF', '1.09'], ['CONVEXHULLEXCLUSION', 'none'], ['SEEDSPHERE', '-2 0 2 3'], ['CONTIGUOUSPOINTSCRITERIA', '3'], ['NUMPROCESSORS', '5'], ['OUTPUTFILENAMEPREFIX', './ala_'], ['COMPRESSOUTPUT', 'false']]
+GRIDSPACING 1.0
+INCLUSIONSPHERE -2 0 2 5
+PDBFILENAME ala.pdb
+DISTANCECUTOFF 1.09
+CONVEXHULLEXCLUSION none
+SEEDSPHERE -2 0 2 3
+CONTIGUOUSPOINTSCRITERIA 3
+NUMPROCESSORS 5
+OUTPUTFILENAMEPREFIX ./ala_
+COMPRESSOUTPUT false
 
 If you use POVME in your research, please cite the following reference:
   Durrant, J. D., C. A. de Oliveira, et al. (2011). "POVME: An algorithm
   for measuring binding-pocket volumes." J Mol Graph Model 29(5): 773-776.
 
 Parameters:
-	OutputFilenamePrefix: ./ala_
-	PointsIncludeRegions: sphere at (-2.0, 0.0, 2.0), radius = 5.0
+	OUTPUTFILENAMEPREFIX: ./ala_
+	POINTSINCLUDEREGIONS: sphere at (-2.0, 0.0, 2.0), radius = 5.0
+	NUMFRAMES: -1
 	OutputFrameFilenamePrefix: ./ala_frameInfo/ala_
-	MaxGrowIterations: 10000000000.0
-	GridSpacing: 1.0
-	NumProcessors: 5
-	ContiguousPocketSeedRegions: sphere at (-2.0, 0.0, 2.0), radius = 3.0
-	DistanceCutoff: 1.09
-	CompressOutput: False
-	PDBFileName: ala.pdb
-	ConvexHullExclusion: none
-	SaveRegions: False
-	ContiguousPointsCriteria: 3
-	OutputBasename: ala_
+	MAXGROWITERATIONS: 10000000000.0
+	GRIDSPACING: 1.0
+	NUMPROCESSORS: 5
+	CONTIGUOUSPOCKETSEEDREGIONS: sphere at (-2.0, 0.0, 2.0), radius = 3.0
+	DISTANCECUTOFF: 1.09
+	COMPRESSOUTPUT: False
+	PDBFILENAME: ala.pdb
+	CONVEXHULLEXCLUSION: none
+	SAVEREGIONS: False
+	CONTIGUOUSPOINTSCRITERIA: 3
+	OUTPUTBASENAME: ala_
 ---------------------------------
 PARAMETERS DEFINED
 ---------------------------------
@@ -65,7 +75,7 @@ FRAME        | VOLUME (A^3) | SURF. A. (A^2)
 -------------+--------------+----------------
 1            |   161.0      |   116.0
 
-Execution time = 2.1189289093 sec
+Execution time = 2.1387629509 sec
 
 ---------------------------------
 ABOUT TO CALCULATE OCCUPANCY AVERAGE
