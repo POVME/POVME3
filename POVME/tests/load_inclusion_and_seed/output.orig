@@ -1,27 +1,37 @@
 ---------------------------------
 START
 ---------------------------------
-[['GRIDSPACING', '1.0'], ['LOADINCLUSIONPOINTSFILENAME', 'inclusion.npy'], ['LOADSEEDPOINTSFILENAME', 'seed.npy'], ['PDBFILENAME', '2fsz_noLig_short.pdb'], ['DISTANCECUTOFF', '1.09'], ['CONVEXHULLEXCLUSION', 'none'], ['CONTIGUOUSPOINTSCRITERIA', '3'], ['NUMPROCESSORS', '2'], ['OUTPUTFILENAMEPREFIX', './load_inclusion_and_seed_'], ['COMPRESSOUTPUT', 'false']]
+GRIDSPACING 1.0
+LOADINCLUSIONPOINTSFILENAME inclusion.npy
+LOADSEEDPOINTSFILENAME seed.npy
+PDBFILENAME 2fsz_noLig_short.pdb
+DISTANCECUTOFF 1.09
+CONVEXHULLEXCLUSION none
+CONTIGUOUSPOINTSCRITERIA 3
+NUMPROCESSORS 2
+OUTPUTFILENAMEPREFIX ./load_inclusion_and_seed_
+COMPRESSOUTPUT false
 
 If you use POVME in your research, please cite the following reference:
   Durrant, J. D., C. A. de Oliveira, et al. (2011). "POVME: An algorithm
   for measuring binding-pocket volumes." J Mol Graph Model 29(5): 773-776.
 
 Parameters:
-	OutputFilenamePrefix: ./load_inclusion_and_seed_
-	LoadSeedPointsFilename: seed.npy
+	OUTPUTFILENAMEPREFIX: ./load_inclusion_and_seed_
+	LOADSEEDPOINTSFILENAME: seed.npy
+	NUMFRAMES: -1
 	OutputFrameFilenamePrefix: ./load_inclusion_and_seed_frameInfo/load_inclusion_and_seed_
-	MaxGrowIterations: 10000000000.0
-	GridSpacing: 1.0
-	NumProcessors: 2
-	DistanceCutoff: 1.09
-	CompressOutput: False
-	PDBFileName: 2fsz_noLig_short.pdb
-	LoadInclusionPointsFilename: inclusion.npy
-	ConvexHullExclusion: none
-	SaveRegions: False
-	ContiguousPointsCriteria: 3
-	OutputBasename: load_inclusion_and_seed_
+	MAXGROWITERATIONS: 10000000000.0
+	GRIDSPACING: 1.0
+	NUMPROCESSORS: 2
+	DISTANCECUTOFF: 1.09
+	COMPRESSOUTPUT: False
+	PDBFILENAME: 2fsz_noLig_short.pdb
+	LOADINCLUSIONPOINTSFILENAME: inclusion.npy
+	CONVEXHULLEXCLUSION: none
+	SAVEREGIONS: False
+	CONTIGUOUSPOINTSCRITERIA: 3
+	OUTPUTBASENAME: load_inclusion_and_seed_
 ---------------------------------
 PARAMETERS DEFINED
 ---------------------------------
@@ -146,7 +156,7 @@ FRAME        | VOLUME (A^3) | SURF. A. (A^2)
 9            |   3148.0     |   1424.0
 10           |   2959.0     |   1571.0
 
-Execution time = 133.485586882 sec
+Execution time = 147.475370884 sec
 
 ---------------------------------
 ABOUT TO CALCULATE OCCUPANCY AVERAGE

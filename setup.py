@@ -86,10 +86,10 @@ setup(
   package_dir={'POVME': 'POVME'},
   package_data={'POVME': ['examples/*/*.*','examples/*/*/*.*'#,'POVME/examples/*/*/*/*'
                           ]},        
-  version = '3.0.33',
+  version = '3.0.34',
   description = 'POVME (Pocket VOlume MEasurer) is a Python package for extracting actionable information from ensembles of protein structures for use in drug design.',
   author = 'Jeff Wagner',
-  author_email = 'jwagnerjpl@gmail.com',
+  author_email = 'j5wagner@ucsd.edu',
   url = 'https://github.com/POVME/POVME',
   download_url = 'https://github.com/POVME/POVME/tarball/2.0',
   #setup_requires=['scipy','numpy'],

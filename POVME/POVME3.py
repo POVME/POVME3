@@ -2,7 +2,7 @@
 
 # POVME 3.0 is released under the GNU General Public License (see http://www.gnu.org/licenses/gpl.html).
 # If you have any questions, comments, or suggestions, please don't hesitate to contact me,
-# Jacob Durrant, at jdurrant [at] ucsd [dot] edu.
+# Jeff Wagner, at j5wagner [at] ucsd [dot] edu.
 #
 # If you use POVME in your work, please cite Durrant, J. D., C. A. de Oliveira, et al.
 #    (2011). "POVME: An algorithm for measuring binding-pocket volumes." J Mol Graph
@@ -33,7 +33,7 @@ from scipy.spatial.distance import cdist
 from scipy.spatial.distance import pdist
 from scipy.spatial.distance import squareform
 
-version = "3.0.0"
+version = "3.0.34"
 
 GridSpacing	            ='GRIDSPACING'
 PointsIncludeRegions	='POINTSINCLUDEREGIONS'
@@ -768,7 +768,7 @@ def determineMaxConvexHull(index_and_pdbs,parameters):
         not_hydros_coors = this_pdb.information.get_coordinates()[not_hydros]
 
         not_hydros_coors= convex_hull_3d.akl_toussaint(not_hydros_coors) # quickly reduces input size
-        if all_surface_atoms == None:
+        if all_surface_atoms is None:
             all_surface_atoms = not_hydros_coors.copy()
         else:
             all_surface_atoms = numpy.vstack((all_surface_atoms, not_hydros_coors))
@@ -811,7 +811,7 @@ def determineAvgConvexHull(index_and_pdbs,parameters):
         not_hydros = this_pdb.selections.invert_selection(hydros)
         not_hydros_coors = this_pdb.information.get_coordinates()[not_hydros]
 
-        if all_not_hydros == None:
+        if all_not_hydros is None:
             all_not_hydros = numpy.array([not_hydros_coors])
         else:
             all_not_hydros = numpy.concatenate((all_not_hydros, numpy.array([not_hydros_coors])))
@@ -1836,7 +1836,7 @@ class runit():
 
             # get all the points of the inclusion regions
             skip = 0
-            if pts == None:
+            if pts is None:
                 pts = parameters[PointsIncludeRegions][0].points_set(parameters[GridSpacing])
                 for Included in parameters[PointsIncludeRegions][1:]: pts = numpy.vstack((pts, Included.points_set(parameters[GridSpacing])))
             else:
@@ -1873,7 +1873,7 @@ class runit():
         if (len(parameters[ContiguousPocketSeedRegions]) > 0) or (parameters[LoadSeedPointsFilename] != ''): 
             if (len(parameters[ContiguousPocketSeedRegions]) > 0):
                 # get all the contiguous points
-                if contig_pts == None:
+                if contig_pts is None:
                     contig_pts = parameters[ContiguousPocketSeedRegions][0].points_set(parameters[GridSpacing])
                     for Contig in parameters[ContiguousPocketSeedRegions][1:]: contig_pts = numpy.vstack((contig_pts, Contig.points_set(parameters[GridSpacing])))
                 else:
