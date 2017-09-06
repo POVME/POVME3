@@ -73,9 +73,9 @@ This example runs POVME on 5 trajectories taken from the POVME 3.0 paper's HSP90
    * The most representative frames from each cluster are output in the ```3-post_analysis/ALL/cluster#``` subdirectories   
    * The average pocket shape of each cluster can be visualized in vmd by running ```vmd -e visualizeAll.vmd``` in the ```3-post_analysis/ALL``` subdirectory, and showing the second representation in each loaded object  
    * Text files of the cluster members and representatives are written, with each line corresponding to one cluster  
-* pocketPointsPca.py runs principal component analysis of the analyzed frames  
+* pocketPointsPca.py runs principal component analysis of the pocket points in the frames  
    * Scatterplots of each simulations position in PC space are shown  
-   * A plot of the explained variance for each PC is shown, as well as a line measuring the cumulative total  
+   * A plot of the explained variance for each PC is shown
    * The first 10 principal components can be visualized by running ```vmd -e loadAllPcs.vmd```  
 
 
