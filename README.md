@@ -21,16 +21,22 @@ Note that this method will create a separate python build. You will need to run 
 
 
 
-## Example
+# Examples Directory
 
 The POVME Git repository comes with examples and test cases which are not included in the pip install.
 
 ```
 git clone https://github.com/POVME/POVME.git
-cd POVME/POVME/examples/ligand_example/
-POVME3.py sample_POVME_input.ini
+cd POVME/POVME/examples/
 ```
 
+## Basic example
+```
+cd basic_example
+POVME3.py sample_input.ini 
+```
+
+This example shows the "classic" operation of POVME, using a geometrically-defined inclusion sphere. If you open the "sample_input.ini" text file, you will find the operating parameters. The minimum input required for POVME to run is the input trajectory name and inclusion region.
 
 Once this runs, you will have an output directory named `POVME_test_run`.
 
@@ -41,13 +47,45 @@ We recommend that you visualize the results using [VMD](http://www.ks.uiuc.edu/D
 Under the Graphics-->Representations menu in VMD, show the ```0: POVME_volume_trajectory.pdb``` molecule using the Drawing Method "VDW". Now press the play button in the bottom right corner of the VMD Main window to watch the pocket trajectory.
 
 
-## Technical Background
+## Ligand-defined inclusion region example
+```
+cd ligand_example/
+POVME3.py sample_POVME_input.ini
+```
 
-`Peel`, heavily based on [Binana](jacob durant), enables us to color the binding site shape with relevant chemical features, such as hydrogen bond donors/acceptors, potential pi-stacking interactions, and hydrophobic pockets. This is a standalone library that will eventually be broken out into its own package. `Peel` contains the `Algebra` class, which enables comparisons of and mathematical operations on binding pocket shapes.
+POVME 3.0 now allows users to define the inclusion region of a pocket using a ligand residue name. The pocket will then be defined in all grid points within 3 Angstroms of the ligand atoms in the loaded PDB trajectory. Note that this residue name must match the one given in the input PDB trajectory.
+
+
+## Clustering and PCA Example
+```
+cd analysis_workflow_example/
+source runWorkflow.sh
+```
+The bulk of the new capabilities of POVME 3.0 are in separate scripts. Three of these are showcased in the analysis workflow example. 
+
+This example runs POVME on 5 trajectories taken from the POVME 3.0 paper's HSP90 simulations. Each of these trajectory PDB files has 5 frames, and has had the ligand removed. After running POVME on these trajectories, three post-processing scripts are run:
+
+* binding_site_overlap.py calculates the similarity of all of the analyzed frames
+* cluster.py processes the binding_site_overlap matrix and performs hierarchical clustering 
+** This example is programmed to yield five clusters, as given in the "-n" argument to cluster.py
+** A heatmap showing which frames belong to which cluster is displayed when cluster.py finishes running
+** Combined and individual-simulation transition maps are displayed
+** The most representative frames from each cluster are output in the ```3-post_analysis/ALL/cluster#``` subdirectories
+** The average pocket shape of each cluster can be visualized in vmd by running ```vmd -e visualizeAll.vmd``` in the ```3-post_analysis/ALL``` subdirectory, and showing the second representation in each loaded object
+** Text files of the cluster members and representatives are written, with each line corresponding to one cluster
+* pocketPointsPCA.py runs principal component analysis of the analyzed frames
+** Scatterplots of each simulations position in PC space are shown
+** A plot of the explained variance for each PC is shown, as well as a line measuring the cumulative total
+** The first 10 principal components can be visualized by running ```vmd -e loadAllPcs.vmd```
+
+The runWorkflow.sh shell script 
+
+
+## miscellaneous
+
+`Peel`, heavily based on Binana (by Jacob Durrant), enables the coloring of binding sites with relevant chemical features, such as hydrogen bond donors/acceptors, potential pi-stacking interactions, and hydrophobic pockets. This is a standalone library that will eventually be broken out into its own package. `Peel` contains the `Algebra` class, which enables comparisons of and mathematical operations on binding pocket shapes. The coloring scheme is intended to be for visualization only, and has not been validated for any quantitative purpose.
 
 `Clustering` is a package that ensembles of binding site shapes and perform clustering and principal component analysis on them. Clustering can be used to find metastable binding site shapes; principal component analysis can be used to find correlated subpockets in binding sites.
 
-[`Pocket ID`](jacob durant) is a library that runs successive, coarse iterations of POVME analysis on a whole protein to find binding pockets.
-
-[`PyMolecule`](jacob durant) (soon to be replaced with something more reasonable, probably MDTraj or Prody) is a class to read `.pdb` files, which is the standard format for protein structures.
+`PyMolecule`(by Jacob Durrant) is a lightweight class to read PDB files.
 
