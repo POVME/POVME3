@@ -43,6 +43,8 @@ dependencies:
 
 test:
   override:
+    - deactivate
+    - source /home/ubuntu/miniconda2/bin/activate
     - source ./tests.sh
 
 # deployment:
