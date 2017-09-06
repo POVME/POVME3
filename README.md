@@ -56,7 +56,7 @@ POVME3.py sample_POVME_input.ini
 POVME 3.0 now allows users to define the inclusion region of a pocket using a ligand residue name. The pocket will then be defined in all grid points within 3 Angstroms of the ligand atoms in the loaded PDB trajectory. Note that this residue name must match the one given in the input PDB trajectory.
 
 
-## Clustering and PCA Example
+## Clustering and PCA example
 ```
 cd analysis_workflow_example/
 source runWorkflow.sh
@@ -65,23 +65,22 @@ The bulk of the new capabilities of POVME 3.0 are in separate scripts. Three of 
 
 This example runs POVME on 5 trajectories taken from the POVME 3.0 paper's HSP90 simulations. Each of these trajectory PDB files has 5 frames, and has had the ligand removed. After running POVME on these trajectories, three post-processing scripts are run:
 
-* binding_site_overlap.py calculates the similarity of all of the analyzed frames
-* cluster.py processes the binding_site_overlap matrix and performs hierarchical clustering 
-** This example is programmed to yield five clusters, as given in the "-n" argument to cluster.py
-** A heatmap showing which frames belong to which cluster is displayed when cluster.py finishes running
-** Combined and individual-simulation transition maps are displayed
-** The most representative frames from each cluster are output in the ```3-post_analysis/ALL/cluster#``` subdirectories
-** The average pocket shape of each cluster can be visualized in vmd by running ```vmd -e visualizeAll.vmd``` in the ```3-post_analysis/ALL``` subdirectory, and showing the second representation in each loaded object
-** Text files of the cluster members and representatives are written, with each line corresponding to one cluster
-* pocketPointsPCA.py runs principal component analysis of the analyzed frames
-** Scatterplots of each simulations position in PC space are shown
-** A plot of the explained variance for each PC is shown, as well as a line measuring the cumulative total
-** The first 10 principal components can be visualized by running ```vmd -e loadAllPcs.vmd```
-
-The runWorkflow.sh shell script 
+* binding_site_overlap.py calculates the similarity of all of the analyzed frames 
+* cluster.py processes the binding_site_overlap matrix and performs hierarchical clustering  
+   * This example is programmed to yield five clusters, as specified in the "-n" argument to cluster.py  
+   * A heatmap showing which frames belong to which cluster is displayed when cluster.py finishes running  
+   * Combined and individual-simulation transition maps are displayed  
+   * The most representative frames from each cluster are output in the ```3-post_analysis/ALL/cluster#``` subdirectories   
+   * The average pocket shape of each cluster can be visualized in vmd by running ```vmd -e visualizeAll.vmd``` in the ```3-post_analysis/ALL``` subdirectory, and showing the second representation in each loaded object  
+   * Text files of the cluster members and representatives are written, with each line corresponding to one cluster  
+* pocketPointsPca.py runs principal component analysis of the analyzed frames  
+   * Scatterplots of each simulations position in PC space are shown  
+   * A plot of the explained variance for each PC is shown, as well as a line measuring the cumulative total  
+   * The first 10 principal components can be visualized by running ```vmd -e loadAllPcs.vmd```  
 
 
-## miscellaneous
+
+## Miscellaneous
 
 `Peel`, heavily based on Binana (by Jacob Durrant), enables the coloring of binding sites with relevant chemical features, such as hydrogen bond donors/acceptors, potential pi-stacking interactions, and hydrophobic pockets. This is a standalone library that will eventually be broken out into its own package. `Peel` contains the `Algebra` class, which enables comparisons of and mathematical operations on binding pocket shapes. The coloring scheme is intended to be for visualization only, and has not been validated for any quantitative purpose.
 
