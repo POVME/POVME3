@@ -1961,7 +1961,7 @@ class runit():
                 convexHull = None
                 crossProducts = None
             else:
-                raise Exception("ConvexHullExlusion keyword not recognized. '%s' is not one of ['none','max','first','each']" %(parameters[ConvexHullExclusion].lower()))
+                raise Exception("ConvexHullExclusion keyword not recognized. '%s' is not one of ['none','max','first','each']" %(parameters[ConvexHullExclusion].lower()))
             parameters[ConvexHullTriangles] = convexHull
             parameters[ConvexHullCrossProducts] = crossProducts
                 
