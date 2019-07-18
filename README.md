@@ -4,6 +4,8 @@
 
 We present a substantial update to the open-source POVME binding pocket analysis software. New capabilities of POVME 3.0 include a flexible chemical coloring scheme for feature identification, post-analysis tools for comparing large ensembles of pockets (e.g., from molecular dynamics simulations), and the introduction of scripts and methods that facilitate binding pocket comparison and analysis. We envision the use of this software for visualization of binding pocket dynamics, selection of representative structures for ensemble docking, and incorporation of molecular dynamics results into ligand design efforts.
 
+A publication associated with this software is at https://doi.org/10.1021/acs.jctc.7b00500. It showcases several capabilities of POVME 3.0, and performs a simple benchmark of grid-based binding pocket similarity analysis.
+
 This document is specific to POVME 3.0. Users interested in POVME 2.0 will find resources [here](http://rocce-vm0.ucsd.edu/data/sw/hosted/POVME/)
 
 ## Install
@@ -42,9 +44,9 @@ Once this runs, you will have an output directory named `POVME_test_run`.
 
 We recommend that you visualize the results using [VMD](http://www.ks.uiuc.edu/Development/Download/download.cgi?PackageName=VMD). Open the POVME output using VMD with the following command: 
 
-```vmd -m POVME_test_run/POVME_volume_trajectory.pdb 1BYQ_every250.pdb```
+```vmd -m POVME_test_run/example_volume_trajectory.pdb 4NSS.pdb```
 
-Under the Graphics-->Representations menu in VMD, show the ```0: POVME_volume_trajectory.pdb``` molecule using the Drawing Method "VDW". Now press the play button in the bottom right corner of the VMD Main window to watch the pocket trajectory.
+Under the Graphics-->Representations menu in VMD, show the ```0: POVME_volume_trajectory.pdb``` molecule using the Drawing Method "VDW" (and consider reducing the `Sphere Scale` value to something like `0.3`). Now press the play button in the bottom right corner of the VMD Main window to watch the pocket trajectory (For this short trajectory, it is probably better to advance manually through the frames).
 
 
 ## Ligand-defined inclusion region example
@@ -52,6 +54,9 @@ Under the Graphics-->Representations menu in VMD, show the ```0: POVME_volume_tr
 cd ligand_example/
 POVME3.py sample_POVME_input.ini
 ```
+To visualize:
+
+```vmd -m POVME_test_run/POVME_volume_trajectory.pdb 1BYQ_every250.pdb```
 
 POVME 3.0 now allows users to define the inclusion region of a pocket using a ligand residue name. The pocket will then be defined in all grid points within 3 Angstroms of the ligand atoms in the loaded PDB trajectory. Note that this residue name must match the one given in the input PDB trajectory.
 
