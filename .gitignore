@@ -1,6 +1,7 @@
-__init__.pyc
+*.py[co]
 *output
 .DS_Store
 .pypirc
 dist
 MANIFEST
+*.egg-info
