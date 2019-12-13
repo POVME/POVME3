@@ -15,18 +15,11 @@ import POVME.packages.pymolecule.pymolecule as pymolecule
 import gzip
 import os
 import shutil
-#import random
 import POVME.packages.binana.peel as peel
 import multiprocessing
 import platform
 from functools import reduce
-
-#from guppy import hpy
-
-#hp=hpy()
-
-try: from io import StringIO
-except: from io import StringIO
+from io import StringIO
 
 from scipy.spatial.distance import cdist
 from scipy.spatial.distance import pdist
