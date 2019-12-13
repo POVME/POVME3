@@ -36,7 +36,7 @@ molecule.fileio.save_pdb('./example_output/first_save.pdb', False, False, False)
 
 # You can also "save" to a string instead of to a file. Definitions used:
 #   pymolecule.Molecule.fileio.save_pdb
-print molecule.fileio.save_pdb('FILENAME DOES NOT MATTER', False, False, True)[:997]
+print(molecule.fileio.save_pdb('FILENAME DOES NOT MATTER', False, False, True)[:997])
 
 # Pymolecule can also save the data in the pym format, which is generally
 # faster than the PDB format. Definitions used::
@@ -281,23 +281,23 @@ molecule.fileio.save_pdb('./example_output/2HU4_rotation_test_about_pivot_5th_at
 #   pymolecule.Molecule.information.get_total_number_of_atoms
 #   pymolecule.Molecule.information.get_total_number_of_heavy_atoms
 #   pymolecule.Molecule.information.get_bounding_box
-print "Center of mass:", molecule.information.get_center_of_mass()
-print "Geometric center:", molecule.information.get_geometric_center()
-print "Total mass:", molecule.information.get_total_mass()
-print "Total number of atoms:", molecule.information.get_total_number_of_atoms()
-print "Total number of heavy atoms:", molecule.information.get_total_number_of_heavy_atoms()
-print "Bounding box:", molecule.information.get_bounding_box()
+print("Center of mass:", molecule.information.get_center_of_mass())
+print("Geometric center:", molecule.information.get_geometric_center())
+print("Total mass:", molecule.information.get_total_mass())
+print("Total number of atoms:", molecule.information.get_total_number_of_atoms())
+print("Total number of heavy atoms:", molecule.information.get_total_number_of_heavy_atoms())
+print("Bounding box:", molecule.information.get_bounding_box())
 
 # You can also get some information about what atoms are bonded to selected atoms.
 # For example, get the number of hydrogen atoms bonded to the 1st atom:
 # Definitions used:
 #   pymolecule.Molecule.atoms_and_bonds.get_number_of_bond_partners_of_element
-print "Number of hydrogen atoms bound to first atom:", molecule.atoms_and_bonds.get_number_of_bond_partners_of_element(0, "H")
+print("Number of hydrogen atoms bound to first atom:", molecule.atoms_and_bonds.get_number_of_bond_partners_of_element(0, "H"))
 
 # You can also get the index of the first atom with a given element bound to
 # a specified atom. Definitions used:
 #   pymolecule.Molecule.atoms_and_bonds.get_index_of_first_bond_partner_of_element
-print "Index of the first hydrogen atom bound to first atom:", molecule.atoms_and_bonds.get_index_of_first_bond_partner_of_element(0, "H")
+print("Index of the first hydrogen atom bound to first atom:", molecule.atoms_and_bonds.get_index_of_first_bond_partner_of_element(0, "H"))
 
 # Functions also exist for determining whether a given atom belongs to a protein,
 # DNA, or RNA molecule. Consider the 3943rd atom, which is known to belong to a
@@ -305,9 +305,9 @@ print "Index of the first hydrogen atom bound to first atom:", molecule.atoms_an
 #   pymolecule.Molecule.information.belongs_to_protein
 #   pymolecule.Molecule.information.belongs_to_dna
 #   pymolecule.Molecule.information.belongs_to_rna
-print "3943rd atom belongs to protein?", molecule.information.belongs_to_protein(3942)
-print "3943rd atom belongs to DNA?", molecule.information.belongs_to_dna(3942)
-print "3943rd atom belongs to RNA?", molecule.information.belongs_to_rna(3942)
+print("3943rd atom belongs to protein?", molecule.information.belongs_to_protein(3942))
+print("3943rd atom belongs to DNA?", molecule.information.belongs_to_dna(3942))
+print("3943rd atom belongs to RNA?", molecule.information.belongs_to_rna(3942))
 
 ########## Constructing Molecules Programatically ##########
 
@@ -349,19 +349,19 @@ new_mol.fileio.save_pdb('./example_output/from_scratch_v2.pdb',False,False)
 # 10 A cutoff. As above, if the third parameter is True, a simple pair-wise distance
 # comparison is performed. Definitions used:
 #   pymolecule.Molecule.other_molecule.steric_clash_with_another_molecule
-print "Clash according to steric_clash_with_another_molecule_atom_by_atom:", molecule_A.other_molecule.steric_clash_with_another_molecule(molecule_B, 10.0, True)
+print("Clash according to steric_clash_with_another_molecule_atom_by_atom:", molecule_A.other_molecule.steric_clash_with_another_molecule(molecule_B, 10.0, True))
 
 # If the third parameter is False (as above), the more sophisticated method for
 # identifying juxtaposed atoms is used. Definitions used:
 #   pymolecule.Molecule.other_molecule.steric_clash_with_another_molecule
-print "Clash according to steric_clash_with_another_molecule:", molecule_A.other_molecule.steric_clash_with_another_molecule(molecule_B, 10.0, False)
+print("Clash according to steric_clash_with_another_molecule:", molecule_A.other_molecule.steric_clash_with_another_molecule(molecule_B, 10.0, False))
 
 # PyMolecule can also be used to identify the minimum distance between two molecules.
 # The second parameter is like the third above, determining whether pair-wise or more
 # sophisticated methods are used to identify distances. Definitions used:
 #   pymolecule.Molecule.other_molecule.get_distance_to_another_molecule
-print 'Closest inter-chain distance according to pairwise comparison:', molecule_A.other_molecule.get_distance_to_another_molecule(molecule_B, True)
-print 'Closest inter-chain distance according to sophisticated method:', molecule_A.other_molecule.get_distance_to_another_molecule(molecule_B, False)
+print('Closest inter-chain distance according to pairwise comparison:', molecule_A.other_molecule.get_distance_to_another_molecule(molecule_B, True))
+print('Closest inter-chain distance according to sophisticated method:', molecule_A.other_molecule.get_distance_to_another_molecule(molecule_B, False))
 #### I THINK THE ABOVE, THE BETTER METHOD MIGHT TAKE LONGER. WHY??? CHECK GENERALLY.
 
 # PyMolecule can calculate RMSD values. To demonstrate this, let's look at the first
@@ -372,7 +372,7 @@ molecule_B_first_hundred = molecule_B.selections.get_molecule_from_selection(num
 # The atoms of these two molecules are in the same order, so we can determine which
 # atoms are equivalent based on order alone. Definitions used:
 #   pymolecule.Molecule.other_molecule.get_rmsd_order_dependent
-print "RMSD between two chains, based on order: ", molecule_A_first_hundred.other_molecule.get_rmsd_order_dependent(molecule_B_first_hundred)
+print("RMSD between two chains, based on order: ", molecule_A_first_hundred.other_molecule.get_rmsd_order_dependent(molecule_B_first_hundred))
 
 # You can also specify which atoms are equivalent. This is accomplished using a tuple
 # of two numpy.array, where each array is comprised of the indecies of self and
@@ -386,7 +386,7 @@ mol2_index_in_order = numpy.arange(0,len(molecule_B_first_hundred.information.ge
 numpy.random.shuffle(mol1_index_in_order)
 numpy.random.shuffle(mol2_index_in_order)
 
-print "RMSD between two chains, equiv atoms specified:", molecule_A_first_hundred.other_molecule.get_rmsd_equivalent_atoms_specified(molecule_B_first_hundred, (mol1_index_in_order, mol2_index_in_order))
+print("RMSD between two chains, equiv atoms specified:", molecule_A_first_hundred.other_molecule.get_rmsd_equivalent_atoms_specified(molecule_B_first_hundred, (mol1_index_in_order, mol2_index_in_order)))
 
 ##### YOU NEED ORDER INDEPENDENT ONE TOO!!!! WITH FINGERPRINTS???? ######
 
@@ -418,11 +418,11 @@ molecule_B_aligned_to_A.fileio.save_pdb('./example_output/last_TRP_of_chain_B_al
 
 # For example, you can get the angle between three points. Definitions used:
 #   pymolecule.Molecule.geometry.get_angle_between_three_points
-print "Angle in radians between 1st, 2nd, and 3rd atoms:", molecule.geometry.get_angle_between_three_points(molecule.information.get_coordinates()[0], molecule.information.get_coordinates()[1], molecule.information.get_coordinates()[2])
+print("Angle in radians between 1st, 2nd, and 3rd atoms:", molecule.geometry.get_angle_between_three_points(molecule.information.get_coordinates()[0], molecule.information.get_coordinates()[1], molecule.information.get_coordinates()[2]))
 
 # You can also get the dihedral angle between four points. Definitions used:
 #   pymolecule.Molecule.geometry.get_dihedral_angle
-print "Dihedral angle in radians between 1st, 2nd, 3rd, and 4th atoms:", molecule.geometry.get_dihedral_angle(molecule.information.get_coordinates()[0], molecule.information.get_coordinates()[1], molecule.information.get_coordinates()[2], molecule.information.get_coordinates()[3])
+print("Dihedral angle in radians between 1st, 2nd, 3rd, and 4th atoms:", molecule.geometry.get_dihedral_angle(molecule.information.get_coordinates()[0], molecule.information.get_coordinates()[1], molecule.information.get_coordinates()[2], molecule.information.get_coordinates()[3]))
 
 # There's also a function to determine whether or not four points are in
 # a plane (within a given tolerance). For example, the 202nd, 203rd, 207th,
@@ -431,4 +431,4 @@ print "Dihedral angle in radians between 1st, 2nd, 3rd, and 4th atoms:", molecul
 #   pymolecule.Molecule.geometry.is_planar
 #   pymolecule.Molecule.geometry.get_planarity_deviation
 #four_atoms_from_TRP_sidechain_selection = numpy.array([201, 202, 206, 207])
-print "Four atoms in the same TRP sidechain are roughly planar?", molecule.geometry.is_planar(molecule.information.get_coordinates()[201], molecule.information.get_coordinates()[202], molecule.information.get_coordinates()[206], molecule.information.get_coordinates()[207], 0.2)
+print("Four atoms in the same TRP sidechain are roughly planar?", molecule.geometry.is_planar(molecule.information.get_coordinates()[201], molecule.information.get_coordinates()[202], molecule.information.get_coordinates()[206], molecule.information.get_coordinates()[207], 0.2))

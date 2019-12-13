@@ -87,7 +87,7 @@ for target in targets:
 
             #mdpocketData = open('dpocket/%s%s/dpout_exp.txt' %(target, rotation)).readlines()
             if len(mdpocketData) == 1: # If there are no pockets detected
-                print "No data for %s %s. Skipping!" %(target, rotation)
+                print("No data for %s %s. Skipping!" %(target, rotation))
                 continue
             else:
                 volumeIndex = mdpocketData[0].split().index('pock_vol')
@@ -149,10 +149,10 @@ def analyze_difference(list1, list2, stdList1 = None, stdList2 = None, normalize
         povmeStdArray /= povmeNormConst
         mdpocketStdArray /= mdpocketNormConst
 
-    toPlot = zip(povmeVolumeArray,mdpocketVolumeArray, numpy.zeros((len(targets))))
+    toPlot = list(zip(povmeVolumeArray,mdpocketVolumeArray, numpy.zeros((len(targets)))))
     toPlot = [i for t in toPlot for i in t]
     if stdList1 != None and stdList2 != None:
-        toPlotStds = zip(povmeStdArray,mdpocketStdArray, numpy.zeros((len(targets))) )
+        toPlotStds = list(zip(povmeStdArray,mdpocketStdArray, numpy.zeros((len(targets))) ))
         toPlotStds = [i for t in toPlotStds for i in t]
     
     differences = []
@@ -197,7 +197,7 @@ def bootstrap_analysis_sum_difference(list1, list2):
     pylab.axvline(realDifference)
     betterThanPercent = 100*float(betterPop)/nBootstraps
     pylab.text(realDifference, 0.5*max(hist[0]),'%.1g' %(betterThanPercent))
-    print 'Real difference is better than %r percent of bootstrap permutations' %(betterThanPercent)
+    print('Real difference is better than %r percent of bootstrap permutations' %(betterThanPercent))
 
 def linear_regression(xData, yData, xErr = None, yErr = None, fit=True, plot=True):
     
@@ -235,14 +235,14 @@ def subplotOrShow(subplotInd):#, title='', xLabel='', yLabel=''):
     else:
         pylab.show()
 
-print 'ANALYZING POCKET VOLUMES'
+print('ANALYZING POCKET VOLUMES')
 
 if allAsSubplots:
     pylab.subplot(331)
 toPlotVols, bar_toPlotVolStds, realDifferences = analyze_difference(povmeVolAvList, mdpocketVolAvList, stdList1=povmeVolStdList, stdList2=mdpocketVolStdList, normalize=normalize)
 #print len(toPlotVolStds)
-pylab.bar(range(len(toPlotVols)), toPlotVols, color=toPlotColors,yerr=bar_toPlotVolStds)
-pylab.xticks(range(len(toPlotVols)),toPlotLabels,rotation = 90)
+pylab.bar(list(range(len(toPlotVols))), toPlotVols, color=toPlotColors,yerr=bar_toPlotVolStds)
+pylab.xticks(list(range(len(toPlotVols))),toPlotLabels,rotation = 90)
 pylab.title('Volume Comparison')
 pylab.ylabel('Volume'+' (normalized)'*normalize)
 
@@ -258,12 +258,12 @@ pylab.ylabel('frequency')
 
 
 if sum(mdpocketSAAvList) != 0:
-    print 'ANALYZING SURFACE AREAS'
+    print('ANALYZING SURFACE AREAS')
     subplotOrShow(334)
     toPlotSAs, bar_toPlotSAStds, realDifferences = analyze_difference(povmeSAAvList, mdpocketSAAvList,stdList1=povmeSAStdList, stdList2=mdpocketSAStdList, normalize=normalize)
 
-    pylab.bar(range(len(toPlotSAs)), toPlotSAs, color=toPlotColors, yerr=bar_toPlotSAStds)
-    pylab.xticks(range(len(toPlotSAs)),toPlotLabels,rotation = 90)
+    pylab.bar(list(range(len(toPlotSAs))), toPlotSAs, color=toPlotColors, yerr=bar_toPlotSAStds)
+    pylab.xticks(list(range(len(toPlotSAs))),toPlotLabels,rotation = 90)
     pylab.title('Surface Area Comparison')
     pylab.ylabel('Surf. Area'+' (normalized)'*normalize)
 
@@ -278,11 +278,11 @@ if sum(mdpocketSAAvList) != 0:
     pylab.ylabel('frequency')
 
 
-print 'ANALYZING POLARITY SCORES'
+print('ANALYZING POLARITY SCORES')
 subplotOrShow(337)
 toPlotPols, bar_toPlotPolStds, realDifferences = analyze_difference(povmePolAvList, mdpocketPolAvList,stdList1=povmePolStdList, stdList2=mdpocketPolStdList, normalize=normalize)
-pylab.bar(range(len(toPlotPols)), toPlotPols, color=toPlotColors, yerr=bar_toPlotPolStds)
-pylab.xticks(range(len(toPlotPols)),toPlotLabels,rotation = 90)
+pylab.bar(list(range(len(toPlotPols))), toPlotPols, color=toPlotColors, yerr=bar_toPlotPolStds)
+pylab.xticks(list(range(len(toPlotPols))),toPlotLabels,rotation = 90)
 pylab.title('Polarity Comparison')
 pylab.ylabel('Polarity'+' (normalized)'*normalize)
 

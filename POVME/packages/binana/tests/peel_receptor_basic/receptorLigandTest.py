@@ -34,4 +34,4 @@ my_ligand_feature_maps['hbondAcceptor'].write_dx_file('LIG_HBA.dx')
 my_ligand_feature_maps['aromatic'].write_dx_file('LIG_ARO.dx')
 my_ligand_feature_maps['hydrophobicity'].write_dx_file('LIG_HPBTY.dx')
 
-print "Done!"
+print("Done!")

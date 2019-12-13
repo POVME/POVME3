@@ -5,7 +5,7 @@ import numpy
 import sys
 import os
 import scipy.ndimage.interpolation as sni
-import cPickle
+import pickle
 import csv
 
 features = ['aromatic','hbondAcceptor','hbondDonor','hydrophilic','hydrophobic','occupancy','adjacency']
@@ -54,7 +54,7 @@ spherePoints = numpy.genfromtxt(outputFile + '.out',skip_header=3, skip_footer=0
 comments='}')
 spherePoints[0,:] = numpy.array([0.,1.,0.,0.])
 #spherePoints = [[0,1,0,0]]
-print spherePoints
+print(spherePoints)
 
 
 
@@ -74,7 +74,7 @@ n_cubes = 50
 #	y.append(n)
 #for n in numpy.arange(0,receptorDim[2]-ligandDim[2],cubeLength):
 #	z.append(n)
-translation_list = list(itertools.product(range(-8,9,2),range(-8,9,2),range(-8,9,2)))
+translation_list = list(itertools.product(list(range(-8,9,2)),list(range(-8,9,2)),list(range(-8,9,2))))
 #print translation_list
 my_score_functions = ['hydrophobic_A * hydrophobic_B',
                      'hydrophilic_A * hydrophilic_B', 
@@ -95,7 +95,7 @@ my_algebra.setScoreFuncs(my_score_functions)
 a = my_algebra.dockPeel(receptorData, ligandPeel, translation_list, spherePoints)
 
 with open('%s/results_%s.cPickle' %(outputDir, ligandName), 'w') as fo:
-    cPickle.dump(a, fo)
+    pickle.dump(a, fo)
 
 
 

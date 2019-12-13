@@ -21,7 +21,7 @@ class point:
         return point(self.x, self.y, self.z)
 
     def print_coors(self):
-        print str(self.x)+"\t"+str(self.y)+"\t"+str(self.z)
+        print(str(self.x)+"\t"+str(self.y)+"\t"+str(self.z))
         
     def snap(self,reso): # snap the point to a grid
         self.x = round(self.x / reso) * reso
@@ -215,7 +215,7 @@ class PDB:
             
             if line[:3] == "END":
                 t = textwrap.wrap("WARNING: END or ENDMDL term found in " + FileName + ". Everything after the first instance of this term will be ignored. If any of your PDBQT files have multiple frames/poses, please partition them into separate files using vina_split and feed each of the the single-frame files into binana separately.", 80)
-                print "\n".join(t) + "\n"
+                print("\n".join(t) + "\n")
                 break
             
             if "between atoms" in line and " A " in line:
@@ -240,7 +240,7 @@ class PDB:
                         
                         if key in atom_already_loaded and TempAtom.residue.strip() in self.protein_resnames: # so this is a protein atom that has already been loaded once
                             self.printout("Warning: Duplicate protein atom detected: \"" + TempAtom.line.strip() + "\". Not loading this duplicate.")
-                            print ""
+                            print("")
                         
                         if not key in atom_already_loaded or not TempAtom.residue.strip() in self.protein_resnames: # so either the atom hasn't been loaded, or else it's a non-protein atom
                                                                                                             # so note that non-protein atoms can have redundant names, but protein atoms cannot.
@@ -260,7 +260,7 @@ class PDB:
     def printout(self, thestring):
         lines = textwrap.wrap(thestring, 80)
         for line in lines:
-            print line
+            print(line)
             
     def SavePDB(self, filename):
         f = open(filename, 'w')
@@ -283,7 +283,7 @@ class PDB:
         
         # first get available index
         t = 1
-        while t in self.AllAtoms.keys():
+        while t in list(self.AllAtoms.keys()):
             t = t + 1
     
         # now add atom
@@ -348,136 +348,136 @@ class PDB:
             
             if not "N" in residue:
                 self.printout('Warning: There is no atom named "N" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine secondary structure. If this residue is far from the active site, this warning may not affect the NNScore.')
-                print ""
+                print("")
             if not "C" in residue:
                 self.printout('Warning: There is no atom named "C" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine secondary structure. If this residue is far from the active site, this warning may not affect the NNScore.')
-                print ""
+                print("")
             if not "CA" in residue:
                 self.printout('Warning: There is no atom named "CA" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine secondary structure. If this residue is far from the active site, this warning may not affect the NNScore.')
-                print ""
+                print("")
             
             if real_resname == "GLU" or real_resname == "GLH" or real_resname == "GLX":
                 if not "OE1" in residue:
                     self.printout('Warning: There is no atom named "OE1" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine salt-bridge interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "OE2" in residue:
                     self.printout('Warning: There is no atom named "OE2" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine salt-bridge interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
 
             if real_resname == "ASP" or real_resname == "ASH" or real_resname == "ASX":
                 if not "OD1" in residue:
                     self.printout('Warning: There is no atom named "OD1" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine salt-bridge interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "OD2" in residue:
                     self.printout('Warning: There is no atom named "OD2" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine salt-bridge interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
             
             if real_resname == "LYS" or real_resname == "LYN":
                 if not "NZ" in residue:
                     self.printout('Warning: There is no atom named "NZ" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-cation and salt-bridge interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
             
             if real_resname == "ARG":
                 if not "NH1" in residue:
                     self.printout('Warning: There is no atom named "NH1" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-cation and salt-bridge interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "NH2" in residue:
                     self.printout('Warning: There is no atom named "NH2" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-cation and salt-bridge interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
             
             if real_resname == "HIS" or real_resname == "HID" or real_resname == "HIE" or real_resname == "HIP":
                 if not "NE2" in residue:
                     self.printout('Warning: There is no atom named "NE2" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-cation and salt-bridge interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "ND1" in residue:
                     self.printout('Warning: There is no atom named "ND1" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-cation and salt-bridge interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
             
             if real_resname == "PHE":
                 if not "CG" in residue:
                     self.printout('Warning: There is no atom named "CG" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CD1" in residue:
                     self.printout('Warning: There is no atom named "CD1" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CD2" in residue:
                     self.printout('Warning: There is no atom named "CD2" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CE1" in residue:
                     self.printout('Warning: There is no atom named "CE1" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CE2" in residue:
                     self.printout('Warning: There is no atom named "CE2" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CZ" in residue:
                     self.printout('Warning: There is no atom named "CZ" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
             
             if real_resname == "TYR":
                 if not "CG" in residue:
                     self.printout('Warning: There is no atom named "CG" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CD1" in residue:
                     self.printout('Warning: There is no atom named "CD1" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CD2" in residue:
                     self.printout('Warning: There is no atom named "CD2" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CE1" in residue:
                     self.printout('Warning: There is no atom named "CE1" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CE2" in residue:
                     self.printout('Warning: There is no atom named "CE2" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CZ" in residue:
                     self.printout('Warning: There is no atom named "CZ" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
             
             if real_resname == "TRP":
                 if not "CG" in residue:
                     self.printout('Warning: There is no atom named "CG" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CD1" in residue:
                     self.printout('Warning: There is no atom named "CD1" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CD2" in residue:
                     self.printout('Warning: There is no atom named "CD2" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "NE1" in residue:
                     self.printout('Warning: There is no atom named "NE1" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CE2" in residue:
                     self.printout('Warning: There is no atom named "CE2" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CE3" in residue:
                     self.printout('Warning: There is no atom named "CE3" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CZ2" in residue:
                     self.printout('Warning: There is no atom named "CZ2" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CZ3" in residue:
                     self.printout('Warning: There is no atom named "CZ3" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CH2" in residue:
                     self.printout('Warning: There is no atom named "CH2" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
             
             if real_resname == "HIS" or real_resname == "HID" or real_resname == "HIE" or real_resname == "HIP":
                 if not "CG" in residue:
                     self.printout('Warning: There is no atom named "CG" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "ND1" in residue:
                     self.printout('Warning: There is no atom named "ND1" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CD2" in residue:
                     self.printout('Warning: There is no atom named "CD2" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CE1" in residue:
                     self.printout('Warning: There is no atom named "CE1" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "NE2" in residue:
                     self.printout('Warning: There is no atom named "NE2" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
             
                         
     # Functions to determine the bond connectivity based on distance
@@ -1509,7 +1509,7 @@ class binana:
         return '_'.join(list)
 
     def hashtable_entry_add_one(self, hashtable, key, toadd = 1): # note that dictionaries (hashtables) are passed by reference in python
-        if hashtable.has_key(key):
+        if key in hashtable:
             hashtable[key] = hashtable[key] + toadd
         else:
             hashtable[key] = toadd
@@ -1794,7 +1794,7 @@ class binana:
         output = output + preface + "Command-line parameters used:" + "\n"
         output = output + preface + "                 Parameter              |            Value           " + "\n"
         output = output + preface + "   -------------------------------------|----------------------------" + "\n"
-        for key in parameters.params.keys():
+        for key in list(parameters.params.keys()):
             value = str(parameters.params[key])
             output = output + preface + "   " + self.center(key,37) + "| " + self.center(value,27)  + "\n"
         
@@ -1950,7 +1950,7 @@ class binana:
             f.close()
             
         if parameters.params['output_file'] == "" and parameters.params['output_dir'] == "": # so you're not outputing to either a file or a directory
-            print output.replace("REMARK ","")
+            print(output.replace("REMARK ",""))
         
         if parameters.params['output_file'] != "": # so it's writing to a single file.
             
@@ -2295,7 +2295,7 @@ class command_line_parameters:
             if item[:1] == '-': # so it's a parameter key value
                 key = item.replace('-','')
                 value = self.is_num(parameters[index+1])
-                if key in self.params.keys():
+                if key in list(self.params.keys()):
                     self.params[key] = value
                     parameters[index] = ""
                     parameters[index + 1] = ""
@@ -2408,39 +2408,39 @@ def intro():
         else:
             wrapped.extend(textwrap.wrap(line, 80))
     
-    print ""
-    print "                                                             |[]{};"
-    print "                                                            .|[]{}"
-    print "                                                            .|  {}"
-    print "                                                             |   }"
-    print "                                                             |   }"
-    print "                                                             |   }"
-    print "                                                            .|   };"
-    print "                                                            .|     :'\""
-    print "                                                           +.        \""
-    print "                                                          =+         \"/"
-    print "                                                         _=          \"/"
-    print "                                                        -_           \"/"
-    print "                                                       ,-            \"/"
-    print "                                                     <>              \"/"
-    print "                                                   |\                \""
-    print "                                               :'\"/                 '\""
-    print "                                        .|[]{};                    :'"
-    print "               ,-_=+.|[]{};:'\"/|\<>,-_=+                           :'"
-    print "           |\<>                                                   ;:"
-    print "          /|                                                    {};"
-    print "          /|                                                   ]{}"
-    print "          /|                                                  []"
-    print "           |\                                               .|["
-    print "            \<                                            =+."
-    print "              >,                                        -_="
-    print "               ,-_=                                  <>,-"
-    print "                  =+.|[]                         \"/|\<"
-    print "                       ]{};:'\"/|\         []{};:'\""
-    print "                                \<>,-_=+.|"
+    print("")
+    print("                                                             |[]{};")
+    print("                                                            .|[]{}")
+    print("                                                            .|  {}")
+    print("                                                             |   }")
+    print("                                                             |   }")
+    print("                                                             |   }")
+    print("                                                            .|   };")
+    print("                                                            .|     :'\"")
+    print("                                                           +.        \"")
+    print("                                                          =+         \"/")
+    print("                                                         _=          \"/")
+    print("                                                        -_           \"/")
+    print("                                                       ,-            \"/")
+    print("                                                     <>              \"/")
+    print("                                                   |\                \"")
+    print("                                               :'\"/                 '\"")
+    print("                                        .|[]{};                    :'")
+    print("               ,-_=+.|[]{};:'\"/|\<>,-_=+                           :'")
+    print("           |\<>                                                   ;:")
+    print("          /|                                                    {};")
+    print("          /|                                                   ]{}")
+    print("          /|                                                  []")
+    print("           |\                                               .|[")
+    print("            \<                                            =+.")
+    print("              >,                                        -_=")
+    print("               ,-_=                                  <>,-")
+    print("                  =+.|[]                         \"/|\<")
+    print("                       ]{};:'\"/|\         []{};:'\"")
+    print("                                \<>,-_=+.|")
     
     for i in wrapped:
-        print i
+        print(i)
 
 
 intro()
@@ -2448,12 +2448,12 @@ intro()
 cmd_params = command_line_parameters(sys.argv[:])
 
 if cmd_params.okay_to_proceed() == False:
-    print "Error: You need to specify the ligand and receptor PDBQT files to analyze using\nthe -receptor and -ligand tags from the command line.\n"
+    print("Error: You need to specify the ligand and receptor PDBQT files to analyze using\nthe -receptor and -ligand tags from the command line.\n")
     sys.exit(0)
     
 if cmd_params.error != "":
-    print "Warning: The following command-line parameters were not recognized:"
-    print "   " + cmd_params.error + "\n"
+    print("Warning: The following command-line parameters were not recognized:")
+    print("   " + cmd_params.error + "\n")
     
 lig = cmd_params.params['ligand']
 rec = cmd_params.params['receptor']

@@ -173,7 +173,7 @@ class Selections():
         try:
             selection = numpy.ones(len(self.__parent_molecule.get_atom_information()), dtype=bool) # start assuming everything is selected
             
-            for key in selection_criteria.keys():
+            for key in list(selection_criteria.keys()):
                 
                 vals = selection_criteria[key]
                 
@@ -195,8 +195,8 @@ class Selections():
             # now get the indices of the selection
             return numpy.nonzero(selection)[0]
         except:
-            print "ERROR: Could not make the selection. Existing fields:"
-            print "\t" + ", ".join(self.__parent_molecule.get_atom_information().dtype.names)
+            print("ERROR: Could not make the selection. Existing fields:")
+            print("\t" + ", ".join(self.__parent_molecule.get_atom_information().dtype.names))
             sys.exit(0)
             
     def invert_selection(self, selection):
@@ -611,7 +611,7 @@ class GeneralTask:
         results_queue.put(self.results)
 
     def value_func(self, item, results_queue): # this is the function that changes through inheritance
-        print item # here's where you do something
+        print(item) # here's where you do something
         self.results.append(item) # here save the results for later compilation
 
 # You'll also need a class representing a box of points, with associated definitions
@@ -638,7 +638,7 @@ class BoxOfPoints():
         max_z = self.__snap_float(box[1][2], reso) + 1.1 * reso
 
         x, y, z = numpy.mgrid[min_x:max_x:reso, min_y:max_y:reso, min_z:max_z:reso]
-        self.points = numpy.array(zip(x.ravel(), y.ravel(), z.ravel()))
+        self.points = numpy.array(list(zip(x.ravel(), y.ravel(), z.ravel())))
         
     def __snap_float(self, val, reso):
         """Snaps an arbitrary point to the nearest grid point.
@@ -777,7 +777,7 @@ class BoxOfPoints():
         # calculate the pairwise distances between all box points
         
         box_of_pts_distance_tree = spatial.KDTree(self.points) # note, in newer versions of scipy use cKDTree
-        print self.points
+        print(self.points)
         self.dist_matrix = box_of_pts_distance_tree.sparse_distance_matrix(box_of_pts_distance_tree, reso * numpy.sqrt(3.0) * 1.1).todense() # so kiddy-corner counted as a neighbor
         
         # note that the diagnol of self.dist_matrix is zero, as expected, but ones with dist > reso * numpy.sqrt(3.0) * 1.1 are also 0. Pretty convenient.
@@ -941,7 +941,7 @@ help_lines.append('')
 help_lines.append('python pocket_id.py --filename rel1_example.pdb --pocket_detection_resolution 4.0 --pocket_measuring_resolution 1.0 --clashing_cutoff 3.0 --number_of_neighbors 4 --processors 1 --number_of_spheres 5 --sphere_padding 5.0 ')
 help_lines.append('')
 
-def printit(text): print textwrap.fill(text, initial_indent='', subsequent_indent='     ')
+def printit(text): print(textwrap.fill(text, initial_indent='', subsequent_indent='     '))
 
 for line in help_lines: printit(line) 
 if len(sys.argv[1:]) == 0: sys.exit(0)
@@ -962,17 +962,17 @@ params = {
 for item in getopt.getopt(sys.argv[1:], '', [ 'filename=', 'pocket_detection_resolution=', 'pocket_measuring_resolution=', 'clashing_cutoff=', 'number_of_neighbors=', 'processors=', 'number_of_spheres=', 'sphere_padding=' ])[0]: params[item[0].replace('--','')] = item[1]
 
 if params['filename'] == '':
-    print "ERROR: Must specify the --filename parameter!"
-    print
+    print("ERROR: Must specify the --filename parameter!")
+    print()
     sys.exit(0)
 
 for key in ['number_of_neighbors', 'processors', 'number_of_spheres']: params[key] = int(params[key])
 for key in ['pocket_detection_resolution', 'pocket_measuring_resolution', 'clashing_cutoff', 'sphere_padding']: params[key] = float(params[key])
 
-print 'Specified command-line arguments:'
-print
-for key in params: print "     --" + key + ': ' + str(params[key])
-print
+print('Specified command-line arguments:')
+print()
+for key in params: print("     --" + key + ': ' + str(params[key]))
+print()
 
 # Step 1: Load in the protein
 
@@ -982,13 +982,13 @@ molecule.load_pdb_into(params['filename'])
 
 # Step 2: Get rid of hydogen atoms. They just slow stuff down.
 
-print "Step 2. Removing hydrogen atoms..."
+print("Step 2. Removing hydrogen atoms...")
 sel = molecule.selections.select_atoms({'element_stripped':'H'})
 sel = molecule.selections.invert_selection(sel)
 molecule = molecule.selections.get_molecule_from_selection(sel)
 
 # Step 3: Calculate the convex hull of the protein alpha carbons.
-print "Step 3. Calculating the convex hull of the PDB file..."
+print("Step 3. Calculating the convex hull of the PDB file...")
 
 molecule_alpha_carbons = molecule.selections.get_molecule_from_selection(molecule.selections.select_atoms({'name_stripped':'CA'})) # Get a version of the protein with just the alpha carbons. In my experience, that's better for convex hull identification. Otherwise the program identifies shallow contors in the protein surface as pockets.
 convex_hull_3d = ConvexHull(molecule_alpha_carbons.get_coordinates())
@@ -1015,7 +1015,7 @@ box_pts.remove_all_points_close_to_other_points(molecule.get_coordinates(), para
 # Step 7. Now surround each of these points with higher density points that in the same regions. This is for getting a more detailed view of the identified pockets.
 if params['pocket_measuring_resolution'] != params['pocket_detection_resolution']:
     printit("Step 7. Flooding the identified pockets with points spaced " + str(params['pocket_measuring_resolution']) + " A apart for a more detailed measurement of the pocket volume...")
-    print "\tAdding points..."
+    print("\tAdding points...")
     box_pts.expand_around_existing_points(params['pocket_detection_resolution']/params['pocket_measuring_resolution'], params['pocket_measuring_resolution'])
     printit("\tRemoving points that fall outside the convex hull...")
     box_pts.remove_points_outside_convex_hull(convex_hull_3d)
@@ -1055,14 +1055,14 @@ for i,pts in enumerate(all_pockets):
             f.write("REMARK CHAIN " + let_ids[cluster_num] + ": PointsInclusionSphere " + str(numpy.round(cluster_center[0],2)) + ' ' + str(numpy.round(cluster_center[1],2)) + ' ' + str(numpy.round(cluster_center[2],2)) + ' ' + str(numpy.round(cluster_radius + params['sphere_padding'],2)) + "\n")
             pts_string = pts_string + write_some_pdbs.numpy_to_pdb(cluster_pts, let_ids[cluster_num])
         except:
-            print
+            print()
             printit("There was an error, but I don't think it was catastrophic. Could be that one of the pocket clusters was empty.")
-            print
+            print()
             
     f.write(pts_string)
     f.close()
 
-print
+print()
 printit("Done. See the pocket{n}.pdb files. Using a visualization program like VMD, identify which of these files includes the pocket you wish to measure. POVME Pocket ID has divided each pocket volume into " + str(params['number_of_spheres']) + " sections (i.e., PDB chains). In some cases, the pocket you're interested in might be included in a larger identified pocket, so feel free to use only certain sections of a given pocket as well.")
 printit("The POVME PointsInclusionSphere commands are located in the header of each pocket{n}.pdb file. A text editor can be used to copy and paste these commands into a POVME input file.")
-print
+print()

@@ -46,7 +46,7 @@ def compareFile(origFile, args):
     origFileData = remove_regex_lines(origFileData)
     newFile = origFile.replace('.orig','')
     if not os.path.exists(newFile):
-        print 'File %s does not exist - Unable to perform file comparison' %(newFile)
+        print('File %s does not exist - Unable to perform file comparison' %(newFile))
         passed = False
         return passed
     newFileData = open(newFile).readlines()
@@ -57,15 +57,15 @@ def compareFile(origFile, args):
     if newFileData == origFileData:
         #passedFiles.append(origFile)
         passed = True
-        print "Files %s and %s match!" %(newFile, origFile)
+        print("Files %s and %s match!" %(newFile, origFile))
     else:
         #failedFiles.append(origFile)
         passed = False
-        print 'File %s DOES NOT MATCH' %(origFile)
+        print('File %s DOES NOT MATCH' %(origFile))
         if args.compare == True:
             validChoice = False
             while validChoice == False:
-                choice = raw_input('Files %s and %s differ. View differences (y,n,v)? ' %(newFile, origFile))
+                choice = input('Files %s and %s differ. View differences (y,n,v)? ' %(newFile, origFile))
                 if choice == 'y':
                     ignoreStr = ' '.join(['-I %s' %(i) for i in regexes_to_ignore])
                     os.system('diff %s %s %s | less' %(ignoreStr, newFile, origFile))
@@ -89,16 +89,16 @@ def runTests(args):
         failedFiles = []
 
         with Chdir(directory):
-            print 
+            print() 
             origFiles = glob.glob('*orig')
             if args.remove_old == True:
                 files_to_remove = [i.replace('.orig','') for i in origFiles]
                 for file_to_remove in files_to_remove:
-                    print 'Removing', file_to_remove
+                    print('Removing', file_to_remove)
                     os.system('rm %s' %(file_to_remove))
-            print "RUNNING TEST %s" %(linesp)
+            print("RUNNING TEST %s" %(linesp))
             runCommand = '%s python %s > output' %(arunPath, script)
-            print "Run command: %s" %(runCommand)
+            print("Run command: %s" %(runCommand))
             #os.system('%s python %s > output' %(arunPath,script))
             #print '%s python %s/%s' %(arunPath, directory, script)
             start = time.time()
@@ -108,16 +108,16 @@ def runTests(args):
                                cwd = directory, shell=True)
 
             out, error = p.communicate()
-            print 'Test ran in %s seconds' %(time.time()-start)
+            print('Test ran in %s seconds' %(time.time()-start))
             #print out, error
 
             results[title]['testPassed'] = True
             if p.returncode == 0:
-                print "Exit status: Completed"
+                print("Exit status: Completed")
                 results[title]['exit_status'] = True
             else:
-                print "Exit status: Failed"
-                print 'error %s' %(error)
+                print("Exit status: Failed")
+                print('error %s' %(error))
                 results[title]['exit_status'] = False
                 results[title]['testPassed'] = False
 
@@ -135,23 +135,23 @@ def runTests(args):
 
     nPassed = 0
     nFailed = 0
-    print
-    print '==============='
-    print "RESULTS SUMMARY"
-    print '==============='
+    print()
+    print('===============')
+    print("RESULTS SUMMARY")
+    print('===============')
     for test in regTests:
-        print "----Test %s   Exit Status = %s ----" %(test[0], results[test[0]]['exit_status'])
-        print "%i file comparisons succeeded: %s" %(len(results[test[0]]['passedFiles']),
-                                                    results[test[0]]['passedFiles'])
-        print "%i file comparisons failed: %s" %(len(results[test[0]]['failedFiles']), results[test[0]]['failedFiles'])
+        print("----Test %s   Exit Status = %s ----" %(test[0], results[test[0]]['exit_status']))
+        print("%i file comparisons succeeded: %s" %(len(results[test[0]]['passedFiles']),
+                                                    results[test[0]]['passedFiles']))
+        print("%i file comparisons failed: %s" %(len(results[test[0]]['failedFiles']), results[test[0]]['failedFiles']))
         if results[test[0]]['testPassed'] == True:
             nPassed += 1
         else:
             nFailed += 1
-    print
-    print '%i tests passed, %i tests failed' %(nPassed, nFailed)
+    print()
+    print('%i tests passed, %i tests failed' %(nPassed, nFailed))
     if nFailed > 0:
-        print "TEST SUITE FAILED"
+        print("TEST SUITE FAILED")
         sys.exit(1)
 
 

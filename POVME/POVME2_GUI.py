@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from Tkinter import *
+from tkinter import *
 #------------------------------------------------------------------------------#
 #                                                                              #
 #                                  POVME2_GUI                                  #
@@ -12,7 +12,7 @@ class POVME2_GUI(Frame):
         #Your code here
         #
 
-        apply(Frame.__init__,(self,Master),kw)
+        Frame.__init__(*(self,Master), **kw)
         self.__Frame2 = Frame(self)
         self.__Frame2.pack(side='top')
         self.__Label1 = Label(self.__Frame2,background='#000000'
@@ -828,8 +828,8 @@ class POVME2_GUI(Frame):
         except ValueError:
             return False
 
-import tkMessageBox
-import tkFileDialog
+import tkinter.messagebox
+import tkinter.filedialog
 import os
 #import shutil
 import sys

@@ -43,7 +43,7 @@ class Trajectory():
         sortedFramesAndNames = [(int(re.findall('frame_([0-9]+).npy',name)[0]), name) for name in traj_file]
         sortedFramesAndNames.sort(key=lambda x:x[0])
         sortedNames = [i[1] for i in sortedFramesAndNames]
-        print sortedNames
+        print(sortedNames)
         self.frames = len(sortedNames)
         for index, fileName in enumerate(sortedNames):
             self.volumetric_filename.append(fileName)
@@ -99,14 +99,14 @@ class Overlap():
         setFrame2 = self.coordinates[frame2]
         
         if not isinstance(setFrame1,set) or not isinstance(setFrame2,set):
-            print "Coordinates must be contained in a set object"
+            print("Coordinates must be contained in a set object")
             sys.exit(1)
 
         num_overlap_points = len(setFrame1.intersection(setFrame2))
         
         '''Test here for error values '''
         if num_overlap_points > min(len(setFrame1),len(setFrame2)):
-            print 'invalid overlap value'
+            print('invalid overlap value')
         return num_overlap_points
 
     # need to calculate the volume that is overlapped
@@ -152,7 +152,7 @@ class main():
     def __init__(self,argv):
         
         if len(argv) == 1:
-            print "Cannot run binding_site_overlap.py: Need to specify .npy files to be read"
+            print("Cannot run binding_site_overlap.py: Need to specify .npy files to be read")
             sys.exit(1)
         parser = OptionParser()
         
@@ -185,7 +185,7 @@ class main():
         hbondDon_overlap = Overlap(file_input.hbondDonor_coordinates)
 
         num_frames = len(file_input.coordinates)
-        print "The number of frames found was: {0}".format(num_frames)
+        print("The number of frames found was: {0}".format(num_frames))
         
         '''Make a matrix of number of overlapping coordinates first'''
         
@@ -236,7 +236,7 @@ class main():
                     
         '''Record the overlap_matrix in a csv file'''
 
-        print "Starting Tanimoto calculations"
+        print("Starting Tanimoto calculations")
 
         tanimoto_matrix = numpy.empty([file_input.frames,file_input.frames],dtype=float)
         
@@ -266,18 +266,18 @@ class main():
                     colored_tanimoto_matrix[f1,f2] = average_similarity             
                     colored_tanimoto_matrix[f2,f1] = average_similarity
                 
-        print "Overlap Matrix for Tanimoto calculation"
-        print tanimoto_matrix
+        print("Overlap Matrix for Tanimoto calculation")
+        print(tanimoto_matrix)
         
         if (options.color):
-            print "Aromatic"
-            print aromatic_tanimoto_matrix
-            print "Hydrogen Bond Acceptor"
-            print hbondAcc_tanimoto_matrix
-            print "Hydrogen Bond Donor"
-            print hbondDon_tanimoto_matrix
+            print("Aromatic")
+            print(aromatic_tanimoto_matrix)
+            print("Hydrogen Bond Acceptor")
+            print(hbondAcc_tanimoto_matrix)
+            print("Hydrogen Bond Donor")
+            print(hbondDon_tanimoto_matrix)
             
-        print "\n"
+        print("\n")
         if (options.csv):
             numpy.savetxt(os.getcwd()+'/POVME_Tanimoto_matrix.csv', tanimoto_matrix, delimiter=',')
         
@@ -295,7 +295,7 @@ class main():
             numpy.save('hbondDon_tanimoto_matrix.npy', hbondDon_tanimoto_matrix)
 
 
-        print "Starting Tversky calculations"
+        print("Starting Tversky calculations")
         tversky_matrix = numpy.empty([file_input.frames,file_input.frames],dtype=float)
         if (options.color):
             aromatic_tversky_matrix = numpy.empty([file_input.frames,file_input.frames],dtype=float)
@@ -315,18 +315,18 @@ class main():
                 
                     colored_tversky_matrix[f1,f2] = (hbondAcc_tversky_matrix[f1,f2] + hbondDon_tversky_matrix[f1,f2] + tversky_matrix[f1,f2] + aromatic_tversky_matrix[f1,f2])/4
 
-        print "Overlap Matrix for Tversky calculation"
-        print tversky_matrix
+        print("Overlap Matrix for Tversky calculation")
+        print(tversky_matrix)
         
         if (options.color):
-            print "Aromatic"
-            print aromatic_tversky_matrix
-            print "Hydrogen Bond Acceptor"
-            print hbondAcc_tversky_matrix
-            print "Hydrogen Bond Donor"
-            print hbondDon_tversky_matrix
+            print("Aromatic")
+            print(aromatic_tversky_matrix)
+            print("Hydrogen Bond Acceptor")
+            print(hbondAcc_tversky_matrix)
+            print("Hydrogen Bond Donor")
+            print(hbondDon_tversky_matrix)
             
-        print "\n"
+        print("\n")
         
         if (options.csv):
             numpy.savetxt(os.getcwd()+'/POVME_Tversky_matrix.csv',tversky_matrix,delimiter=',')

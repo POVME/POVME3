@@ -5,7 +5,7 @@ import random
 import copy
 
 if not len(sys.argv) == 3:
-    print 'usage: python scoreSolution.py attemptFile keyFile'
+    print('usage: python scoreSolution.py attemptFile keyFile')
     sys.exit()
 
 
@@ -24,7 +24,7 @@ def bootstrap_analysis(list1, list2):
     similarities = []
     for i in range(nBootstraps):
         if i % 1000 == 0:
-            print 'bootstrap',i
+            print('bootstrap',i)
         newIndices = np.random.randint(0,len(list1),(len(list1)))
         list1Scramble = list1[newIndices]
         #list1Scramble = list(list1)
@@ -47,7 +47,7 @@ def bootstrap_analysis(list1, list2):
     pylab.axvline(realSimilarity)
     betterThanPercent = 100*float(betterPop)/nBootstraps
     pylab.text(realSimilarity, 0.5*max(hist[0]),'%.1f' %(betterThanPercent))
-    print 'Real similarity is better than %r percent of bootstrap permutations' %(betterThanPercent)
+    print('Real similarity is better than %r percent of bootstrap permutations' %(betterThanPercent))
 
 
 
@@ -105,11 +105,11 @@ realSolution = open(sys.argv[2]).readlines()
 realSolutionGroups = np.array([int(i.split()[0]) for i in realSolution])
 
 if len(attemptedSolution) != len(realSolution):
-    print 'error: Different number of classifications in the proposed solution and key file'
+    print('error: Different number of classifications in the proposed solution and key file')
 
 realScore = test_solution(attemptedSolutionGroups, realSolutionGroups)
 
-print realScore
+print(realScore)
 
 bootstrap_analysis(attemptedSolutionGroups, realSolutionGroups)
 pylab.show()
