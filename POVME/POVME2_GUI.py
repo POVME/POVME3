@@ -1,6 +1,9 @@
 #!/usr/bin/python
 
 from tkinter import *
+import tkinter.messagebox as tkMessageBox
+import tkinter.filedialog as tkFileDialog
+
 #------------------------------------------------------------------------------#
 #                                                                              #
 #                                  POVME2_GUI                                  #
@@ -828,10 +831,8 @@ class POVME2_GUI(Frame):
         except ValueError:
             return False
 
-import tkinter.messagebox
-import tkinter.filedialog
+
 import os
-#import shutil
 import sys
 
 if __name__ == '__main__':
