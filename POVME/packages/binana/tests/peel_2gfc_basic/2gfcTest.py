@@ -28,4 +28,4 @@ my_feature_maps['hydrophilic'].write_dx_file('HPL.dx')
 #my_feature_maps['hydrophobicity'].write_dx_file('HPBTY.dx')
 
 
-print "Done!"
+print("Done!")

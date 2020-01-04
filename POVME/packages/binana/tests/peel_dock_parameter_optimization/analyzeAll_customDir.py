@@ -1,4 +1,4 @@
-import cPickle
+import pickle
 import sys
 import numpy
 import glob
@@ -6,7 +6,7 @@ import gzip
 import copy
 import sys
 import threading
-import Queue
+import queue
 import time 
 ligands = []
 
@@ -22,17 +22,17 @@ def loadPickle(this_q, this_filename):
     fo = gzip.open(this_filename,'rb')
     #this_scoreList = cPickle.load(fo)
     data = fo.read()
-    this_scoreList = cPickle.loads(data)
+    this_scoreList = pickle.loads(data)
     fo.close()
     this_q.put((filePrefix, this_scoreList))
     #this_scoreList2 = copy.deepcopy(this_scoreList)
     #this_q.put((filePrefix, this_scoreList, this_scoreList2))
     
-q = Queue.Queue()
+q = queue.Queue()
 threadList = []
 for filename in glob.glob('%s/results*' %(resultsDir))[:30]:
 #for filename in glob.glob('%s/results*' %(resultsDir))[:200]:
-    print filename
+    print(filename)
     #filePrefix = filename.replace(resultsDir,'').replace('.cPickle','')
     #ligands.append(filePrefix)
     
@@ -48,7 +48,7 @@ c = 0
 while sum([i.is_alive() for i in threadList]) != 0:
     time.sleep(1)
     c += 1
-    print 'waiting for threads %i sec:' %(c), [i.is_alive() for i in threadList]
+    print('waiting for threads %i sec:' %(c), [i.is_alive() for i in threadList])
 while not q.empty():
     prefix, scoreList = q.get()
     ligands.append(prefix)
@@ -86,7 +86,7 @@ minRotation = {}
 for ligand in ligands:
     #minRotation[ligand] = sorted(list(rotations[ligand]), key=lambda x:abs(x[0]))[0]
     minRotation[ligand] = sorted(list(rotations[ligand]), key=lambda x:abs(x[0]))[-1]
-print minRotation
+print(minRotation)
 
 
 ##Get normalization factors
@@ -109,7 +109,7 @@ for ligand in ligands:
     ligandMeans[ligand] = numpy.array(ligandMeans[ligand])
     #Avoid dividing by 0
     ligandMeans[ligand][ligandMeans[ligand] == 0.0] = 1.
-print ligandMeans
+print(ligandMeans)
         
 ###This comes in handy when scoring later
 template_scoreListDict = {}
@@ -177,9 +177,9 @@ def scoreAll(factors):
 def rankFactors(factors):
     #This function takes a list of weighting factors and returns the rank that 0,0,0 gets when using them as multipliers on the score terms
     #this_bestScoreTransList = getBestTranslations(factors)
-    print factors
+    print(factors)
     this_scoreListDict = scoreAll(factors)
-    print 'scored!'
+    print('scored!')
     ranks = []
     for ligand in ligands:
         if 1:
@@ -207,7 +207,7 @@ def rankFactors(factors):
                         rank = numpy.count_nonzero(this_scoreListDict[ligand][:,7]>tripleZScore)
                         ranks.append(rank)
                         break
-    print sum(ranks)
+    print(sum(ranks))
     return sum(ranks)
     #for i, row in enumerate(this_bestScoreTransList):
     #    if (row[:3] == numpy.array([0,0,0])).all():
@@ -228,7 +228,7 @@ def scoreFactors(factors):
 '''    
 
 def print_parameters(x):
-    print x
+    print(x)
 
 import scipy.optimize
 
@@ -280,7 +280,7 @@ my_optimization = scipy.optimize.minimize(rankFactors, #scoreFactors,
                                                     (-200,200))
                                           )
 
-print 'OPTIMIZATION STATS:', my_optimization
+print('OPTIMIZATION STATS:', my_optimization)
 optimizedFactors = my_optimization.x
 
 '''
@@ -290,8 +290,8 @@ optimizedFactors = my_optimization
 '''
 optimizedFactors = numpy.array([  6.27265804e-01,   4.54168056e+00,   5.46248338e+00,  -1.87883923e+00, 1.44989168e+00,   3.79782140e-01,   5.51136641e-04,  -2.47446270e-03, 1.14398554e+00,   2.64094296e-03,  -2.12394170e-03,  -2.48873856e-03, -9.11841469e-04,   7.13814468e-01,  -1.06753076e+00,   2.37556547e+00, 1.97917698e+00,  -2.62286481e+00])
 '''
-print 'OPTIMIZATION FINISHED!!!!!!'
-print optimizedFactors
+print('OPTIMIZATION FINISHED!!!!!!')
+print(optimizedFactors)
 
 #bestScoreTransList = getBestTranslations(my_optimization.x)
 
@@ -324,7 +324,7 @@ pylab.scatter(distScoreList[:,0], distScoreList[:,1], color='black', s=3)
 
 #for ligand in ligands:
 for row in finalScoreList:
-    if row[0] == 0 and row[1] == 0 and row[2] == 0 and tuple(row[3:7]) in minRotation.values():
+    if row[0] == 0 and row[1] == 0 and row[2] == 0 and tuple(row[3:7]) in list(minRotation.values()):
         pylab.scatter([0],[row[7]], color='r', s=100)
 
 h, xedges, yedges = numpy.histogram2d(distScoreList[:,0], distScoreList[:,1], bins=50)

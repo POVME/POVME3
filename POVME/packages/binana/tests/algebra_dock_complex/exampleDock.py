@@ -5,7 +5,7 @@ import numpy
 import sys
 import os
 import scipy.ndimage.interpolation as sni
-import cPickle
+import pickle
 import csv
 
 
@@ -72,7 +72,7 @@ outputFile = number + "_" + nsteps
 spherePoints = numpy.genfromtxt(outputFile + '.out',skip_header=3, skip_footer=0, usecols=(4,5,6,7), 
 comments='}')
 #spherePoints = [[0,1,0,0]]
-print spherePoints
+print(spherePoints)
 
 
 
@@ -92,7 +92,7 @@ print spherePoints
 #	y.append(n)
 #for n in numpy.arange(0,receptorDim[2]-ligandDim[2],cubeLength):
 #	z.append(n)
-translation_list = list(itertools.product(range(-8,9,2),range(-8,9,2),range(-8,9,2)))
+translation_list = list(itertools.product(list(range(-8,9,2)),list(range(-8,9,2)),list(range(-8,9,2))))
 #print translation_list
 my_score_functions = ['hydrophobic_A * hydrophobic_B',
                      'hydrophilic_A * hydrophilic_B', 
@@ -129,7 +129,7 @@ else:
 a=do_docking()
 
 with open('results_%s.cPickle' %(ligandName), 'w') as fo:
-    cPickle.dump(a, fo)
+    pickle.dump(a, fo)
 
 
 

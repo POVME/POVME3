@@ -57,8 +57,8 @@ dxFile_peel = open('peel_generated.dx').read()
 dxFile_povme2 = open('test2_volumetric_density.dx').read()
 
 if dxFile_povme1 != dxFile_peel:
-    print "dxFile_povme1 differs from dxFile_peel"
+    print("dxFile_povme1 differs from dxFile_peel")
 if dxFile_povme2 != dxFile_peel:
-    print "dxFile_povme2 differs from dxFile_peel"
+    print("dxFile_povme2 differs from dxFile_peel")
 if dxFile_povme1 != dxFile_povme2:
-    print "dxFile_povme1 differs from dxFile_povme2"
+    print("dxFile_povme1 differs from dxFile_povme2")

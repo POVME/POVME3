@@ -21,13 +21,14 @@ import shutil
 import POVME.packages.binana.peel as peel
 import multiprocessing
 import platform
+from functools import reduce
 
 #from guppy import hpy
 
 #hp=hpy()
 
-try: from cStringIO import StringIO
-except: from StringIO import StringIO
+try: from io import StringIO
+except: from io import StringIO
 
 from scipy.spatial.distance import cdist
 from scipy.spatial.distance import pdist
@@ -89,7 +90,7 @@ def log(astr, parameters):
     '''
 
     # Print the output to the screen.
-    print astr
+    print(astr)
 
     # Save it to the output file as well.
     try:
@@ -135,7 +136,7 @@ class Multithreading():
         self.results = []
 
         if num_processors != 1 and (platform.system().upper()[:3] == "WIN" or "NT" in platform.system().upper()): # If it's windows, you can only use one processor.
-            print "WARNING: Use of multiple processors is not supported in Windows. Proceeding with one processor..."
+            print("WARNING: Use of multiple processors is not supported in Windows. Proceeding with one processor...")
             num_processors = 1
 
         if num_processors == 1: # so just running on 1 processor, perhaps under windows
@@ -157,7 +158,7 @@ class Multithreading():
 
             # reduce the number of processors if too many have been specified
             if len(inputs) < num_processors:
-                print 'Too many processors requested (%i requested, vs %i frames to analyze). Lowering number requested.' %(num_processors, len(inputs)) 
+                print('Too many processors requested (%i requested, vs %i frames to analyze). Lowering number requested.' %(num_processors, len(inputs))) 
                 num_processors = len(inputs)
 
             if len(inputs) == 0: # if there are no inputs, there's nothing to do.
@@ -849,6 +850,7 @@ def determineFirstConvexHull(index_and_pdbs,parameters):
             hydros = this_pdb.selections.select_atoms({'element_stripped':['H']})
             not_hydros = this_pdb.selections.invert_selection(hydros)
             not_hydros_coors = this_pdb.information.get_coordinates()[not_hydros]
+            break
 
 
     akl_toussaint_pts = convex_hull_3d.akl_toussaint(not_hydros_coors) # quickly reduces input size
@@ -878,9 +880,9 @@ class MultithreadingCalcVolumeTask(MultithreadingTaskGeneral):
         results_queue -- A multiprocessing.Queue() object for storing the calculation output
 
         """
-        print '---------------------------------'
-        print 'STARTING CALC VOLUME'#,hp.heap()
-        print '---------------------------------'
+        print('---------------------------------')
+        print('STARTING CALC VOLUME')#,hp.heap()
+        print('---------------------------------')
 
 
         frame_indx = item[0]
@@ -1140,7 +1142,7 @@ class MultithreadingCalcVolumeTask(MultithreadingTaskGeneral):
         extra_data_to_add['CalculateSurfaceArea'] = surfA
         #print "Surface Area for frame %r: %r" %(frame_indx, len(surfacePointsSet.intersection(adjacentPointsSet)))
         #if parameters[SaveIndividualPocketVolumes] == True:
-        for color in coloredMaps.keys():
+        for color in list(coloredMaps.keys()):
             #First make a copy of coloredMaps[color] that only contains the points over the intensity threshold
             #print color, coloredMaps[color]
             #log('AAAAA' + color + str(frame_indx), parameters)
@@ -1188,9 +1190,9 @@ class MultithreadingCalcVolumeTask(MultithreadingTaskGeneral):
         #else:
         #    log("\tFrame " + str(frame_indx) + ": " + repr(volume) + " A^3", parameters)
         self.results.append((frame_indx, volume, extra_data_to_add))
-        print '---------------------------------'
-        print 'FINISHING CALC VOLUME'#,hp.heap()
-        print '---------------------------------'
+        print('---------------------------------')
+        print('FINISHING CALC VOLUME')#,hp.heap()
+        print('---------------------------------')
 
         #if len(extra_data_to_add.keys()) != 0:
         #else: self.results.append((frame_indx, volume))
@@ -1219,8 +1221,8 @@ class MultithreadingDefIncRegByLigTask(MultithreadingTaskGeneral):
         pdb.fileio.load_pym_into(pym_filename)
 
         ligand_atoms = pdb.select_atoms({'resname_stripped':parameters[DefinePocketByLigand]})
-        print parameters[DefinePocketByLigand]
-        print ligand_atoms
+        print(parameters[DefinePocketByLigand])
+        print(ligand_atoms)
         ligand_coords = pdb.get_coordinates()[ligand_atoms].round()
         ligand_coords_set = set([tuple(row) for row in ligand_coords])
         self.results.append(ligand_coords_set)
@@ -1597,7 +1599,7 @@ class ConfigFile:
         # has more than 2 members, python will crash. However, each entity in self.entities should have only 2 members
         # due to the processing code above. 
         for parameter,values in self.entities: 
-            print parameter, values
+            print(parameter, values)
             #if unexpected config keyword in config file, throw this exception
             if parameter not in all_parameters:
                 raise Exception('%s is not a valid parameter. Valid parameters are: %r' %(parameter,all_parameters))
@@ -1683,13 +1685,13 @@ class runit():
         log("", parameters)
         log("Reading frames from " + filename, parameters)
 
-        f = open(filename, 'rb')
+        f = open(filename, 'r')
         while True:
 
             if parameters[NumFrames] != -1:
                 if len(pdb_strings) >= parameters[NumFrames]: break
 
-            line = f.readline()
+            line = str(f.readline())
 
             if len(line) == 0:
                 pdb_strings.append(growing_string)
@@ -1717,18 +1719,18 @@ class runit():
         argv -- A list of the command-line arguments.
 
         '''
-        print '---------------------------------'
-        print 'START'#,hp.heap()
-        print '---------------------------------'
+        print('---------------------------------')
+        print('START')#,hp.heap()
+        print('---------------------------------')
 
         start_time = time.time()
 
         # Load the configuration file
         if len(argv) == 1:
-                print "\nPOVME " + version
-                print "\nPlease specify the input file from the command line!\n\nExample: python POVME.py input_file.ini"
+                print("\nPOVME " + version)
+                print("\nPlease specify the input file from the command line!\n\nExample: python POVME.py input_file.ini")
                 self.reference({})
-                print
+                print()
                 sys.exit()
 
         config = ConfigFile(argv[1])
@@ -1768,7 +1770,7 @@ class runit():
         # print out parameters
 #consider this section for deletion 
         log("Parameters:", parameters)
-        for i in parameters.keys():
+        for i in list(parameters.keys()):
 
             if i == 'NumFrames' and parameters[NumFrames] == -1: continue # So only show this parameter if it's value is not the default.
 
@@ -1779,9 +1781,9 @@ class runit():
                 if parameters[i] != "": log("\t" + str(i) + ": " + str(parameters[i]), parameters)
 #this section ^ total garbage
         
-        print '---------------------------------'
-        print 'PARAMETERS DEFINED'#,hp.heap()
-        print '---------------------------------'
+        print('---------------------------------')
+        print('PARAMETERS DEFINED')#,hp.heap()
+        print('---------------------------------')
         
         pts = None
 
@@ -1789,14 +1791,14 @@ class runit():
 
             # load the points in they aren't already present
 
-            print '---------------------------------'
-            print 'ABOUT TO LOAD RECEPTORS'#,hp.heap()
-            print '---------------------------------'
+            print('---------------------------------')
+            print('ABOUT TO LOAD RECEPTORS')#,hp.heap()
+            print('---------------------------------')
             # load the PDB frames
             index_and_pdbs = self.load_multi_frame_pdb(parameters[PDBFileName], parameters)
-            print '---------------------------------'
-            print 'RECEPTORS LOADED'#,hp.heap()
-            print '---------------------------------'
+            print('---------------------------------')
+            print('RECEPTORS LOADED')#,hp.heap()
+            print('---------------------------------')
 
             # calculate all the volumes
             log("", parameters)
@@ -1968,9 +1970,9 @@ class runit():
             
             log("Calculating the pocket volume of each frame", parameters)
             tmp = Multithreading([(index, pdb_object, parameters) for index, pdb_object in index_and_pdbs], parameters[NumProcessors], MultithreadingCalcVolumeTask)
-            print '---------------------------------'
-            print 'VOLUMES CALCULATED'#,hp.heap()
-            print '---------------------------------'
+            print('---------------------------------')
+            print('VOLUMES CALCULATED')#,hp.heap()
+            print('---------------------------------')
 
             # delete the temp swap directory if necessary
 
@@ -2015,7 +2017,7 @@ class runit():
             if parameters[CompressOutput] == True: traj_file = gzip.open(parameters[OutputFilenamePrefix] + "volume_trajectory.pdb.gz", 'wb')
             else: traj_file = open(parameters[OutputFilenamePrefix] + "volume_trajectory.pdb", 'w')
 
-            for frame_index in range(1,len(volume_dic.keys())+1):
+            for frame_index in range(1,len(list(volume_dic.keys()))+1):
                 if parameters[CompressOutput] == True: frame_file = gzip.open(parameters[OutputFrameFilenamePrefix] + "frame_" + str(frame_index) + ".pdb.gz", 'rb')
                 else: frame_file = open(parameters[OutputFrameFilenamePrefix] + "frame_" + str(frame_index) + ".pdb", 'r')
 
@@ -2028,12 +2030,12 @@ class runit():
             traj_file.close()
 
             #if parameters[SaveColoredMap] == True:
-            colors = tmp.results[0][2]['SaveColoredMap'].keys()
+            colors = list(tmp.results[0][2]['SaveColoredMap'].keys())
             for color in colors:
                 if parameters[CompressOutput] == True: traj_file = gzip.open(parameters[OutputFilenamePrefix] + color + "_trajectory.pdb.gz", 'wb')
                 else: traj_file = open(parameters[OutputFilenamePrefix] + color + "_volume_trajectory.pdb", 'w')
 
-                for frame_index in range(1,len(volume_dic.keys())+1):
+                for frame_index in range(1,len(list(volume_dic.keys()))+1):
                     if parameters[CompressOutput] == True: frame_file = gzip.open(parameters[OutputFrameFilenamePrefix] + "frame_" + str(frame_index) + "_" + color + ".pdb.gz", 'rb')
                     else: frame_file = open(parameters[OutputFrameFilenamePrefix] + "frame_" + str(frame_index) + "_" + color + ".pdb", 'r')
 
@@ -2067,9 +2069,9 @@ class runit():
 
 
 
-            print '---------------------------------'
-            print 'ABOUT TO CALCULATE OCCUPANCY AVERAGE'#,hp.heap()
-            print '---------------------------------'
+            print('---------------------------------')
+            print('ABOUT TO CALCULATE OCCUPANCY AVERAGE')#,hp.heap()
+            print('---------------------------------')
             # Generate the frame-averages volumetric density map
             #if parameters[SaveVolumetricDensityDX] == True or parameters[SaveVolumetricDensityNpy] == True:
             unique_points = {}
@@ -2127,22 +2129,22 @@ class runit():
 
 
 
-            print '---------------------------------'
-            print 'CALCULATED OCCUPANCY AVERAGE'#,hp.heap()
-            print '---------------------------------'
+            print('---------------------------------')
+            print('CALCULATED OCCUPANCY AVERAGE')#,hp.heap()
+            print('---------------------------------')
 
 
             #if parameters[SaveColoredMap] == True:
 
-            print '---------------------------------'
-            print 'ABOUT TO CALCULATE COLOR MAPS'#,hp.heap()
-            print '---------------------------------'
+            print('---------------------------------')
+            print('ABOUT TO CALCULATE COLOR MAPS')#,hp.heap()
+            print('---------------------------------')
 
             #print 'Saving Colored Maps!'
             #start = time.time()
             
 
-            colors = tmp.results[0][2]['SaveColoredMap'].keys()
+            colors = list(tmp.results[0][2]['SaveColoredMap'].keys())
             for color in colors:
                 overall_min = numpy.ones(3) * 1e100
                 overall_max = numpy.ones(3) * -1e100
@@ -2197,9 +2199,9 @@ class runit():
                     #if parameters[SaveVolumetricDensityNpy] == True:
                     numpy.save(colorParams['OutputFrameFilenamePrefix']+'volumetric_density.npy', all_pts)
                     #print 'time to save map for %s: %s' %(color, str(time.time()-start3))
-            print '---------------------------------'
-            print 'CALCULATED COLOR MAPS'#,hp.heap()
-            print '---------------------------------'
+            print('---------------------------------')
+            print('CALCULATED COLOR MAPS')#,hp.heap()
+            print('---------------------------------')
 
 
 if __name__ == "__main__": dorun = runit(sys.argv)

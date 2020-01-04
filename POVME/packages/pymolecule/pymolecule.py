@@ -29,14 +29,14 @@ from scipy.spatial.distance import cdist
 import scipy
 import copy
 import sys
-import cPickle as pickle
+import pickle as pickle
 import shutil
 import warnings
 warnings.filterwarnings("ignore", message="changing the sparsity structure of a csr_matrix is expensive. lil_matrix is more efficient.")
 
 version="2.0"
 
-if __name__ == '__main__': print "\npymolecule " + version + "\n"
+if __name__ == '__main__': print("\npymolecule " + version + "\n")
 
 class Information():
     '''A class for storing and accessing information about the elements of a pymolecule.Molecule object'''
@@ -355,7 +355,7 @@ class Information():
         '''Identifies spheres that bound (encompass) the entire molecule, the chains, and the residues. This information is stored in pymolecule.Molecule.information.hierarchy.'''
 
         # first, check to see if it's already been defined
-        if 'spheres' in self.__hierarchy.keys(): return
+        if 'spheres' in list(self.__hierarchy.keys()): return
         
         # set up the new structure
         self.__hierarchy['spheres'] = {}
@@ -373,7 +373,7 @@ class Information():
         self.__hierarchy['spheres']['molecule']['radius'] = whole_mol_calc[1]
         
         # do calcs for the chains
-        self.__hierarchy['spheres']['chains']['keys'] = numpy.array(self.__hierarchy['chains']['indices'].keys()) #numpy string array e.g. ['a','b','c']
+        self.__hierarchy['spheres']['chains']['keys'] = numpy.array(list(self.__hierarchy['chains']['indices'].keys())) #numpy string array e.g. ['a','b','c']
         self.__hierarchy['spheres']['chains']['centers'] = numpy.empty((len(self.__hierarchy['spheres']['chains']['keys']),3))
         self.__hierarchy['spheres']['chains']['radii'] = numpy.empty(len(self.__hierarchy['spheres']['chains']['keys']))
         
@@ -385,7 +385,7 @@ class Information():
             self.__hierarchy['spheres']['chains']['radii'][index] = asphere[1]
             
         # do calcs for the residues
-        self.__hierarchy['spheres']['residues']['keys'] = numpy.array(self.__hierarchy['residues']['indices'].keys())
+        self.__hierarchy['spheres']['residues']['keys'] = numpy.array(list(self.__hierarchy['residues']['indices'].keys()))
         self.__hierarchy['spheres']['residues']['centers'] = numpy.empty((len(self.__hierarchy['spheres']['residues']['keys']),3))
         self.__hierarchy['spheres']['residues']['radii'] = numpy.empty(len(self.__hierarchy['spheres']['residues']['keys']))
         
@@ -404,9 +404,9 @@ class Information():
     def resseq_reindex(self):
         '''Reindexes the resseq field of the atoms in the molecule, starting with 1'''
         
-        keys = numpy.core.defchararray.add(self.__atom_information['resname_stripped'], '-')
-        keys = numpy.core.defchararray.add(keys, numpy.array([str(t) for t in self.__atom_information['resseq']]))
-        keys = numpy.core.defchararray.add(keys, '-')
+        keys = numpy.core.defchararray.add(self.__atom_information['resname_stripped'], b'-')
+        keys = numpy.core.defchararray.add(keys, numpy.array([t for t in self.__atom_information['resseq']]))
+        keys = numpy.core.defchararray.add(keys, b'-')
         keys = numpy.core.defchararray.add(keys, self.__atom_information['chainid_stripped'])
         
         keys2 = numpy.insert(keys,0, '')[:-1]
@@ -447,9 +447,9 @@ class FileIO():
         self.__parent_molecule.set_atom_information(pickle.load(open(filename + 'atom_information', "rb" )))
         self.__parent_molecule.set_coordinates(numpy.load(filename + "coordinates.npz")['arr_0'])
         # now look for other possible files (optional output)
-        if os.path.exists(filename + 'remarks'): self.__parent_molecule.set_remarks(pickle.load( open( filename + 'remarks', "rb" ) ) ) 
-        if os.path.exists(filename + 'hierarchy'): self.__parent_molecule.set_hierarchy(pickle.load( open( filename + 'hierarchy', "rb" ) ) )
-        if os.path.exists(filename + 'filename'): self.__parent_molecule.set_filename(pickle.load( open( filename + 'filename', "rb" ) ) )
+        if os.path.exists(filename + 'remarks'): self.__parent_molecule.set_remarks(pickle.load( open( filename + 'remarks', "r" ) ) )
+        if os.path.exists(filename + 'hierarchy'): self.__parent_molecule.set_hierarchy(pickle.load( open( filename + 'hierarchy', "r" ) ) )
+        if os.path.exists(filename + 'filename'): self.__parent_molecule.set_filename(pickle.load( open( filename + 'filename', "r" ) ) )
         if os.path.exists(filename + "bonds.npz"):
             # Some extra work here to load sparse bond matrix
             bonds_raw = numpy.load(filename + "bonds.npz") #['arr_0']
@@ -493,18 +493,19 @@ class FileIO():
         source_data = numpy.genfromtxt(file_obj, dtype="S6,S5,S5,S5,S1,S4,S4,S8,S8,S8,S6,S6,S10,S2,S3", names=['record_name', 'serial', 'name', 'resname', 'chainid', 'resseq', 'empty', 'x', 'y', 'z', 'occupancy', 'tempfactor', 'empty2', 'element', 'charge'], delimiter=[6, 5, 5, 5, 1, 4, 4, 8, 8, 8, 6, 6, 10, 2, 3])
         
         # get the remarks, if any. good to hold on to this because some of my programs might retain info via remarks
-        remark_indices = numpy.nonzero(source_data['record_name'] == "REMARK")[0]
+        remark_indices = numpy.nonzero(source_data['record_name'] == b"REMARK")[0]
         remarks = []
         for index in remark_indices:
             astr = ""
-            for name in source_data.dtype.names[1:]: astr = astr + source_data[name][index]
+            for name in source_data.dtype.names[1:]:
+                astr = astr + source_data[name][index].decode("utf-8")
             remarks.append(astr.rstrip())
         self.__parent_molecule.set_remarks(remarks)
         
         if source_data.ndim == 0: source_data = source_data.reshape(1, -1) # in case the pdb file has only one line
         
         # get the ones that are ATOM or HETATOM in the record_name
-        or_matrix = numpy.logical_or((source_data['record_name'] == "ATOM  "), (source_data['record_name'] == "HETATM"))
+        or_matrix = numpy.logical_or((source_data['record_name'] == b"ATOM  "), (source_data['record_name'] == b"HETATM"))
         indices_of_atom_or_hetatom = numpy.nonzero(or_matrix)[0]
         self.__parent_molecule.set_atom_information(source_data[indices_of_atom_or_hetatom])
 
@@ -547,7 +548,7 @@ class FileIO():
         for f in fields_to_strip: self.__parent_molecule.set_atom_information(append_fields(self.__parent_molecule.get_atom_information(), f + '_stripped', data=numpy.core.defchararray.strip(self.__parent_molecule.get_atom_information()[f])))
         
         # now, if there's conect data, load it. this part of the code is not that "numpyic"
-        conect_indices = numpy.nonzero(source_data['record_name'] == "CONECT")[0]
+        conect_indices = numpy.nonzero(source_data['record_name'] == b"CONECT")[0]
         if len(conect_indices) > 0:
             
             self.__parent_molecule.set_bonds(numpy.zeros((len(self.__parent_molecule.get_atom_information()), len(self.__parent_molecule.get_atom_information()))))
@@ -563,7 +564,7 @@ class FileIO():
                 astr= astr.rstrip()
                 
                 indices = []
-                for i in xrange(0, len(astr), 5): indices.append(serial_to_index[int(astr[i:i+5])])
+                for i in range(0, len(astr), 5): indices.append(serial_to_index[int(astr[i:i+5])])
                 
                 for partner_index in indices[1:]:
                     self.__parent_molecule.add_bond(indices[0],partner_index)
@@ -676,22 +677,22 @@ class FileIO():
             printout = numpy.core.defchararray.add(printout, atom_information['resname'])
             printout = numpy.core.defchararray.add(printout, atom_information['chainid'])
             printout = numpy.core.defchararray.add(printout, numpy.core.defchararray.rjust(atom_information['resseq'].astype('|S4'),4))
-            printout = numpy.core.defchararray.add(printout, '    ')
-            printout = numpy.core.defchararray.add(printout,  numpy.core.defchararray.rjust(numpy.array(["%.3f" % t for t in coordinates[:,0]]), 8))
-            printout = numpy.core.defchararray.add(printout,  numpy.core.defchararray.rjust(numpy.array(["%.3f" % t for t in coordinates[:,1]]), 8))
-            printout = numpy.core.defchararray.add(printout,  numpy.core.defchararray.rjust(numpy.array(["%.3f" % t for t in coordinates[:,2]]), 8))
-            printout = numpy.core.defchararray.add(printout,  numpy.core.defchararray.rjust(numpy.array(["%.2f" % t for t in atom_information['occupancy']]), 6))
-            printout = numpy.core.defchararray.add(printout,  numpy.core.defchararray.rjust(numpy.array(["%.2f" % t for t in atom_information['tempfactor']]), 6))
-            printout = numpy.core.defchararray.add(printout, '          ')
+            printout = numpy.core.defchararray.add(printout, b'    ')
+            printout = numpy.core.defchararray.add(printout,  numpy.core.defchararray.rjust(numpy.array([b"%.3f" % t for t in coordinates[:,0]]), 8))
+            printout = numpy.core.defchararray.add(printout,  numpy.core.defchararray.rjust(numpy.array([b"%.3f" % t for t in coordinates[:,1]]), 8))
+            printout = numpy.core.defchararray.add(printout,  numpy.core.defchararray.rjust(numpy.array([b"%.3f" % t for t in coordinates[:,2]]), 8))
+            printout = numpy.core.defchararray.add(printout,  numpy.core.defchararray.rjust(numpy.array([b"%.2f" % t for t in atom_information['occupancy']]), 6))
+            printout = numpy.core.defchararray.add(printout,  numpy.core.defchararray.rjust(numpy.array([b"%.2f" % t for t in atom_information['tempfactor']]), 6))
+            printout = numpy.core.defchararray.add(printout, b'          ')
             printout = numpy.core.defchararray.add(printout, atom_information['element'])
             printout = numpy.core.defchararray.add(printout, atom_information['charge'])
 
             if return_text == False: 
-                if printout[0][-1:] == "\n": afile.write("".join(printout) + "\n")
-                else: afile.write("\n".join(printout) + "\n")
+                if printout[0][-1:] == "\n": afile.write(str("".join([i.decode("utf-8") for i in printout]) + "\n"))
+                else: afile.write(str("\n".join([i.decode("utf-8") for i in printout]) + "\n"))
             else:
-                if printout[0][-1:] == "\n": return_string = return_string + ("".join(printout) + "\n")
-                else: return_string = return_string + ("\n".join(printout) + "\n")
+                if printout[0][-1:] == "\n": return_string = return_string + str("".join([i.decode("utf-8") for i in printout]) + "\n")
+                else: return_string = return_string + str("\n".join([i.decode("utf-8") for i in printout]) + "\n")
             
             # print out connect
             if not self.__parent_molecule.get_bonds() is None:
@@ -705,7 +706,7 @@ class FileIO():
             if return_text == False: afile.close()
             else: return return_string
             
-        else: print "WARNING: Cannot save a Molecule with no atoms (file name \"" + filename + "\")"
+        else: print("WARNING: Cannot save a Molecule with no atoms (file name \"" + filename + "\")")
 
 class AtomsAndBonds():
     '''A class for adding and deleting atoms and bonds'''
@@ -733,7 +734,7 @@ class AtomsAndBonds():
         if remove_old_bond_data == True or self.__parent_molecule.get_bonds() is None: self.__parent_molecule.set_bonds(numpy.zeros((len(self.__parent_molecule.information.get_atom_information()), len(self.__parent_molecule.information.get_atom_information()))))
         
         # get the longest bond length on record
-        max_bond_length = numpy.max([self.__parent_molecule.get_constants()['bond_length_dict'][key] for key in self.__parent_molecule.get_constants()['bond_length_dict'].keys()])
+        max_bond_length = numpy.max([self.__parent_molecule.get_constants()['bond_length_dict'][key] for key in list(self.__parent_molecule.get_constants()['bond_length_dict'].keys())])
         
         # which ones could possibly be bound (less than the max_bond_length)
         distances = scipy.spatial.distance.squareform(pdist(self.__parent_molecule.get_coordinates()))
@@ -744,11 +745,11 @@ class AtomsAndBonds():
             index2 = ones_to_consider[1][index]
             
             if index1 != index2: # so an atom is not bound to itself.__parent_molecule
-                key = self.__parent_molecule.get_atom_information()['element_stripped'][index1] +'-' + self.__parent_molecule.get_atom_information()['element_stripped'][index2]
-                
+                key = self.__parent_molecule.get_atom_information()['element_stripped'][index1].decode("utf-8")  +'-' + self.__parent_molecule.get_atom_information()['element_stripped'][index2].decode("utf-8")
+
                 try: bond_dist = self.__parent_molecule.get_constants()['bond_length_dict'][key]
                 except:
-                    print "WARNING: Unknown bond distance between elements " + self.__parent_molecule.get_atom_information()['element_stripped'][index1] + ' and ' + self.__parent_molecule.get_atom_information()['element_stripped'][index2] + '. Assuming ' + str(max_bond_length) + '.'
+                    print("WARNING: Unknown bond distance between elements " + str(self.__parent_molecule.get_atom_information()['element_stripped'][index1]) + ' and ' + str(self.__parent_molecule.get_atom_information()['element_stripped'][index2]) + '. Assuming ' + str(max_bond_length) + '.')
                     bond_dist = max_bond_length
                     
                 if distances[index1][index2] < bond_dist * 1.2 and distances[index1][index2] > bond_dist * 0.5: # so they should be bonded
@@ -844,7 +845,7 @@ class AtomsAndBonds():
         try:
             bonds[index1,index2] = 0
             bonds[index2,index1] = 0
-        except: print "Could not delete bond between " + str(index1) + " and " + str(index2) + "."
+        except: print("Could not delete bond between " + str(index1) + " and " + str(index2) + ".")
         
     def add_bond(self, index1, index2, order=1):
         '''Adds a bond.
@@ -998,7 +999,7 @@ class Selections():
         try:
             selection = numpy.ones(len(self.__parent_molecule.get_atom_information()), dtype=bool) # start assuming everything is selected
             
-            for key in selection_criteria.keys():
+            for key in list(selection_criteria.keys()):
                 
                 vals = selection_criteria[key]
                 
@@ -1020,8 +1021,8 @@ class Selections():
             # now get the indices of the selection
             return numpy.nonzero(selection)[0]
         except:
-            print "ERROR: Could not make the selection. Existing fields:"
-            print "\t" + ", ".join(self.__parent_molecule.get_atom_information().dtype.names)
+            print("ERROR: Could not make the selection. Existing fields:")
+            print("\t" + ", ".join(self.__parent_molecule.get_atom_information().dtype.names))
             sys.exit(0)
             
     def select_atoms_in_bounding_box(self, bounding_box):
@@ -1064,7 +1065,7 @@ class Selections():
             '''
 
         if self.__parent_molecule.information.get_bonds() is None:
-            print "You need to define the bonds to use select_all_atoms_bound_to_selection()."
+            print("You need to define the bonds to use select_all_atoms_bound_to_selection().")
             return
         bonds_to_consider = self.__parent_molecule.get_bonds()[selection]
         return numpy.unique(numpy.nonzero(bonds_to_consider)[1])
@@ -1087,12 +1088,12 @@ class Selections():
         # had a branch-identification function. 
 
         if self.__parent_molecule.get_bonds() is None:
-            print "To identify atoms in the same molecule as the atoms of a selection, you need to define the bonds."
+            print("To identify atoms in the same molecule as the atoms of a selection, you need to define the bonds.")
             return
 
         #Make sure atoms are neighboring
         if not directionality_atom_index in self.select_all_atoms_bound_to_selection(numpy.array([root_atom_index])):
-            print "The root and directionality atoms, with indices " + str(root_atom_index) + " and " + str(directionality_atom_index) + ", respectively, are not neighboring atoms."
+            print("The root and directionality atoms, with indices " + str(root_atom_index) + " and " + str(directionality_atom_index) + ", respectively, are not neighboring atoms.")
             return
 
         # first, set up the two indices need to manage the growing list of
@@ -1135,7 +1136,7 @@ class Selections():
         # note that bonds must be defined
 
         if self.__parent_molecule.get_bonds() is None:
-            print "To identify atoms in the same molecule as the atoms of a selection, you need to define the bonds."
+            print("To identify atoms in the same molecule as the atoms of a selection, you need to define the bonds.")
             return
 
         indices = []
@@ -1231,9 +1232,9 @@ class Selections():
             '''
 
         # get string ids representing the residues of all atoms
-        keys = numpy.core.defchararray.add(self.__parent_molecule.get_atom_information()['resname_stripped'], '-')
-        keys = numpy.core.defchararray.add(keys, numpy.array([str(t) for t in self.__parent_molecule.get_atom_information()['resseq']]))
-        keys = numpy.core.defchararray.add(keys, '-')
+        keys = numpy.core.defchararray.add(self.__parent_molecule.get_atom_information()['resname_stripped'], b'-')
+        keys = numpy.core.defchararray.add(keys, numpy.array([bytes(t) for t in self.__parent_molecule.get_atom_information()['resseq']]))
+        keys = numpy.core.defchararray.add(keys, b'-')
         keys = numpy.core.defchararray.add(keys, self.__parent_molecule.get_atom_information()['chainid_stripped'])
 
         # get the unique keys of the selection
@@ -1426,7 +1427,7 @@ class Selections():
         
             '''
 
-        if not 'chains' in self.__parent_molecule.get_hierarchy().keys() : # so it hasn't already been calculated
+        if not 'chains' in list(self.__parent_molecule.get_hierarchy().keys()) : # so it hasn't already been calculated
             unique_chainids = numpy.unique(self.__parent_molecule.get_atom_information()['chainid_stripped'])
 
             self.__parent_molecule.get_hierarchy()['chains'] = {}
@@ -1444,7 +1445,7 @@ class Selections():
         
             '''
 
-        if not 'residues' in self.__parent_molecule.get_hierarchy().keys() : # so it hasn't already been calculated
+        if not 'residues' in list(self.__parent_molecule.get_hierarchy().keys()) : # so it hasn't already been calculated
 
             keys = numpy.core.defchararray.add(self.__parent_molecule.get_atom_information()['resname_stripped'], '-')
             keys = numpy.core.defchararray.add(keys, numpy.array([str(t) for t in self.__parent_molecule.get_atom_information()['resseq']]))
@@ -1481,7 +1482,7 @@ class Selections():
         paths = self.__ring_recursive_walk(index1, index2, [], 0)
         
         if len(paths) == 0:
-            print "No paths found between two indices"
+            print("No paths found between two indices")
             return False
         
         #Remove paths that do not start or end at the correct location
@@ -1599,7 +1600,7 @@ class Manipulation():
         
         self.__parent_molecule.set_coordinates(self.__parent_molecule.get_coordinates() + delta)
 
-        if 'spheres' in self.__parent_molecule.get_hierarchy().keys():
+        if 'spheres' in list(self.__parent_molecule.get_hierarchy().keys()):
             # so update location of hierarchical elements
             self.__parent_molecule.get_hierarchy()['spheres']['molecule']['center'] = self.__parent_molecule.get_hierarchy()['spheres']['molecule']['center'] + delta
             self.__parent_molecule.get_hierarchy()['spheres']['chains']['centers'] = self.__parent_molecule.get_hierarchy()['spheres']['chains']['centers'] + delta
@@ -1759,7 +1760,7 @@ class Geometry():
         
         #Make sure vectors aren't <0,0,0>
         if vector1_mag < 1e-10 or vector2_mag < 1e-10:
-            print "One of vectors to determine angle is < 0, 0, 0 >...returning 0."
+            print("One of vectors to determine angle is < 0, 0, 0 >...returning 0.")
             return 0
         
         vector1 = vector1 / vector1_mag
@@ -2051,8 +2052,8 @@ class OtherMolecules():
             '''
 
         if len(self.__parent_molecule.get_coordinates()) != len(other_mol.get_coordinates()):
-            print "Cannot calculate RMSD: number of atoms are not equal."
-            print "\t" + str(len(self.__parent_molecule.get_coordinates())) + " vs. " + str(len(other_mol.get_coordinates())) + " atoms."
+            print("Cannot calculate RMSD: number of atoms are not equal.")
+            print("\t" + str(len(self.__parent_molecule.get_coordinates())) + " vs. " + str(len(other_mol.get_coordinates())) + " atoms.")
             return 99999999.0
         
         self_coors_in_order = self.__parent_molecule.get_coordinates()[tethers[0]]
@@ -2119,17 +2120,17 @@ class Quaternion:
             '''
         #Make sure m is a 3x3 array
         if m.shape[0] != 3 or m.shape[1] != 3:
-            print "Could not load quaternion from matrix...size is not (3x3)"
+            print("Could not load quaternion from matrix...size is not (3x3)")
             return
         
         #Check that matrix is orthogonal. m_T = m_inv
         if not numpy.array_equal(numpy.transpose(m),numpy.linalg.inv(m)):
-            print "Load Quaternion error. Matrix is not orthogonal"
+            print("Load Quaternion error. Matrix is not orthogonal")
             return
         
         #Need to make sure that the matrix is special orthogonal
         if numpy.fabs(1-numpy.linalg.det(m)) > 0.000001: #Done for rounding errors
-            print "Load Quaternion error.  Determinant is not 1"
+            print("Load Quaternion error.  Determinant is not 1")
             return
         
         #First calculate the sum of the diagonal elements

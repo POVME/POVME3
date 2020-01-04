@@ -25,26 +25,26 @@ fmaps_2 = peel_2.create_feature_maps([25,55,-25,5,-15,15], 1, ['occupancy','hbon
 
 
 my_algebra = peel.algebra()
-print
-print
-print 'The scoring function components are originally:'
-print '\n'.join(my_algebra.getScoreFuncs())
-print
-print "However, I'd prefer them to be"
+print()
+print()
+print('The scoring function components are originally:')
+print('\n'.join(my_algebra.getScoreFuncs()))
+print()
+print("However, I'd prefer them to be")
 my_score_funcs = ['-2 * hydrophobic_A * hydrophobic_B',
                   'hbondAcceptor_A * numpy.sqrt(hbondDonor_B)',
                   'numpy.sqrt(hbondDonor_A) * hbondAcceptor_B',
                   '-aromatic_A - aromatic_B',
                   '0.0001 * numpy.exp( hydrophobicity_A * hydrophobicity_B )']
-print '\n'.join(my_score_funcs)
+print('\n'.join(my_score_funcs))
 
 
 my_algebra.setScoreFuncs(my_score_funcs)
 
 my_score_maps, my_scores = my_algebra.scoreAll(fmaps_1, fmaps_2)
 
-print 'The scores for each term are'
-print '\n'.join(['%.5e\t%s'%(score, func) for func, score in zip(my_score_funcs, my_scores)])
+print('The scores for each term are')
+print('\n'.join(['%.5e\t%s'%(score, func) for func, score in zip(my_score_funcs, my_scores)]))
 
 my_score_maps[0].write_dx_file('term1.dx')
 my_score_maps[1].write_dx_file('term2.dx')

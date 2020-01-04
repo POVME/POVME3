@@ -34,4 +34,4 @@ my_feature_maps['hydrophilic'].write_pdb('HPL.pdb')
 #HBAPoints = numpy.transpose(numpy.nonzero(HBAMap))
 #print HBAPoints
 
-print "Done!"
+print("Done!")

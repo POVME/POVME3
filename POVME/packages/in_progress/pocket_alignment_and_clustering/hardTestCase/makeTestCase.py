@@ -37,7 +37,7 @@ families[9] = [27,mainPocket,sidePocket1,sidePocket2,sidePocket3,sidePocket4]
 
 familyMembership = []
 #for index, family in enumerate(families.keys()):
-for family in families.keys():
+for family in list(families.keys()):
     for replicate in range(families[family][0]):
         outPrefix = 'family%i_rep%02i' %(family, replicate)
         this_fm = peel.featureMap([-20,20,-20,20,-20,20],1)
