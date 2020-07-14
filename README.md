@@ -6,7 +6,9 @@ We present a substantial update to the open-source POVME binding pocket analysis
 
 A publication associated with this software is at https://doi.org/10.1021/acs.jctc.7b00500. It showcases several capabilities of POVME 3.0, and performs a simple benchmark of grid-based binding pocket similarity analysis.
 
-This document is specific to POVME 3.0. Users interested in POVME 2.0 will find resources [~here~](http://rocce-vm0.ucsd.edu/data/sw/hosted/POVME/)[here(more up to date)](https://git.durrantlab.pitt.edu/jdurrant/POVME)
+This document is specific to POVME 3.0. Users interested in POVME 2.0 will find resources [here(more up to date)](https://git.durrantlab.pitt.edu/jdurrant/POVME)
+
+[(old POVME2 link, may be deprecated)](http://rocce-vm0.ucsd.edu/data/sw/hosted/POVME/)
 
 ## Install
 
@@ -30,7 +32,11 @@ pip install povme
 ```
 
 
-Note that this method will create a separate python build. You will need to run ```source miniconda2/bin/activate``` in each terminal where you want to use POVME3.
+Note that this method will create a separate python build. To access this in subsequent terminal sessions, you will need to run 
+```
+. miniconda2/etc/profile.d/conda.sh
+conda activate base
+``` 
 
 
 
