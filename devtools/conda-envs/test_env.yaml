@@ -8,6 +8,7 @@ dependencies:
     # Base depends
   - python
   - pip
+  - setuptools
 
     # Testing
   - pytest
