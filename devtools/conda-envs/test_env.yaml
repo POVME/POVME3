@@ -1,0 +1,23 @@
+name: test
+channels:
+
+  - conda-forge
+
+  - defaults
+dependencies:
+    # Base depends
+  - python
+  - pip
+  - setuptools
+
+    # Testing
+  - pytest
+  - pytest-cov
+  - codecov
+
+  - numpy
+  - scipy
+    # Pip-only installs
+  #- pip:
+  #  - codecov
+

@@ -1,6 +1,6 @@
 # POVME
 
-[![CircleCI](https://circleci.com/gh/POVME/POVME.svg?style=svg)](https://circleci.com/gh/POVME/POVME)
+![CI](https://github.com/POVME/POVME/workflows/CI/badge.svg)
 
 We present a substantial update to the open-source POVME binding pocket analysis software. New capabilities of POVME 3.0 include a flexible chemical coloring scheme for feature identification, post-analysis tools for comparing large ensembles of pockets (e.g., from molecular dynamics simulations), and the introduction of scripts and methods that facilitate binding pocket comparison and analysis. We envision the use of this software for visualization of binding pocket dynamics, selection of representative structures for ensemble docking, and incorporation of molecular dynamics results into ligand design efforts.
 
