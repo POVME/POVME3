@@ -1,4 +1,4 @@
-name: CI
+name: Python 3
 
 on:
   # GitHub has started calling new repo's first branch "main" https://github.com/github/renaming
@@ -26,7 +26,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [macOS-latest, ubuntu-latest]
-        python-version: [2.7]
+        python-version: [3.6, 3.9]
 
     steps:
     - uses: actions/checkout@v1
