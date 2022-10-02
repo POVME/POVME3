@@ -29,12 +29,12 @@ def fixPdbSdfFormatting(data):
 
 data = [i.split() for i in open('cluster_members.csv').readlines()]
 
-print [len(i) for i in data]
+print([len(i) for i in data])
 
 nClusters = len(data)
 nCols = 3
 nRows = (nClusters+(nCols-1))/nCols
-print nClusters, nRows, nCols
+print(nClusters, nRows, nCols)
 
 def getGroupPrefix(runPrefix):
     groupPrefix = runPrefix.split('run')[0].strip('_')
@@ -49,7 +49,7 @@ for cluster in data:
         #print member, result
         prefix = result[0][0].strip('_')
         groupPrefix = getGroupPrefix(prefix)
-        if not groupPrefix in groupPrefix2prefixes2frames.keys():
+        if not groupPrefix in list(groupPrefix2prefixes2frames.keys()):
             groupPrefix2prefixes2frames[groupPrefix] = {}
         groupPrefix2prefixes2frames[groupPrefix][prefix] = []
         frame = int(result[0][1])
@@ -57,7 +57,7 @@ for cluster in data:
         groupPrefix2prefixes2frames[groupPrefix][prefix] += [frame]
 #print prefix2frames
 
-prefixes = prefix2frames.keys()
+prefixes = list(prefix2frames.keys())
 prefixes.sort()
 nPrefixes = len(prefixes)
 groupPrefixes = list(set([getGroupPrefix(i) for i in prefixes]))
@@ -75,7 +75,7 @@ for prefix in prefixes:
     frames = prefix2frames[prefix]
     frames.sort()
     #if prefix in prefixAndFrame2Col.keys():
-    if groupPrefix in groupPrefixColsTaken.keys():
+    if groupPrefix in list(groupPrefixColsTaken.keys()):
         #Note that frame numbering starts at 1 so off-by-1 won't be a problem here
         offset = max(groupPrefixColsTaken[groupPrefix])
     else:
@@ -86,8 +86,8 @@ for prefix in prefixes:
 
 #memberships = np.zeros((nClusters, nPrefixes, max([len(i) for i in prefix2frames.values()])))
 #memberships = np.zeros((nClusters, nGroupPrefixes, max([len(i) for i in prefix2frames.values()])))
-memberships = np.zeros((nClusters, nGroupPrefixes, max([max(i) for i in groupPrefixColsTaken.values()])))
-print [(groupPrefix, max(i)) for groupPrefix, i in zip(groupPrefixColsTaken.keys(), groupPrefixColsTaken.values())]
+memberships = np.zeros((nClusters, nGroupPrefixes, max([max(i) for i in list(groupPrefixColsTaken.values())])))
+print([(groupPrefix, max(i)) for groupPrefix, i in zip(list(groupPrefixColsTaken.keys()), list(groupPrefixColsTaken.values()))])
 #1/0
 memberships -= 1
 for clusterIndex, cluster in enumerate(data):
@@ -100,7 +100,7 @@ for clusterIndex, cluster in enumerate(data):
         col = prefixAndFrame2Col[prefix][frame]
         #print member
         if sum(memberships[:,row,col]) > 0:
-            print memberships[:,row,col]
+            print(memberships[:,row,col])
             1/0
         memberships[:,row,col] = 0
         memberships[clusterIndex,row,col] = 1
@@ -113,7 +113,7 @@ for clusterIndex, cluster in enumerate(data):
                  aspect='auto')
     #pylab.yticks(range(len(prefixes)), [[]*4+[prefix] for i, prefix in enumerate(prefixes) if i%5==0])
     #pylab.yticks(range(0,len(prefixes),1), prefixes )
-    pylab.yticks(range(0,len(groupPrefixes),1), groupPrefixes )
+    pylab.yticks(list(range(0,len(groupPrefixes),1)), groupPrefixes )
     pylab.xlabel('Frame')
     pylab.title('Cluster %i' %(clusterIndex))
     
@@ -141,7 +141,7 @@ allTransitions = np.zeros((nClusters, nClusters))
 transitions = dict(((groupPrefix,np.zeros((nClusters, nClusters))) for groupPrefix in groupPrefixes))
 for simulationIndex, groupPrefix in enumerate(groupPrefixes):
     simulationIndex = groupPrefixes.index(groupPrefix)
-    for prefix in groupPrefix2prefixes2frames[groupPrefix].keys():
+    for prefix in list(groupPrefix2prefixes2frames[groupPrefix].keys()):
         currentCluster = None
         sliceStartCol = min(prefixAndFrame2Col[prefix].values())
         sliceEndCol = max(prefixAndFrame2Col[prefix].values())
@@ -152,7 +152,7 @@ for simulationIndex, groupPrefix in enumerate(groupPrefixes):
             if len(nonzeros[0]) == 0:
                 nextCluster = None
             elif len(nonzeros[0]) > 1:
-                print nextCluster
+                print(nextCluster)
                 1/0
             else:
                 nextCluster = nonzeros[0][0]
@@ -237,9 +237,9 @@ for simulationIndex, groupPrefix in enumerate(groupPrefixes):
 
     # nodes
     nFramesPerClusterThisSim = [np.sum(memberships[clusterIndex,simulationIndex,:]==1) for clusterIndex in range(nClusters)]
-    print nFramesPerClusterThisSim
+    print(nFramesPerClusterThisSim)
     nodeSizes = [150. * float(i)/(np.mean(nFramesPerClusterAllSims)/nGroupPrefixes) for i in nFramesPerClusterThisSim]
-    print nodeSizes
+    print(nodeSizes)
     nx.draw_networkx_nodes(G, pos, node_size=nodeSizes)
 
     
@@ -285,7 +285,7 @@ for line in index2frameData:
     prefix2indices[prefix] = prefix2indices.get(prefix,[]) + [int(index)]
     index2prefix[index] = prefix
 
-sortedPrefixes = prefix2indices.keys()
+sortedPrefixes = list(prefix2indices.keys())
 sortedPrefixes.sort()
 groupOverlapSimilarities = np.zeros((nGroupPrefixes, nGroupPrefixes))
 tanimoto = np.load('tanimoto_matrix.npy')
@@ -368,17 +368,17 @@ pdb2Lig = {#'1BYQ':'ADP',
            } 
 
 pdb2LigMol = {}
-import urllib2
-sortedPdbList = pdb2Lig.keys()
+import urllib.request, urllib.error, urllib.parse
+sortedPdbList = list(pdb2Lig.keys())
 sortedPdbList.sort()
 for pdb in sortedPdbList:
-    print pdb, pdb2Lig[pdb]
+    print(pdb, pdb2Lig[pdb])
     if pdb2Lig[pdb] == 'NOLIG':
         pdb2LigMol[pdb] = Chem.Mol()
         continue
     url = 'http://www.rcsb.org/pdb/download/downloadLigandFiles.do?ligandIdList=%s&structIdList=%s&instanceType=all&excludeUnobserved=false&includeHydrogens=false' %(pdb2Lig[pdb],pdb)
     #print url
-    response = urllib2.urlopen(url)
+    response = urllib.request.urlopen(url)
     #print "Response received"
     import time
     time.sleep(0.5)
@@ -408,7 +408,7 @@ for pdb in sortedPdbList:
 legends = []
 molList = []
 
-sortedPdbList2 = pdb2LigMol.keys()
+sortedPdbList2 = list(pdb2LigMol.keys())
 sortedPdbList2.sort()
 for pdb in sortedPdbList2:
     legends.append(pdb)
@@ -469,20 +469,20 @@ flatMolSimilarities = molSimilarities[np.triu_indices(nGroupPrefixes,1)]
 
 import random
 import scipy.stats
-print "Calculating Rank Correlations"
+print("Calculating Rank Correlations")
 actualTau = scipy.stats.kendalltau(flatGroupOverlapSimilarities,
                                   flatMolSimilarities)
-print "Actual Kendall Tau:", actualTau
+print("Actual Kendall Tau:", actualTau)
 actualRho = scipy.stats.spearmanr(flatGroupOverlapSimilarities,
                                   flatMolSimilarities)
-print "Actual Spearman's Rho:", actualRho
+print("Actual Spearman's Rho:", actualRho)
 nResamplings = 10000
 bootstrapRhos = []
 bootstrapTaus = []
 #flatGroupOverlapSimilarities = np.random.random(flatGroupOverlapSimilarities.shape)
 #flatMolSimilarities = np.random.random(flatMolSimilarities.shape)
 for i in range(nResamplings):
-    newOrder = range(len(flatMolSimilarities))
+    newOrder = list(range(len(flatMolSimilarities)))
     random.shuffle(newOrder)
     scrambledMolSimilarities = [flatMolSimilarities[i] for i in newOrder]
     scrambledRho = scipy.stats.spearmanr(flatGroupOverlapSimilarities,

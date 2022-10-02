@@ -40,7 +40,7 @@ for target in targets:
     pdbName = target.split('/')[-1]
     protID = pdbName.replace('.pdb','')
     if protName in bSiteRes:
-        print target, 'IN LIST UNDER TITLE', protName
+        print(target, 'IN LIST UNDER TITLE', protName)
         u = MDA.Universe(target)
         protein = u.selectAtoms('not resname LIG')
         bSiteResAtoms = u.selectAtoms(' or '.join(['(resnum %i and name CA)'%(i) for i in bSiteRes[protName]]))

@@ -37,11 +37,11 @@ for x in range(1, frame_count):
 	frame_pocket_coordinates_string_list=[[str(i) for i in j] for j in frame_pocket_coordinates_list]
 	
 	coordinate_set=(frame_pocket_coordinates | coordinate_set)
-	print 'atoms in frame', x, len(frame_pocket_coordinates)
+	print('atoms in frame', x, len(frame_pocket_coordinates))
 
 	common_coordinate_set=(frame_pocket_coordinates - common_coordinate_set)
 
-print 'Total number of points identified as part of the pocket: ', len(coordinate_set)
+print('Total number of points identified as part of the pocket: ', len(coordinate_set))
 total_atoms=len(coordinate_set)
 
 coordinates = np.array([list(i) for i in coordinate_set])
@@ -50,13 +50,13 @@ coordinates = np.array([list(i) for i in coordinate_set])
 #this is required to build pdb's of these PCs downstream
 
 write_common_coordinate_filestream = open(nx3_filename, 'w')
-print >> write_common_coordinate_filestream, total_atoms
-print >> write_common_coordinate_filestream, 'Common points xyz file'
+print(total_atoms, file=write_common_coordinate_filestream)
+print('Common points xyz file', file=write_common_coordinate_filestream)
 
-print coordinates[total_atoms-1,0],coordinates[total_atoms-1,1],coordinates[total_atoms-1,2]
+print(coordinates[total_atoms-1,0],coordinates[total_atoms-1,1],coordinates[total_atoms-1,2])
 
 for x in range(0,total_atoms):
-	print >> write_common_coordinate_filestream, 'O ', coordinates[x,0], coordinates[x,1], coordinates[x,2]
+	print('O ', coordinates[x,0], coordinates[x,1], coordinates[x,2], file=write_common_coordinate_filestream)
 
 #now that all the common points have been identified, pairwise distances can be
 #computed between all points in the data set to identify the resolution (in
@@ -99,7 +99,7 @@ binary_frame_array = np.zeros((total_atoms+1, frame_count+1))
 #compute the "average binary presence" of each point in the array, save
 #per-frame presence in the binary_frame_arrays data structure
 
-print 'computing average and per-frame presences'
+print('computing average and per-frame presences')
 
 for x in range(1,frame_count):
 
@@ -126,7 +126,7 @@ for x in range(1,frame_count):
 		#3D data structure from zero to one
 		binary_frame_arrays[rel_frame_point_scaled[0],rel_frame_point_scaled[1],rel_frame_point_scaled[2],x]=1
 
-print 'converting data from 3D arrays to vectors'
+print('converting data from 3D arrays to vectors')
 
 #loop responsible for transferring data from the 3D average presence array to a 1D array 
 #This should reduce look-up time when computing the covariance matrix
@@ -148,7 +148,7 @@ for point in coordinates:
 denominator = frame_count - 1		
 cov_mat=np.zeros((total_atoms+1,total_atoms+1))
 
-print 'computing covariance matrix'
+print('computing covariance matrix')
 #This algorithm is take from (REF HERE)
 #As is, it takes ~2-3 minutes on a standard linux workstation
 
@@ -173,9 +173,9 @@ for i in range(0,total_atoms):
 
 		cov_mat[i, j]=covariance_entry
 
-print 'Covariance matrix computed'
-print 'NumPy is now diagonalizing the covariance matrix, which is of dimenstion ', total_atoms 
-print 'Please be patient...'
+print('Covariance matrix computed')
+print('NumPy is now diagonalizing the covariance matrix, which is of dimenstion ', total_atoms) 
+print('Please be patient...')
 
 #Using eigh over eig dramatically improves performance: eigenvectors are now computed
 #in about 2 minutes because of the symmetry of the matrix, vs 1hr from straight schoolbook
@@ -193,7 +193,7 @@ normalization = sum(eigenvalues)
 for count in range(0, 9):
 	#it seems as if the eigenvalues are stored in increasing order; thus the index
 	#must be reversed during look-up
-	print >> scree_plot_write_stream, eigenvalues[(total_atoms-count)]/normalization
+	print(eigenvalues[(total_atoms-count)]/normalization, file=scree_plot_write_stream)
 
 #print principal components as a vector, downstream tcl script turns this
 #into a .pdb file
@@ -209,6 +209,6 @@ for x in range(0,9):
 	eigenvector_filename += str(x)
 	write_file=open(eigenvector_filename, 'w')
 	for y in range(0,total_atoms):
-		print >> write_file, np.real(eigenvectors[y,(total_atoms-x)])
+		print(np.real(eigenvectors[y,(total_atoms-x)]), file=write_file)
 	
 

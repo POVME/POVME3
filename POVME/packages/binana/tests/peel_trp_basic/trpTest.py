@@ -12,4 +12,4 @@ my_feature_maps['hbondAcceptor'].write_pdb('HBA.pdb')
 my_feature_maps['hbondDonor'].write_pdb('HBD.pdb')
 my_feature_maps['aromatic'].write_pdb('ARO.pdb')
 
-print "Done!"
+print("Done!")

@@ -5,7 +5,7 @@
 
 
 import numpy as np
-import cPickle
+import pickle
 import glob
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA as sklearnPCA
@@ -36,7 +36,7 @@ pdb2Lig = {#'1BYQ':'ADP',
            '4R3M_every50ns':'JR9',
            #'4W7T':'3JC'
            } 
-sortedPdbs = pdb2Lig.keys()
+sortedPdbs = list(pdb2Lig.keys())
 sortedPdbs.sort()
 
 
@@ -66,7 +66,7 @@ frameList = []
 for line in index2frameData:
     index = int(line.split(',')[0])
     prefix = line.split('/')[-1].split('_frame')[0]
-    print prefix
+    print(prefix)
     frame = int(line.split('/')[-1].split('_')[-1].replace('.npy',''))
     frameList.append(frame)
     prefix2indices[prefix] = prefix2indices.get(prefix,[]) + [int(index)]
@@ -78,14 +78,14 @@ for line in index2frameData:
 
 
 ## Load all relevant frames
-print "Loading frames"
+print("Loading frames")
 pointsSetList = []
 frameStringList = []
 allPointsSet = set()
 prefixList = []
 for prefix in sortedPdbs:
     maxFrame = max(prefix2frames[prefix])
-    framesToLoad = range(1,maxFrame,every)
+    framesToLoad = list(range(1,maxFrame,every))
     for frame in framesToLoad:
         frameString = '%s_frame_%i' %(prefix, frame)
         frameFilename = '%s/%s/%s_frameInfo/%s.npy' %(analysisPath,
@@ -99,7 +99,7 @@ for prefix in sortedPdbs:
         allPointsSet = allPointsSet.union(pointsSet)
 
         
-print "Vectorizing frames"
+print("Vectorizing frames")
 coord2vectPos = dict([(coord, i) for i, coord in enumerate(allPointsSet)])
 vectPos2Coord = dict([(i, coord) for i, coord in enumerate(allPointsSet)])
 nVectPos = len(allPointsSet)
@@ -109,9 +109,9 @@ for f1 in range(nFrames):
     for point in pointsSetList[f1]:
         vecPosMatrix[f1,coord2vectPos[point]] = 1
 #print vecPosMatrix
-print 'vecPosMatrix.shape is ', vecPosMatrix.shape
+print('vecPosMatrix.shape is ', vecPosMatrix.shape)
 
-print "Making X_std"
+print("Making X_std")
 
 normalizeFeatures = 'Mean'
 if normalizeFeatures == 'MeanAndStd':
@@ -119,10 +119,10 @@ if normalizeFeatures == 'MeanAndStd':
 elif normalizeFeatures == 'Mean':
     X_std = vecPosMatrix - np.mean(vecPosMatrix,0)
 
-print "Making sklearn_pca"
+print("Making sklearn_pca")
 nComponents = 10
 sklearn_pca = sklearnPCA(n_components=nComponents)
-print "Making Y_sklearn"
+print("Making Y_sklearn")
 
 # An important note -- we get a hash value for the raw data here
 # as a unique identifier of this dataset. Then we save the initial
@@ -135,18 +135,18 @@ if not(os.path.exists(pca_result_hash)):
     #Y_sklearn = sklearn_pca.fit_transform(X_std)
     sklearn_pca.fit(X_std)
     with open(pca_result_hash,'wb') as of:
-        cPickle.dump(sklearn_pca, of)
+        pickle.dump(sklearn_pca, of)
     Y_sklearn = sklearn_pca.transform(X_std)
     #with open(pca_result_hash,'wb') as of:
     #    cPickle.dump(Y_sklearn, of)
 else:
     #Y_sklearn = cPickle.load(open(pca_result_hash))
-    sklearn_pca = cPickle.load(open(pca_result_hash))
+    sklearn_pca = pickle.load(open(pca_result_hash))
     Y_sklearn = sklearn_pca.transform(X_std)
 
-print 'Y_sklearn.shape', Y_sklearn.shape
+print('Y_sklearn.shape', Y_sklearn.shape)
 for col in range(Y_sklearn.shape[1]):
-    print col, np.mean(abs(Y_sklearn[:,col]))
+    print(col, np.mean(abs(Y_sklearn[:,col])))
 
 twoD = True
 threeD = False
@@ -181,7 +181,7 @@ from matplotlib.offsetbox import AnnotationBbox, OffsetImage
 import scipy.spatial.distance as ssd
 import itertools
 if twoD:
-    combos = list(itertools.combinations(range(4),2))
+    combos = list(itertools.combinations(list(range(4)),2))
     for index, (pc_x, pc_y) in enumerate(combos):
         xMin = min(Y_sklearn[:,pc_x])
         xMax = max(Y_sklearn[:,pc_x])
@@ -258,11 +258,11 @@ if twoD:
                 hist2d, xEdges, yEdges = np.histogram2d(xs, ys, bins=[xBins, yBins])
                 import scipy.ndimage.filters
                 hist2d = scipy.ndimage.filters.gaussian_filter(hist2d,3.5)
-                print xBins[:-1]
-                print
-                print yBins[:-1]
-                print
-                print hist2d
+                print(xBins[:-1])
+                print()
+                print(yBins[:-1])
+                print()
+                print(hist2d)
                 #xBins += [xBins[-1]+(xRange/25)]
                 #yBins += [yBins[-1]+(yRange/25)]
                 contour = pylab.contour(xBins[:-1],
@@ -386,9 +386,9 @@ mol modcolor 1 top ColorID 1
     
 if savePcDxFiles:
     loadAllScript = 'display rendermode GLSL\ndisplay projection Orthographic\n'
-    print 'Saving Principal Component DX files'
+    print('Saving Principal Component DX files')
     for pc_ind in range(nComponents):
-        print "Saving DX file for PC %i" %(pc_ind+1)
+        print("Saving DX file for PC %i" %(pc_ind+1))
         pcPoints = np.zeros((vecPosMatrix.shape[1],4))
         for vectPos in vectPos2Coord:
             coord = vectPos2Coord[vectPos]
@@ -401,5 +401,5 @@ if savePcDxFiles:
     with open('loadAllPcs.vmd', 'wb') as of:
         of.write(loadAllScript)
     
-print "Done!"
+print("Done!")
 

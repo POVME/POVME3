@@ -91,14 +91,14 @@ class Overlap():
         setFrame2 = self.coordinates[frame2]
         
         if not isinstance(setFrame1,set) or not isinstance(setFrame2,set):
-            print "Coordinates must be contained in a set object"
+            print("Coordinates must be contained in a set object")
             sys.exit(1)
 
         num_overlap_points = len(setFrame1.intersection(setFrame2))
 
         '''Test here for error values '''
         if num_overlap_points > min(len(setFrame1),len(setFrame2)):
-            print 'invalid overlap value'
+            print('invalid overlap value')
         return num_overlap_points
 
     # need to calculate the volume that is overlapped
@@ -152,10 +152,10 @@ class main():
         for arg in argv:
             if ('.npy' in arg) and ('frame' in arg):
                 command_input['traj_file'].append(arg)
-        print command_input['traj_file']
+        print(command_input['traj_file'])
         
         if command_input == []:
-            print "You need to specify .npy files to be read"
+            print("You need to specify .npy files to be read")
             sys.exit(1)
 
         file_input = Trajectory()
@@ -164,11 +164,11 @@ class main():
         overlap_value = Overlap(file_input.coordinates)
 
         num_frames = len(file_input.coordinates)
-        print "The number of frames found was: {0}".format(num_frames)
+        print("The number of frames found was: {0}".format(num_frames))
         
         ''' TEST TEST TEST '''
         for i in range(len(file_input.coordinates)):
-            print "The number of atoms in {0} is {1}".format(file_input.frameToFileName[i],len(file_input.coordinates[i]))
+            print("The number of atoms in {0} is {1}".format(file_input.frameToFileName[i],len(file_input.coordinates[i])))
         #print overlap_value.volumes
 
         '''TESTING HERE'''
@@ -190,9 +190,9 @@ class main():
         #print os.getcwd()
         #numpy.savetxt(os.getcwd()+'/POVME_Schrodinger_matrix_'+command_input['output_name']+'.csv', overlap_matrix, delimiter =',')
 
-        print "Starting Tanimoto calculations"
+        print("Starting Tanimoto calculations")
 
-        print "Overlap Matrix for Tanimoto calculation"
+        print("Overlap Matrix for Tanimoto calculation")
         tanimoto_matrix = numpy.empty([file_input.frames,file_input.frames],dtype=float)
 
         for f1 in range(num_frames):
@@ -201,11 +201,11 @@ class main():
                 tanimoto_matrix[f1,f2] = tanimoto_result
                 tanimoto_matrix[f2,f1] = tanimoto_result
 
-        print tanimoto_matrix
+        print(tanimoto_matrix)
         #numpy.savetxt(os.getcwd()+'/POVME_Tanimoto_matrix_'+command_input['output_name']+'.csv', tanimoto_matrix, delimiter=',')
         numpy.save(os.getcwd()+'/POVME_Tanimoto_matrix_'+command_input['output_name']+'.npy',tanimoto_matrix)
 
-        print "Starting Tversky calculations"
+        print("Starting Tversky calculations")
         tversky_matrix = numpy.empty([file_input.frames,file_input.frames],dtype=float)
 
         for f1 in range(num_frames):
@@ -213,7 +213,7 @@ class main():
                 #print 'length of frame 1 = {0}'.format(len(overlap_value.coordinates[f1]))
                 tversky_matrix[f1,f2] = overlap_value.tversky_overlap(f1, f2)
 
-        print tversky_matrix
+        print(tversky_matrix)
         #numpy.savetxt(os.getcwd()+'/POVME_Tversky_matrix_'+command_input['output_name']+'.csv',tversky_matrix,delimiter=',')
         numpy.save(os.getcwd()+'/POVME_Tversky_matrix_'+command_input['output_name']+'.npy',tversky_matrix)
         
@@ -221,7 +221,7 @@ class main():
         ''' Saving which index refers to which frame file for use in clustering '''
         
         frames_dict = file_input.frameToFileName
-        print frames_dict
+        print(frames_dict)
 
         with open('indexMapToFrames.csv','wb') as csvfile:
             fieldnames = ['index','frame']

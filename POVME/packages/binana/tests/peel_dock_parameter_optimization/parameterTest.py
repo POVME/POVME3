@@ -9,7 +9,7 @@
 # It returns the sum of the ranks of the correct placements. The best combination of parameters would minimize the sum of the correct ranks (for instance, the correct placements should all be in 1st place given a perfect scoring function).
 
 import copy
-import cPickle
+import pickle
 import os
 import os.path
 import glob
@@ -51,7 +51,7 @@ docking_translation_list = list(itertools.product(numpy.arange(-8./gridResolutio
                                                   numpy.arange(-8./gridResolution,8.001/gridResolution,2./gridResolution),
                                                   numpy.arange(-8./gridResolution,8.001/gridResolution,2./gridResolution)))
 
-print docking_translation_list[0]
+print(docking_translation_list[0])
 my_score_functions = ['hydrophobic_A * hydrophobic_B',
                      'hydrophilic_A * hydrophilic_B',
                      'hydrophilic_A * hydrophobic_B',
@@ -119,14 +119,14 @@ for proteinPdbPrefix in proteinPdbPrefixes:
         # Now save the featureMaps for this protein
         #with gzip.open('%s/%s_featureMaps.cPickle.gz' %(proteinFmOutputDir, proteinPdbPrefix),'wb') as my_file:
         my_file = gzip.open('%s/%s_featureMaps.cPickle.gz' %(proteinFmOutputDir, proteinPdbPrefix),'wb')
-        cPickle.dump(protein_feature_maps, my_file, protocol=2)
+        pickle.dump(protein_feature_maps, my_file, protocol=2)
         my_file.close()
     else:
         #If the job is marked as started, let's see if it's finished. If so, load that receptor map
         if os.path.exists('%s/%s_featureMaps.cPickle.gz' %(proteinFmOutputDir, proteinPdbPrefix)):
             #with gzip.open('%s/%s_featureMaps.cPickle.gz' %(proteinFmOutputDir, proteinPdbPrefix),'rb') as my_file:
             my_file = gzip.open('%s/%s_featureMaps.cPickle.gz' %(proteinFmOutputDir, proteinPdbPrefix),'rb')
-            protein_feature_maps = cPickle.load(my_file)
+            protein_feature_maps = pickle.load(my_file)
             my_file.close()
         #Otherwise, there's probably another process working on making the feature map for this protein.
         #Skip it and go onto the next
@@ -148,7 +148,7 @@ for proteinPdbPrefix in proteinPdbPrefixes:
 
                 #with gzip.open('%s/results_%s.cPickle.gz' %(dockingResultsOutputDir, ligandPrefix), 'wb') as my_file:
                 my_file = gzip.open('%s/results_%s.cPickle.gz' %(dockingResultsOutputDir, ligandPrefix), 'wb')
-                cPickle.dump(results, my_file, protocol=2)
+                pickle.dump(results, my_file, protocol=2)
                 my_file.close()
             #else:
             #    #with gzip.open('%s/results_%s.cPickle.gz' %(dockingResultsOutputDir, ligandPrefix), 'rb') as my_file:
@@ -170,9 +170,9 @@ def scoreAll(factors):
 
 def rankFactors(factors):
     #This function takes a list of weighting factors and returns the rank that 0,0,0 gets when using them as multipliers on the score terms
-    print factors
+    print(factors)
     this_scoreListDict = scoreAll(factors)
-    print 'scored!'
+    print('scored!')
     ranks = []
     for ligand in ligands:
         for i, row in enumerate(this_scoreListDict[ligand]):
@@ -182,7 +182,7 @@ def rankFactors(factors):
                     #print row
                     ranks.append(i)
                     break
-    print sum(ranks)
+    print(sum(ranks))
     return sum(ranks)
 
 ligands = []
@@ -192,12 +192,12 @@ if not os.path.exists(analysisStartedFlagFilename):
     os.system('touch %s' %(analysisStartedFlagFilename))
     allScoreListDict = {}
     for filename in glob.glob('%s/results*' %(analysisOutputDir)):
-        print filename
+        print(filename)
         filePrefix = filename.replace(analysisOutputDir,'').replace('.cPickle','')
         ligands.append(filePrefix)
         #with gzip.open(filename, 'rb') as my_file:
         my_file = gzip.open(filename,'rb')
-        scoreList = cPickle.load(my_file)
+        scoreList = pickle.load(my_file)
         my_file.close()
 
         allScoreListDict[filePrefix] = copy.deepcopy(scoreList)
@@ -262,11 +262,11 @@ if not os.path.exists(analysisStartedFlagFilename):
                                                     (-20,20))
                                           )
 
-    print 'OPTIMIZATION STATS:', my_optimization
+    print('OPTIMIZATION STATS:', my_optimization)
     optimizedFactors = my_optimization.x
     #with gzip.open('%s/optimization_results.cPickle.gz') as my_file:
     my_file = gzip.open('%s/optimization_results.cPickle.gz', 'wb')
-    cPickle.dump(my_optimization, my_file, protocol=2)
+    pickle.dump(my_optimization, my_file, protocol=2)
     my_file.close()
 
 
@@ -281,7 +281,7 @@ if not os.path.exists(analysisStartedFlagFilename):
 
     #for ligand in ligands:
     for row in finalScoreList:
-        if row[0] == 0 and row[1] == 0 and row[2] == 0 and tuple(row[3:7]) in minRotation.values():
+        if row[0] == 0 and row[1] == 0 and row[2] == 0 and tuple(row[3:7]) in list(minRotation.values()):
             pylab.scatter([0],[row[7]], color='r', s=100)
 
     h, xedges, yedges = numpy.histogram2d(distScoreList[:,0], distScoreList[:,1], bins=50)

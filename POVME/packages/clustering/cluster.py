@@ -156,28 +156,28 @@ class Cluster():
         if (self.indexToNpyFile == {}) and (self.prefixToTrajectory != {}):
             raise Exception("ERROR! Given pdb trajectory (-t/T) but not given index file (-i). Output will return matrix indices instead of frame numbers or cluster representative structures.")
         elif self.indexToNpyFile == {}:
-            print "Not given index file (-i). Clustering will return matrix indices, but not trajectory frame numbers or members/representatives."
+            print("Not given index file (-i). Clustering will return matrix indices, but not trajectory frame numbers or members/representatives.")
         elif (self.indexToNpyFile != {}) and(self.prefixToTrajectory == {}):
-            print "Given index file (-i) but not prefix-to-trajectory mapping (-t or -T). Clustering will return prefix and frame numbers of cluster members, but will not extract representatives."
+            print("Given index file (-i) but not prefix-to-trajectory mapping (-t or -T). Clustering will return prefix and frame numbers of cluster members, but will not extract representatives.")
         elif (self.indexToNpyFile != {}) and (self.prefixToTrajectory != {}):
-            print "Given index file (-i) and prefix-to-trajectory mapping (-t or -T). Clustering will return prefix and frame numbers of cluster members, and will extract representatives."
+            print("Given index file (-i) and prefix-to-trajectory mapping (-t or -T). Clustering will return prefix and frame numbers of cluster members, and will extract representatives.")
 
     def ensure_file_prefixes_map_to_trajectories(self):
         if (self.prefixToTrajectory == {}) or (self.indexToNpyFile == {}):
-            print "No -i and/or -t/T arguments given - Skipping file-prefix-to-trajectory mapping completeness test"
+            print("No -i and/or -t/T arguments given - Skipping file-prefix-to-trajectory mapping completeness test")
             return
         else:        
             allPrefixesSet = set(self.indexToPrefix.values())
             for prefix in allPrefixesSet:
-                if not(prefix in self.prefixToTrajectory.keys()):
-                    raise Exception('File prefix %s not found in -t arguments (which are %r)' %(prefix, self.prefixToTrajectory.keys()))
+                if not(prefix in list(self.prefixToTrajectory.keys())):
+                    raise Exception('File prefix %s not found in -t arguments (which are %r)' %(prefix, list(self.prefixToTrajectory.keys())))
         return
         
     def ensure_trajectories_exist(self):
         if self.prefixToTrajectory == {}:
-            print "No -t/T arguments given. Skipping trajectory-file-existence check"
+            print("No -t/T arguments given. Skipping trajectory-file-existence check")
         else:
-            for trajectoryFile in self.prefixToTrajectory.values():
+            for trajectoryFile in list(self.prefixToTrajectory.values()):
                 if not(os.path.exists(trajectoryFile)):
                     raise Exception("Trajectory file %s not found" %(trajectoryFile))
             
@@ -190,8 +190,8 @@ class Cluster():
         #frames,result = scipy.cluster.vq.kmeans2(self.whited_overlap_values, number_clusters)
         code, dist = scipy.cluster.vq.vq(self.whited_overlap_values,frames)
 
-        print "The clusters are {0}".format(code)
-        print code.shape
+        print("The clusters are {0}".format(code))
+        print(code.shape)
         list_of_clusters = self.separate_clusters(code)
         #return code
         return list_of_clusters
@@ -265,7 +265,7 @@ class Cluster():
 
 #        print "cluster results: {0}".format(cluster_results)
         total_num_clusters = len(set(cluster_results))
-        list_clusters = [list([]) for i in xrange(total_num_clusters)]
+        list_clusters = [list([]) for i in range(total_num_clusters)]
 
         for i in range(len(cluster_results)):
 #            print "Cluster_res for {0} is {1}".format(i, cluster_results[i])
@@ -311,7 +311,7 @@ class Cluster():
         if (self.indexToFrame == {}) and (self.indexToNpyFile != {}):
             repsFileName = '%scluster_reps.csv' %(outputPrefix)
             membersFileName = '%scluster_members.csv' %(outputPrefix)
-            print "Unable to extract frame numbers from file names. Writing out npy file names to %s and %s" %(repsFileName, membersFileName)
+            print("Unable to extract frame numbers from file names. Writing out npy file names to %s and %s" %(repsFileName, membersFileName))
             with open(repsFileName,'wb') as of:
                 cluster_rep_file_names = [str(self.indexToNpyFile[i]) for i in centroid_list]
                 of.write('\n'.join(cluster_rep_file_names))
@@ -322,7 +322,7 @@ class Cluster():
                     of.write('\n')
             
         elif (self.indexToFrame == {}) and (self.indexToNpyFile == {}):
-            print "No matrix-index-to-trajectory-frame mapping given. Writing out matrix indices"
+            print("No matrix-index-to-trajectory-frame mapping given. Writing out matrix indices")
             with open('%scluster_reps.csv' %(outputPrefix),'wb') as of:
                 of.write('\n'.join([str(i) for i in centroid_list]))
             with open('%scluster_members.csv' %(outputPrefix),'wb') as of:
@@ -333,7 +333,7 @@ class Cluster():
         elif (self.indexToFrame != {}):
             repsFileName = '%scluster_reps.csv' %(outputPrefix)
             membersFileName = '%scluster_members.csv' %(outputPrefix)
-            print "Matrix-index-to-trajectory-frame mapping given. Writing out trajectory frames to %s and %s." %(repsFileName, membersFileName)
+            print("Matrix-index-to-trajectory-frame mapping given. Writing out trajectory frames to %s and %s." %(repsFileName, membersFileName))
             
             with open(repsFileName,'wb') as of:
                 cluster_rep_frame_nums = [str(self.indexToFrame[i]) for i in centroid_list]
@@ -349,7 +349,7 @@ class Cluster():
                     of.write('\n')
 
         if (self.indexToFrame != {}) and (self.prefixToTrajectory != {}):
-            print "Extracting trajectory frames"
+            print("Extracting trajectory frames")
             matrixIndex2Cluster = {}
             for index, centroid in enumerate(centroid_list):
                 matrixIndex2Cluster[centroid] = index
@@ -364,7 +364,7 @@ class Cluster():
             #print cluster
             #print indexToFrame.keys()
             for matrixInd in cluster:
-                if not(matrixInd in self.indexToFrame.keys()):
+                if not(matrixInd in list(self.indexToFrame.keys())):
                     raise Exception('User requested all frame pdbs to be output to cluster directories, but the program is unable to map all overlap matrix indices to trajectory/frame combinations. Make sure that -t/-T and -i arguments cover all frames and prefixes. Index: %i Cluster: %i' %(matrixInd, clusterInd))
 
         ## If all mappings exist, extract all relevant frames
@@ -386,7 +386,7 @@ class Cluster():
             frameNum = int(npyFileName.split('/')[-1].split('frame_')[-1].replace('.npy',''))
             prefixMatch = ''
             ## See if this prefix is in our dictionary or trajectories
-            for trajPrefix in self.prefixToTrajectory.keys():
+            for trajPrefix in list(self.prefixToTrajectory.keys()):
                 if trajPrefix == npyFilePrefix:
                     if prefixMatch == '':
                         prefixMatch = trajPrefix
@@ -408,7 +408,7 @@ class Cluster():
             else:
                 outputFileName = '%sframe_%i.pdb' %(prefixMatch, frameNum)
             fullOutputFileName = outputDir + '/' + outputFileName
-            if not trajFileName in framesToExtract.keys():
+            if not trajFileName in list(framesToExtract.keys()):
                 framesToExtract[trajFileName] = {}
                 
             framesToExtract[trajFileName][frameNum] = fullOutputFileName
@@ -468,7 +468,7 @@ class Cluster():
             of.write(frameData)
             '''            
     def generate_difference_maps(self, list_of_clusters, clusterInd2CentFileName, outputPrefix):
-        print "Generating difference maps"
+        print("Generating difference maps")
         #nFrames = len(frame_assignments)
         nFrames = sum([len(i) for i in list_of_clusters])
         #list_of_clusters = self.separate_clusters(frame_assignments)
@@ -497,11 +497,11 @@ class Cluster():
                         
             clusterCounts.append(thisClusterCounts)
             
-        allPoints = numpy.array(allFrameCounts.keys())
+        allPoints = numpy.array(list(allFrameCounts.keys()))
         allFrameMap = peel.featureMap.fromPovmeList(allPoints, justCoords = True, skinDistance=2.)
         allFrameMap.data[:] = 0.0
         
-        for point in allFrameCounts.keys():
+        for point in list(allFrameCounts.keys()):
             thisIndex = allFrameMap.point_to_nearest_index(point)
             allFrameMap.data[thisIndex] = allFrameCounts[point]
         
@@ -509,7 +509,7 @@ class Cluster():
         for thisClusterCounts in clusterCounts:
             thisClusterMap = peel.featureMap.fromPovmeList(allPoints, justCoords = True, skinDistance=2.)
             thisClusterMap.data[:] = 0.0
-            for point in thisClusterCounts.keys():
+            for point in list(thisClusterCounts.keys()):
                 thisIndex = allFrameMap.point_to_nearest_index(point)
                 thisClusterMap.data[thisIndex] = thisClusterCounts[point]
             
@@ -763,7 +763,7 @@ class main():
 
         # Print message and exit out of program if missing essential files
         if args.m == '':
-            print "Cannot run cluster.py: Need an overlap file from binding_site_overlap.py in order to cluster \n"
+            print("Cannot run cluster.py: Need an overlap file from binding_site_overlap.py in order to cluster \n")
             #print_help()
             sys.exit(1)
 
@@ -828,25 +828,25 @@ class main():
                 argsNsp = args.N.split(':')
                 if len(argsNsp) == 1:
                     maxKPClusters = int(argsNsp[0])
-                    userNClusters = range(1,maxKPClusters+1)
-                    print "Computing Kelley penalty for nClusters from 1 to %i" %(maxKPClusters)
+                    userNClusters = list(range(1,maxKPClusters+1))
+                    print("Computing Kelley penalty for nClusters from 1 to %i" %(maxKPClusters))
                 elif args.N.count(':') == 1:
                     minKPClusters = int(argsNsp[0])
                     maxKPClusters = int(argsNsp[1])
-                    userNClusters = range(minKPClusters,maxKPClusters+1)
-                    print "Computing Kelley penalty for nClusters from %i to %i" %(minKPClusters, maxKPClusters)
+                    userNClusters = list(range(minKPClusters,maxKPClusters+1))
+                    print("Computing Kelley penalty for nClusters from %i to %i" %(minKPClusters, maxKPClusters))
                 elif args.N.count(':') == 2:
                     minKPClusters = int(argsNsp[0])
                     maxKPClusters = int(argsNsp[1])
                     stride = int(argsNsp[2])
-                    userNClusters = range(minKPClusters,maxKPClusters+1,stride)
-                    print "Computing Kelley penalty for nClusters from %i to %i, taking strides of %i" %(minKPClusters, maxKPClusters, stride)
+                    userNClusters = list(range(minKPClusters,maxKPClusters+1,stride))
+                    print("Computing Kelley penalty for nClusters from %i to %i, taking strides of %i" %(minKPClusters, maxKPClusters, stride))
                     
             else:
                 #maxKPClusters = clustering_obj.frames
                 maxKPClusters = min(75, clustering_obj.frames)
-                userNClusters = range(1,maxKPClusters+1)
-                print "Computing Kelley penalty for nClusters from 1 to %i" %(maxKPClusters)
+                userNClusters = list(range(1,maxKPClusters+1))
+                print("Computing Kelley penalty for nClusters from 1 to %i" %(maxKPClusters))
                 
                 
             ## In order to achieve proper scaling, we must ALWAYS have 1 as a possible cluster number 
@@ -871,7 +871,7 @@ class main():
                 progressDecile = (10*index)/len(potentialNClusters)
                 if progressDecile > lastProgressDecile:
                     lastProgressDecile = progressDecile
-                    print "Kelley penalty " + str(progressDecile*10) + "% computed"
+                    print("Kelley penalty " + str(progressDecile*10) + "% computed")
                 if args.kmeans == True:
                     list_of_clusters = clustering_obj.kmeans_cluster(nClusters)
                 else:
@@ -925,7 +925,7 @@ class main():
             optimal_nClusters = validNClusters[numpy.argsort(kPenalties)[0]]
             list_of_clusters = clustering_results[optimal_nClusters]
             #clusters = clustering_obj.separate_clusters(frame_assignments)
-            print "Done computing Kelley penalty. Optimal number of clusters is %i" %(optimal_nClusters)
+            print("Done computing Kelley penalty. Optimal number of clusters is %i" %(optimal_nClusters))
 
         clusterInd2CentFileName = clustering_obj.find_centroids(list_of_clusters, args.o)
 

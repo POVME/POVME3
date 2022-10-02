@@ -162,7 +162,7 @@ class point:
         return point([self.x, self.y, self.z])
 
     def print_coords(self):
-        print str(self.x)+"\t"+str(self.y)+"\t"+str(self.z)
+        print(str(self.x)+"\t"+str(self.y)+"\t"+str(self.z))
 
     def coords(self):
         return [self.x,self.y,self.z]
@@ -421,7 +421,7 @@ class PDB:
 
                         if key in atom_already_loaded and TempAtom.residue.strip() in self.protein_resnames: # so this is a protein atom that has already been loaded once
                             self.printout("Warning: Duplicate protein atom detected: \"" + TempAtom.line.strip() + "\". Not loading this duplicate.")
-                            print ""
+                            print("")
 
                         if not key in atom_already_loaded or not TempAtom.residue.strip() in self.protein_resnames: # so either the atom hasn't been loaded, or else it's a non-protein atom
                                                                                                             # so note that non-protein atoms can have redundant names, but protein atoms cannot.
@@ -441,7 +441,7 @@ class PDB:
     def printout(self, thestring):
         lines = textwrap.wrap(thestring, 80)
         for line in lines:
-            print line
+            print(line)
 
     def SavePDB(self, filename):
         f = open(filename, 'w')
@@ -464,7 +464,7 @@ class PDB:
 
         # first get available index
         t = 1
-        while t in self.AllAtoms.keys():
+        while t in list(self.AllAtoms.keys()):
             t = t + 1
 
         # now add atom
@@ -529,136 +529,136 @@ class PDB:
 
             if not "N" in residue:
                 self.printout('Warning: There is no atom named "N" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine secondary structure. If this residue is far from the active site, this warning may not affect the NNScore.')
-                print ""
+                print("")
             if not "C" in residue:
                 self.printout('Warning: There is no atom named "C" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine secondary structure. If this residue is far from the active site, this warning may not affect the NNScore.')
-                print ""
+                print("")
             if not "CA" in residue:
                 self.printout('Warning: There is no atom named "CA" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine secondary structure. If this residue is far from the active site, this warning may not affect the NNScore.')
-                print ""
+                print("")
 
             if real_resname == "GLU" or real_resname == "GLH" or real_resname == "GLX":
                 if not "OE1" in residue:
                     self.printout('Warning: There is no atom named "OE1" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine salt-bridge interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "OE2" in residue:
                     self.printout('Warning: There is no atom named "OE2" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine salt-bridge interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
 
             if real_resname == "ASP" or real_resname == "ASH" or real_resname == "ASX":
                 if not "OD1" in residue:
                     self.printout('Warning: There is no atom named "OD1" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine salt-bridge interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "OD2" in residue:
                     self.printout('Warning: There is no atom named "OD2" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine salt-bridge interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
 
             if real_resname == "LYS" or real_resname == "LYN":
                 if not "NZ" in residue:
                     self.printout('Warning: There is no atom named "NZ" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-cation and salt-bridge interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
 
             if real_resname == "ARG":
                 if not "NH1" in residue:
                     self.printout('Warning: There is no atom named "NH1" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-cation and salt-bridge interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "NH2" in residue:
                     self.printout('Warning: There is no atom named "NH2" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-cation and salt-bridge interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
 
             if real_resname == "HIS" or real_resname == "HID" or real_resname == "HIE" or real_resname == "HIP":
                 if not "NE2" in residue:
                     self.printout('Warning: There is no atom named "NE2" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-cation and salt-bridge interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "ND1" in residue:
                     self.printout('Warning: There is no atom named "ND1" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-cation and salt-bridge interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
 
             if real_resname == "PHE":
                 if not "CG" in residue:
                     self.printout('Warning: There is no atom named "CG" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CD1" in residue:
                     self.printout('Warning: There is no atom named "CD1" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CD2" in residue:
                     self.printout('Warning: There is no atom named "CD2" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CE1" in residue:
                     self.printout('Warning: There is no atom named "CE1" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CE2" in residue:
                     self.printout('Warning: There is no atom named "CE2" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CZ" in residue:
                     self.printout('Warning: There is no atom named "CZ" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
 
             if real_resname == "TYR":
                 if not "CG" in residue:
                     self.printout('Warning: There is no atom named "CG" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CD1" in residue:
                     self.printout('Warning: There is no atom named "CD1" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CD2" in residue:
                     self.printout('Warning: There is no atom named "CD2" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CE1" in residue:
                     self.printout('Warning: There is no atom named "CE1" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CE2" in residue:
                     self.printout('Warning: There is no atom named "CE2" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CZ" in residue:
                     self.printout('Warning: There is no atom named "CZ" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
 
             if real_resname == "TRP":
                 if not "CG" in residue:
                     self.printout('Warning: There is no atom named "CG" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CD1" in residue:
                     self.printout('Warning: There is no atom named "CD1" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CD2" in residue:
                     self.printout('Warning: There is no atom named "CD2" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "NE1" in residue:
                     self.printout('Warning: There is no atom named "NE1" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CE2" in residue:
                     self.printout('Warning: There is no atom named "CE2" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CE3" in residue:
                     self.printout('Warning: There is no atom named "CE3" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CZ2" in residue:
                     self.printout('Warning: There is no atom named "CZ2" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CZ3" in residue:
                     self.printout('Warning: There is no atom named "CZ3" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CH2" in residue:
                     self.printout('Warning: There is no atom named "CH2" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
 
             if real_resname == "HIS" or real_resname == "HID" or real_resname == "HIE" or real_resname == "HIP":
                 if not "CG" in residue:
                     self.printout('Warning: There is no atom named "CG" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "ND1" in residue:
                     self.printout('Warning: There is no atom named "ND1" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CD2" in residue:
                     self.printout('Warning: There is no atom named "CD2" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "CE1" in residue:
                     self.printout('Warning: There is no atom named "CE1" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
                 if not "NE2" in residue:
                     self.printout('Warning: There is no atom named "NE2" in the protein residue ' + last_key + '. Please use standard naming conventions for all protein residues. This atom is needed to determine pi-pi and pi-cation interactions. If this residue is far from the active site, this warning may not affect the NNScore.')
-                    print ""
+                    print("")
 
 
     # Functions to determine the bond connectivity based on distance
@@ -1890,7 +1890,7 @@ class featureMap:
         newWay = True
         if newWay:
             coord2GridIndex = thisMap.generate_coord_to_grid_index_dict()
-            gridPts = np.array(coord2GridIndex.keys())
+            gridPts = np.array(list(coord2GridIndex.keys()))
             allDists = ssd.cdist(offGridPts[:,:3],gridPts[:,:3])
             globalMaxDist = np.amax(allDists)
             for index, offGridPt in enumerate(offGridPts):
@@ -2058,7 +2058,7 @@ class featureMap:
 
     def generateRotations(self,number,nsteps):
 
-        if number in self.pointDict.keys():
+        if number in list(self.pointDict.keys()):
             spherePoints = self.pointDict[number]
 
         else:
@@ -2153,7 +2153,7 @@ class featureMap:
         zpsi = 57.29578 * np.arctan2((w*y - x*z),(x*y + w*z))
         #rotatedArrays = copy.deepcopy(ligandMaps)
 
-        for feature in rotatedArrays.keys():
+        for feature in list(rotatedArrays.keys()):
             self.data = sni.rotate(self.data,zphi,axes=(0,1), reshape=False)
             self.data = sni.rotate(self.data,xtheta,axes=(1,2), reshape=False)
             self.data = sni.rotate(self.data,zpsi,axes=(0,1), reshape=False)
@@ -2620,7 +2620,7 @@ class featureMapEnsemble():
 
         tempOtherBitVector = np.zeros((other.getNumFeatureMaps(),self.getnVecPos()),dtype=np.bool)
 
-        for frame in xrange(other.getNumFeatureMaps()):
+        for frame in range(other.getNumFeatureMaps()):
             for coord in self.getCoord2BitVecPos():
                 if coord not in other.getCoord2BitVecPos():
                     continue
@@ -2650,13 +2650,13 @@ class featureMapEnsemble():
         return self.bit_vectors
 
     def makeBitVector(self,num_feature_maps, nVectPos):
-        print "Starting BitVector construction"
+        print("Starting BitVector construction")
         this_vec_pos_matrix = np.zeros((num_feature_maps, nVectPos), dtype=np.bool)
         for f1 in range(num_feature_maps):
             for coord in np.load(self.filenames[f1]):
                 this_vec_pos_matrix[f1,self.getCoord2BitVecPos()[tuple(coord)]] = 1
         self.setBitVector(this_vec_pos_matrix)
-        print "Finished that too."
+        print("Finished that too.")
 
     def setCoord2BitVecPos(self, coord2BitVecPos):
         self.coord2vectPos = coord2BitVecPos
@@ -2665,18 +2665,18 @@ class featureMapEnsemble():
         return self.coord2vectPos
 
     def makeCoord2BitVecPos(self, filenames=[], num_frames=0):
-        print "Beginning Coord2BitVecPos"
+        print("Beginning Coord2BitVecPos")
         allPointsSet = set()
         for f1 in range(num_frames):
             for coord in np.load(filenames[f1]):
                 allPointsSet.add(tuple(map(int,coord)))
             self.setCoord2BitVecPos(OrderedDict((coord, i) for i, coord in enumerate(allPointsSet)))
         self.setnVecPos(len(allPointsSet))
-        print "Finished Coord2BitVecPos"
+        print("Finished Coord2BitVecPos")
 
     def allPointsSetfromCoord2BVP(self):
         allPointsSet = set()
-        for coord in self.getCoord2BitVecPos().iterkeys():
+        for coord in self.getCoord2BitVecPos().keys():
             allPointsSet.add( coord )
         return allPointsSet
 
@@ -2712,8 +2712,8 @@ class featureMapEnsemble():
 
     def getFeatureMap(self, index):
         tempBitVector = self.getBitVector()[index]
-        print tempBitVector
-        myArray = np.array([coord for coord in self.getCoord2BitVecPos().keys() if tempBitVector[self.getCoord2BitVecPos()[coord]]])
+        print(tempBitVector)
+        myArray = np.array([coord for coord in list(self.getCoord2BitVecPos().keys()) if tempBitVector[self.getCoord2BitVecPos()[coord]]])
         return featureMap.fromPovmeList(myArray, 1)
     
     @classmethod
@@ -2737,21 +2737,21 @@ class featureMapEnsemble():
         return thisFME
 
     def saveToNPZ(self,outfile):
-        print "Saving file to %s" %outfile
+        print("Saving file to %s" %outfile)
         np.savez(outfile, self.getBitVector(), self.getCoord2BitVecPos())
-        print "Finished saving to file"
+        print("Finished saving to file")
 
     def loadFromNPZ(self, infile):
-        print "Loading NPZ file"
+        print("Loading NPZ file")
         tempfile = np.load(infile)
-        print tempfile
+        print(tempfile)
 
         self.setBitVector(tempfile['arr_0'])
         self.setCoord2BitVecPos(tempfile['arr_1'].item())
         self.setNumFeatureMaps(len(self.getBitVector()))
         self.setnVecPos(len(self.getCoord2BitVecPos()))
-        print len(self.getCoord2BitVecPos())
-        print "Finished loading NPZ file"
+        print(len(self.getCoord2BitVecPos()))
+        print("Finished loading NPZ file")
 
 
 class algebra:
@@ -2967,14 +2967,14 @@ class algebra:
         c=0
         for [w,x,y,z] in spherePoints:
             c += 1
-            print "Processing rotation %i of %i" %(c, len(spherePoints))
+            print("Processing rotation %i of %i" %(c, len(spherePoints)))
             #Quaternions to Euler angles:
             #180/3.1415926
             #zphi = 57.29578 * np.arctan2((w*y + x*z),-(x*y - w*z))
             #xtheta = 57.29578 * np.arccos(-w**2 - x**2 + y**2 + z**2)
             #zpsi = 57.29578 * np.arctan2((w*y - x*z),(x*y + w*z))
             rotatedArrays = copy.deepcopy(ligandMaps)
-            for feature in rotatedArrays.keys():
+            for feature in list(rotatedArrays.keys()):
                 rotatedArrays[feature].interpolation_rotate_inplace([w,x,y,z])
             #print zphi, xtheta, zpsi
             #for feature in rotatedArrays.keys():
@@ -2990,7 +2990,7 @@ class algebra:
                 #shiftedArray = sni.shift(receptorMap,[X,Y,Z])
 
                 shiftedArrays = copy.deepcopy(rotatedArrays)
-                for feature in shiftedArrays.keys():
+                for feature in list(shiftedArrays.keys()):
                     shiftedArrays[feature].translate_inplace([X,Y,Z])
                     #shiftedArrays[feature].borders = [shiftedArrays[feature].borders[0]+X,
                     #                                  shiftedArrays[feature].borders[1]+X,
@@ -3015,19 +3015,19 @@ class algebra:
                 successfulDockings.append([[X,Y,Z],[w,x,y,z],scores])
                 #print [[X,Y,Z],[w,x,y,z],scores]
         successfulDockings.sort(key=lambda x: sum(x[2]), reverse = True)
-        print "Docking complete!"
+        print("Docking complete!")
         return successfulDockings
 
     def dockPeel(self,receptorMaps, ligandPeel, translation_list,spherePoints):
 
-        resolution = receptorMaps[receptorMaps.keys()[0]].getReso()
+        resolution = receptorMaps[list(receptorMaps.keys())[0]].getReso()
 
         #successfulDockings = np.array(['Translation Steps','Rotation Quaternion','Score'],dtype='string_')
         successfulDockings=[]
         c=0
         for [w,x,y,z] in spherePoints:
             c += 1
-            print "Processing rotation %i of %i: %s" %(c, len(spherePoints), str([w,x,y,z]))
+            print("Processing rotation %i of %i: %s" %(c, len(spherePoints), str([w,x,y,z])))
             #Quaternions to Euler angles:
             #180/3.1415926
             #zphi = 57.29578 * np.arctan2((w*y + x*z),-(x*y - w*z))
@@ -3098,7 +3098,7 @@ class algebra:
 
                 #shiftedMaps = copy.deepcopy(rotatedMaps)
 
-                for feature in shiftedMaps.keys():
+                for feature in list(shiftedMaps.keys()):
                     shiftedMaps[feature].translate_inplace([dXAngstroms,dYAngstroms,dZAngstroms])
                     #shiftedMaps[feature].translate_inplace([X,Y,Z])
                     #shiftedMaps[feature].borders = [shiftedMaps[feature].borders[0]+X,
@@ -3122,12 +3122,12 @@ class algebra:
                 successfulDockings.append([[absXAngstroms,absYAngstroms,absZAngstroms],[w,x,y,z],scores])
                 #print [[X,Y,Z],[w,x,y,z],scores]
         successfulDockings.sort(key=lambda x: sum(x[2]), reverse = True)
-        print "Docking complete!"
+        print("Docking complete!")
         return successfulDockings
 
     def printLastScores(self):
         if self.lastScores != None:
-            print '\n'.join(['%.5e\t%s'%(score, func) for func, score in zip(self.lastStringScoreFuncs, self.lastScores)])
+            print('\n'.join(['%.5e\t%s'%(score, func) for func, score in zip(self.lastStringScoreFuncs, self.lastScores)]))
 
 
 
@@ -3142,7 +3142,7 @@ class peel:
     #    return '_'.join(list)
 
     def hashtable_entry_add_one(self, hashtable, key, toadd = 1): # note that dictionaries (hashtables) are passed by reference in python
-        if hashtable.has_key(key):
+        if key in hashtable:
             hashtable[key] = hashtable[key] + toadd
         else:
             hashtable[key] = toadd
@@ -3448,7 +3448,7 @@ class peel:
         #Turning into a set so the hash search will be fast
         #povmeSet = set([ tuple(i) for i in povmeList])
 
-        for feature in colorMaps.keys():
+        for feature in list(colorMaps.keys()):
             completePointList = colorMaps[feature].toPovmeList()
             #Only return points that were available in the POVME list beforehand
             #THIS COULD BE IMPROVED
@@ -3543,11 +3543,11 @@ class peel:
         for this_atom in self.receptor.AllAtoms:
             this_element = self.receptor.AllAtoms[this_atom].element
             coordinates_pt = self.receptor.AllAtoms[this_atom].coordinates
-            if this_element in radii.keys():
+            if this_element in list(radii.keys()):
                 #print self.receptor.AllAtoms[this_atom].coordinates, radii[this_element]
                 self.features['occupancies'][this_atom] = {'coordinates':coordinates_pt, 'radius':radii[this_element]}
             else:
-                print "WARNING: Atom type %s is not C, H, O, N P, S, or F. Assuming atomic radius of 2 angstroms" %(this_element)
+                print("WARNING: Atom type %s is not C, H, O, N P, S, or F. Assuming atomic radius of 2 angstroms" %(this_element))
                 self.features['occupancies'][this_atom] = {'coordinates':coordinates_pt, 'radius': 2.0}
 
 
@@ -3865,10 +3865,10 @@ class peel:
             this_element = this_atom_info['element_stripped']
             receptor_atom_index = self.receptor.selections.select_atoms({'serial':this_serial})
             coordinates_pt = point(self.receptor.get_coordinates()[receptor_atom_index][0])
-            if this_element in radii.keys():
+            if this_element in list(radii.keys()):
                 self.features['occupancies'][this_serial] = {'coordinates': coordinates_pt, 'radius':radii[this_element]}
             else:
-                print "WARNING: Atom type %s is not C, H, O, N P, S, or F. Assuming atomic radius of 2 angstroms" %(this_element)
+                print("WARNING: Atom type %s is not C, H, O, N P, S, or F. Assuming atomic radius of 2 angstroms" %(this_element))
                 self.features['occupancies'][this_atom_info['serial']] = {'coordinates':coordinates_pt, 'radius':2.0}
 
 
@@ -3985,16 +3985,16 @@ class peel:
     def rotate(self, quaternion, center='average'):
         if center == 'average':
             coords = []
-            for feature in self.features.keys():
-                    for key in self.features[feature].keys():
+            for feature in list(self.features.keys()):
+                    for key in list(self.features[feature].keys()):
                         coords.append(self.features[feature][key]['coordinates'].coords())
             coords = np.array(coords)
             center = np.array([np.mean(coords[:,0]), np.mean(coords[:,1]), np.mean(coords[:,2])])
 
         #Move whole thing to be vcentered around 0,0,0
         self.translate(-1.0*center)
-        for feature in self.features.keys():
-                for index in self.features[feature].keys():
+        for feature in list(self.features.keys()):
+                for index in list(self.features[feature].keys()):
                     oldCoordsList = self.features[feature][index]['coordinates'].coords()
                     oldMagnitude = self.features[feature][index]['coordinates'].magnitude()
                     #rotation = self.functions.axisangle_to_q(quaternion[1:], np.arcsin(quaternion[0])*2)
@@ -4012,8 +4012,8 @@ class peel:
 
 
     def translate(self, vector):
-        for feature in self.features.keys():
-            for key in self.features[feature].keys():
+        for feature in list(self.features.keys()):
+            for key in list(self.features[feature].keys()):
                 oldCoords = self.features[feature][key]['coordinates'].coords()
                 newCoords = oldCoords + np.array(vector)
                 self.features[feature][key]['coordinates'] = point(newCoords)
@@ -4088,44 +4088,44 @@ def intro():
 
 
 
-    print "              ..I?+?.                                       "
-    print "             ..$7$7.                                        "
-    print "             ..$$Z,                                         "
-    print "            ..I$$O?.                                        "
-    print "            :??7$$$.                                        "
-    print "          .=????7III                                        "
-    print "        ..I?????I???..                                      "
-    print "      ...???????I????.                                      "
-    print "      ..?+??????I?????                                      "
-    print "      .??I??????II????+.                                    "
-    print "      ~?II??????II+???=+..                                  "
-    print "     .??I+??????II????+=+.                                  "
-    print "     .+?I,???????I?????+~:,                                 "
-    print "     .+I?~???????+I????++~~:~..                             "
-    print "     .+??==???????=+?+++++:~~:~~:.....                      "
-    print "     .++?+.???????+~+?+++++,:~:~~~,:,:::,........ .......   "
-    print "     .?=++=~++??+++:=??++++++~::,:~~::::~~:~=~~~~~~~~~?+=.. "
-    print "      :+====?+++++++.=??++++++????=~~=~~::,:,,,,:::~==++=   "
-    print "      .+==~=+++++++++,=I?+++++++..:?77I????????????I7?...   "
-    print "      .:====~??+++++?++:I?+++++++~. ..................      "
-    print "      ..++=~=:+?++++++++??I?++++++??..                      "
-    print "      ..?~==~=~.??++++++++?7??++++++++,.                    "
-    print "        ~=====~,.=?++++++++??7?+++++++++~                   "
-    print "        .==~~:==...=?+?+++++???7??+++++++?.                 "
-    print "        .?===~=:~   ..??++?+++???7?I?++?++?,.               "
-    print "        .?=~=~~:=..     .7???++?+??7$7I?++III,.             "
-    print "        .==~~~:~:..        ..,777I???7$ODDMDNM,             "
-    print "        .,~~~~~=::.               .~$II7ZOONMN.             "
-    print "        ..:=~~~=:?.               .......,=I7I.             "
-    print "        ..=+=~==::.                      . ....             "
-    print "        ..?+===~~=.                                         "
-    print "          ~+==~~=~.                                         "
-    print "          .+?==~=:.                                         "
-    print "          ..I7II++.                                         "
-    print "            .=I$$$.                                         "
-    print "               ....                                         "
-    print
-    print "Thanks for using peel.py. We are phasing out the command-line functionality for this program. Please see the examples for how peel.py can be imported and used in a variety of workflows."
+    print("              ..I?+?.                                       ")
+    print("             ..$7$7.                                        ")
+    print("             ..$$Z,                                         ")
+    print("            ..I$$O?.                                        ")
+    print("            :??7$$$.                                        ")
+    print("          .=????7III                                        ")
+    print("        ..I?????I???..                                      ")
+    print("      ...???????I????.                                      ")
+    print("      ..?+??????I?????                                      ")
+    print("      .??I??????II????+.                                    ")
+    print("      ~?II??????II+???=+..                                  ")
+    print("     .??I+??????II????+=+.                                  ")
+    print("     .+?I,???????I?????+~:,                                 ")
+    print("     .+I?~???????+I????++~~:~..                             ")
+    print("     .+??==???????=+?+++++:~~:~~:.....                      ")
+    print("     .++?+.???????+~+?+++++,:~:~~~,:,:::,........ .......   ")
+    print("     .?=++=~++??+++:=??++++++~::,:~~::::~~:~=~~~~~~~~~?+=.. ")
+    print("      :+====?+++++++.=??++++++????=~~=~~::,:,,,,:::~==++=   ")
+    print("      .+==~=+++++++++,=I?+++++++..:?77I????????????I7?...   ")
+    print("      .:====~??+++++?++:I?+++++++~. ..................      ")
+    print("      ..++=~=:+?++++++++??I?++++++??..                      ")
+    print("      ..?~==~=~.??++++++++?7??++++++++,.                    ")
+    print("        ~=====~,.=?++++++++??7?+++++++++~                   ")
+    print("        .==~~:==...=?+?+++++???7??+++++++?.                 ")
+    print("        .?===~=:~   ..??++?+++???7?I?++?++?,.               ")
+    print("        .?=~=~~:=..     .7???++?+??7$7I?++III,.             ")
+    print("        .==~~~:~:..        ..,777I???7$ODDMDNM,             ")
+    print("        .,~~~~~=::.               .~$II7ZOONMN.             ")
+    print("        ..:=~~~=:?.               .......,=I7I.             ")
+    print("        ..=+=~==::.                      . ....             ")
+    print("        ..?+===~~=.                                         ")
+    print("          ~+==~~=~.                                         ")
+    print("          .+?==~=:.                                         ")
+    print("          ..I7II++.                                         ")
+    print("            .=I$$$.                                         ")
+    print("               ....                                         ")
+    print()
+    print("Thanks for using peel.py. We are phasing out the command-line functionality for this program. Please see the examples for how peel.py can be imported and used in a variety of workflows.")
 
 
 if __name__=='__main__':

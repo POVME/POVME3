@@ -3,12 +3,12 @@ import numpy as np
 import re
 data = [i.split() for i in open('cluster_members.csv').readlines()]
 
-print [len(i) for i in data]
+print([len(i) for i in data])
 
 nClusters = len(data)
 nCols = 3
 nRows = (nClusters+(nCols-1))/nCols
-print nClusters, nRows, nCols
+print(nClusters, nRows, nCols)
 
 def getGroupPrefix(runPrefix):
     groupPrefix = runPrefix.split('run')[0].strip('_')
@@ -23,7 +23,7 @@ for cluster in data:
         #print member, result
         prefix = result[0][0].strip('_')
         groupPrefix = getGroupPrefix(prefix)
-        if not groupPrefix in groupPrefix2prefixes2frames.keys():
+        if not groupPrefix in list(groupPrefix2prefixes2frames.keys()):
             groupPrefix2prefixes2frames[groupPrefix] = {}
         groupPrefix2prefixes2frames[groupPrefix][prefix] = []
         frame = int(result[0][1])
@@ -31,7 +31,7 @@ for cluster in data:
         groupPrefix2prefixes2frames[groupPrefix][prefix] += [frame]
 #print prefix2frames
 
-prefixes = prefix2frames.keys()
+prefixes = list(prefix2frames.keys())
 prefixes.sort()
 nPrefixes = len(prefixes)
 groupPrefixes = list(set([getGroupPrefix(i) for i in prefixes]))
@@ -49,7 +49,7 @@ for prefix in prefixes:
     frames = prefix2frames[prefix]
     frames.sort()
     #if prefix in prefixAndFrame2Col.keys():
-    if groupPrefix in groupPrefixColsTaken.keys():
+    if groupPrefix in list(groupPrefixColsTaken.keys()):
         #Note that frame numbering starts at 1 so off-by-1 won't be a problem here
         offset = max(groupPrefixColsTaken[groupPrefix])
     else:
@@ -60,8 +60,8 @@ for prefix in prefixes:
 
 #memberships = np.zeros((nClusters, nPrefixes, max([len(i) for i in prefix2frames.values()])))
 #memberships = np.zeros((nClusters, nGroupPrefixes, max([len(i) for i in prefix2frames.values()])))
-memberships = np.zeros((nClusters, nGroupPrefixes, max([max(i) for i in groupPrefixColsTaken.values()])))
-print [(groupPrefix, max(i)) for groupPrefix, i in zip(groupPrefixColsTaken.keys(), groupPrefixColsTaken.values())]
+memberships = np.zeros((nClusters, nGroupPrefixes, max([max(i) for i in list(groupPrefixColsTaken.values())])))
+print([(groupPrefix, max(i)) for groupPrefix, i in zip(list(groupPrefixColsTaken.keys()), list(groupPrefixColsTaken.values()))])
 #1/0
 memberships -= 1
 for clusterIndex, cluster in enumerate(data):
@@ -74,7 +74,7 @@ for clusterIndex, cluster in enumerate(data):
         col = prefixAndFrame2Col[prefix][frame]
         #print member
         if sum(memberships[:,row,col]) > 0:
-            print memberships[:,row,col]
+            print(memberships[:,row,col])
             1/0
         memberships[:,row,col] = 0
         memberships[clusterIndex,row,col] = 1
@@ -87,7 +87,7 @@ for clusterIndex, cluster in enumerate(data):
                  aspect='auto')
     #pylab.yticks(range(len(prefixes)), [[]*4+[prefix] for i, prefix in enumerate(prefixes) if i%5==0])
     #pylab.yticks(range(0,len(prefixes),1), prefixes )
-    pylab.yticks(range(0,len(groupPrefixes),1), groupPrefixes )
+    pylab.yticks(list(range(0,len(groupPrefixes),1)), groupPrefixes )
     pylab.xlabel('Frame')
     pylab.title('Cluster %i' %(clusterIndex))
     
@@ -115,7 +115,7 @@ allTransitions = np.zeros((nClusters, nClusters))
 transitions = dict(((groupPrefix,np.zeros((nClusters, nClusters))) for groupPrefix in groupPrefixes))
 for simulationIndex, groupPrefix in enumerate(groupPrefixes):
     simulationIndex = groupPrefixes.index(groupPrefix)
-    for prefix in groupPrefix2prefixes2frames[groupPrefix].keys():
+    for prefix in list(groupPrefix2prefixes2frames[groupPrefix].keys()):
         currentCluster = None
         sliceStartCol = min(prefixAndFrame2Col[prefix].values())
         sliceEndCol = max(prefixAndFrame2Col[prefix].values())
@@ -126,7 +126,7 @@ for simulationIndex, groupPrefix in enumerate(groupPrefixes):
             if len(nonzeros[0]) == 0:
                 nextCluster = None
             elif len(nonzeros[0]) > 1:
-                print nextCluster
+                print(nextCluster)
                 1/0
             else:
                 nextCluster = nonzeros[0][0]
@@ -211,9 +211,9 @@ for simulationIndex, groupPrefix in enumerate(groupPrefixes):
 
     # nodes
     nFramesPerClusterThisSim = [np.sum(memberships[clusterIndex,simulationIndex,:]==1) for clusterIndex in range(nClusters)]
-    print nFramesPerClusterThisSim
+    print(nFramesPerClusterThisSim)
     nodeSizes = [150. * float(i)/(np.mean(nFramesPerClusterAllSims)/nGroupPrefixes) for i in nFramesPerClusterThisSim]
-    print nodeSizes
+    print(nodeSizes)
     nx.draw_networkx_nodes(G, pos, node_size=nodeSizes)
 
     

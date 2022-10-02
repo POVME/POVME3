@@ -8,7 +8,7 @@ targets = glob.glob('../CSAR_FULL_RELEASE_29NOVEMBER2012/*/SETUP_DOCKING_FILES/C
 
 
 for target in targets:
-    print target
+    print(target)
     for rotation in range(5):
         u = MDA.Universe(target)
         atom1 = u.atoms[numpy.random.randint(0,len(u.atoms))]
